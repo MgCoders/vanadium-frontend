@@ -7,8 +7,10 @@
     {
       "root": "src",
       "outDir": "dist",
+      "deployUrl": "",
       "assets": [
         "assets",
+        "vendors",
         "favicon.ico"
       ],
       "index": "index.html",
@@ -19,12 +21,22 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles/app.scss",
+        "styles/bootstrap.scss",
+        "styles/font-awesome.scss",
+        "styles/layout.scss",
+        "styles/loader.scss",
+        "styles/material2-theme.scss",
+        "styles/theme.scss",
+        "styles/ui.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
+        "hmr": "environments/environment.hmr.ts",
         "prod": "environments/environment.prod.ts"
       }
     }
@@ -58,7 +70,6 @@
     "class": {
       "spec": false
     },
-    "component": {
-    }
+    "component": {}
   }
 }
