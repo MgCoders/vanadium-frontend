@@ -1,0 +1,8 @@
+version: '3.1'
+
+services:
+
+    sulfurapp:
+      image: sulfurapp
+      ports:
+        - 0.0.0.0:8180:80
