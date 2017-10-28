@@ -8,12 +8,13 @@ import { Page500Component } from './500/500.component';
 import { PageConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { PageLockScreenComponent } from './lock-screen/lock-screen.component';
 import { PageMaintenanceComponent } from './maintenance/maintenance.component';
+import { AuthGuard } from '../_guards/auth.guard';
 
 export const ExtraPagesRoutes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: '/app/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'login', component: PageLoginComponent },
       { path: 'sign-up', component: PageSignUpComponent },
       { path: 'forgot-password', component: PageForgotPasswordComponent },
@@ -21,7 +22,7 @@ export const ExtraPagesRoutes: Routes = [
       { path: '500', component: Page500Component },
       { path: 'confirm-email', component: PageConfirmEmailComponent },
       { path: 'lock-screen', component: PageLockScreenComponent },
-      { path: 'maintenance', component: PageMaintenanceComponent },
+      { path: 'maintenance', component: PageMaintenanceComponent, canActivate: [AuthGuard] },
     ]
   }
 ];

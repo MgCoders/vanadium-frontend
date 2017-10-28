@@ -6,23 +6,23 @@
           <a [routerLink]="['/']">Login</a>
         </div>
 
-        <form name="material_login_form" class="form-validation" ng-submit="submit()">
+        <form name="material_login_form" class="form-validation" [formGroup]="validationForm" (ngSubmit)="login()">
           <fieldset>
             <div class="form-group">
               <mat-form-field class="full-width">
-                <input required matInput type="email" name="email" placeholder="Email">
+                <input formControlName="email" matInput type="email" name="email" placeholder="Email" [(ngModel)]="model.email">
                 <mat-icon matSuffix class="material-icons">mail_outline</mat-icon>
               </mat-form-field>
             </div>
             <div class="form-group">
               <mat-form-field class="full-width">
-                <input required matInput type="password" name="password" placeholder="Password">
+                <input formControlName="password" matInput type="password" name="password" placeholder="Password" [(ngModel)]="model.password">
                 <mat-icon matSuffix class="material-icons">lock_outline</mat-icon>
               </mat-form-field>
             </div>
 
             <div class="divider divider-md"></div>
-            <button [routerLink]="['/']" mat-raised-button type="button" color="primary" class="float-right">Login</button>
+            <button [disabled]="!validationForm.valid" mat-raised-button type="submit" color="primary" class="float-right">Login</button>
           </fieldset>
         </form>
 

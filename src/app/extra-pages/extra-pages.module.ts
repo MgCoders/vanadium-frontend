@@ -43,6 +43,10 @@ import { Page500Component } from './500/500.component';
 import { PageConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { PageLockScreenComponent } from './lock-screen/lock-screen.component';
 import { PageMaintenanceComponent } from './maintenance/maintenance.component';
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -78,6 +82,8 @@ import { PageMaintenanceComponent } from './maintenance/maintenance.component';
     MatToolbarModule,
     MatTooltipModule,
     MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     PageLoginComponent,

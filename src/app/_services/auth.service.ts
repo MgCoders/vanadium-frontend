@@ -7,39 +7,35 @@ import {
 } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
+import 'rxjs/Rx';
+
+export const TOKEN_NAME: string = 'jwt_token';
 
 @Injectable()
 export class AuthService {
 
-  public token: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  private jwt = new JwtHelper();
 
-  constructor(private http: Http) {
-    // set token if saved in local storage
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.token = currentUser && currentUser.token;
+  constructor(private http: Http) {}
+
+  getToken(): string {
+    return localStorage.getItem(TOKEN_NAME);
   }
 
-  /*login(username: string, password: string): Observable<boolean> {
-    return this.http.post('/api/authenticate', JSON.stringify({ username: username, password: password }))
-      .map((response: Response) => {
-        // login successful if there's a jwt token in the response
-        let token = response.json() && response.json().token;
-        if (token) {
-          // set token property
-          this.token = token;
+  setToken(token: string): void {
+    localStorage.setItem(TOKEN_NAME, token);
+  }
 
-          // store username and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
+  public isAuthenticated(): boolean {
+    console.log('is auth?');
+    // get the token
+    const token = this.getToken();
+    // return a boolean reflecting
+    // whether or not the token is expired
+    console.log((token != null) && !this.jwt.isTokenExpired(token));
+    return (token != null) && !this.jwt.isTokenExpired(token);
+  }
 
-          // return true to indicate successful login
-          return true;
-        } else {
-          // return false to indicate failed login
-          return false;
-        }
-      });
-  }*/
 
   login(email: string, password: string): Observable<boolean> {
     const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
@@ -53,11 +49,10 @@ export class AuthService {
         const token = response.json() && response.json().token;
         if (token) {
           // set token property
-          this.token = token;
-          const role = this.jwtHelper.decodeToken(token).role;
+          const role = this.jwt.decodeToken(token).role;
           // store username and jwt token in local storage to keep user logged in between page refreshes
-          sessionStorage.setItem('token', token.split(' ')[1]);
-          sessionStorage.setItem('currentUser', JSON.stringify({email, role, token}));
+          this.setToken(token);
+          localStorage.setItem('currentUser', JSON.stringify({email, role, token}));
           // return true to indicate successful login
           return true;
         } else {
@@ -69,8 +64,8 @@ export class AuthService {
 
   logout(): void {
     // clear token remove user from local storage to log user out
-    this.token = null;
     localStorage.removeItem('currentUser');
+    localStorage.removeItem(TOKEN_NAME);
   }
 
 }

@@ -73,6 +73,11 @@ import { SharedModule } from './shared/shared.module';
 // hmr
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { UserService } from './_services/user.service';
+import { TokenInterceptor } from './_interceptors/token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { AuthService } from './_services/auth.service';
+import { AuthGuard } from './_guards/auth.guard';
 
 @NgModule({
   imports: [
@@ -147,7 +152,21 @@ import { UserService } from './_services/user.service';
     PageLayoutFullscreenComponent,
   ],
   bootstrap: [AppComponent],
-  providers: [UserService]
+  providers: [
+    AuthService,
+    UserService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
+  ]
 })
 
 export class AppModule {
