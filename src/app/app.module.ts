@@ -72,6 +72,7 @@ import { SharedModule } from './shared/shared.module';
 
 // hmr
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
+import { UserService } from './_services/user.service';
 
 @NgModule({
   imports: [
@@ -145,7 +146,8 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
     // Pages
     PageLayoutFullscreenComponent,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [UserService]
 })
 
 export class AppModule {

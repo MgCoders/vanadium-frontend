@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../../_services/user.service';
 
 @Component({
   selector: 'my-page-login',
@@ -6,4 +7,8 @@ import { Component } from '@angular/core';
   templateUrl: './login.component.html'
 })
 
-export class PageLoginComponent {}
+export class PageLoginComponent {
+
+  constructor(private _userService: UserService) {
+  }
+}
