@@ -74,7 +74,10 @@ import { SharedModule } from './shared/shared.module';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { UserService } from './_services/user.service';
 import { TokenInterceptor } from './_interceptors/token.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule
+} from '@angular/common/http';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
@@ -83,6 +86,7 @@ import { AuthGuard } from './_guards/auth.guard';
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
