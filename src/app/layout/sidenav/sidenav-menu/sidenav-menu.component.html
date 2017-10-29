@@ -3,6 +3,13 @@
   <li><a mat-button [routerLink]="['/app/dashboard']"><i class="nav-icon material-icons">home</i><span class="nav-text">Dashboard</span></a></li>
   <li><a mat-button href="javascript:;" myToggleQuickview="customizer"><i class="nav-icon material-icons">settings</i><span class="nav-text">Customizer</span></a></li>
   <li>
+    <a mat-button href="#/app/proyectos"><i class="nav-icon material-icons">equalizer</i><span class="nav-text">Proyectos</span></a>
+    <ul>
+      <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/proyectos/alta']">Alta</a></li>
+      <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/proyectos/ver']">Ver</a></li>
+    </ul>
+  </li>
+  <li>
     <a mat-button href="#/app/ui"><i class="nav-icon material-icons">bubble_chart</i><span class="nav-text">UI Kit</span></a>
     <ul>
       <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/ui/typography']"><span>Typography</span></a></li>
