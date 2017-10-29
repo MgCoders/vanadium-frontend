@@ -21,8 +21,10 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(request).do((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
         // do stuff with response if you want
+        console.log(event);
       }
     }, (err: any) => {
+      console.log(err);
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
           // redirect to the login route

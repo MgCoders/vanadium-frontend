@@ -58,10 +58,14 @@ export class AuthService {
           // return true to indicate successful login
           return true;
         } else {
-          // return false to indicate failed login
-          return false;
+          this.handleErrorObservable(response);
         }
-      });
+      })
+      .catch(this.handleErrorObservable);
+  }
+
+  private handleErrorObservable(error: Response | any) {
+    return Observable.throw(error.message || error);
   }
 
   logout(): void {

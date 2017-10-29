@@ -24,7 +24,6 @@ import {
 export class PageLoginComponent implements OnInit {
 
   model: any = {};
-  loading = false;
   returnUrl: string;
 
   validationForm: FormGroup;
@@ -61,23 +60,24 @@ export class PageLoginComponent implements OnInit {
         if (result === true) {
           this.router.navigate([this.returnUrl]);
           console.log('LOGINA!');
-        } else {
-          this.openSnackBar('Username or password is incorrect', 'Ok')   ;
-          this.loading = false;
-          this.onResetForm();
         }
-      });
+      } ,
+      (err) => {
+        console.log('NO LOG');
+        this.openSnackBar(err, 'Ok')   ;
+        this.onResetForm();
+    });
   }
 
   // SnackBar
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4000,
     });
   }
 
   onResetForm() {
-    this.validationForm.reset();
     this.formSubmitted = false;
+    this.validationForm.reset();
   }
 }
