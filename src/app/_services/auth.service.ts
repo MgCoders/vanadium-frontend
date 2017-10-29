@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
 import 'rxjs/Rx';
+import { environment } from '../../environments/environment';
 
 export const TOKEN_NAME: string = 'jwt_token';
 
@@ -43,7 +44,8 @@ export class AuthService {
     const body = new URLSearchParams();
     body.set('email', email);
     body.set('password', password);
-    return this.http.post('http://localhost:8080/sulfur/api/users/login', body.toString(), options)
+    const url = `${environment.apiUrl}/users/login`;
+    return this.http.post(url, body.toString(), options)
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         const token = response.json() && response.json().token;

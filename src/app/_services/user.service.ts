@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class UserService {
@@ -8,7 +9,8 @@ export class UserService {
 
   public ping() {
     console.log('ping');
-    this.http.get('http://localhost:8080/sulfur/api/users/')
+    const url = `${environment.apiUrl}/users/`;
+    this.http.get(url)
       .subscribe(
         data => console.log(data),
         err => console.log(err)
