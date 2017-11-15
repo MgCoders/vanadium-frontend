@@ -28,3 +28,4 @@ documentation/*.html
 # misc
 .env
 /node_modules/
+.idea/
