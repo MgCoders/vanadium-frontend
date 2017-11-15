@@ -42,6 +42,7 @@ import { FormAutocompleteComponent } from './autocomplete/autocomplete.component
 import { FormCheckboxComponent } from './checkbox/checkbox.component';
 import { FormChipsComponent } from './chips/chips.component';
 import { FormDatepickerComponent } from './datepicker/datepicker.component';
+import { FormExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { FormInputComponent } from './input/input.component';
 import { FormRadioButtonComponent } from './radio-button/radio-button.component';
 import { FormSelectComponent } from './select/select.component';
@@ -96,6 +97,7 @@ import { FormValidationComponent } from './validation/validation.component';
     FormCheckboxComponent,
     FormChipsComponent,
     FormDatepickerComponent,
+    FormExpansionPanelComponent,
     FormInputComponent,
     FormRadioButtonComponent,
     FormSelectComponent,

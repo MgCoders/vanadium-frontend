@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material';
 // openDialogWithAResult
 @Component({
   selector: 'dialog-result-example-dialog',
-  template: `<h1 md-dialog-title>Dialog</h1>
+  template: `<h1 md-dialog-title style="font-size: 20px;">Dialog</h1>
     <div md-dialog-content style="padding-bottom: 20px;">What would you like to do?</div>
     <div md-dialog-actions>
       <button mat-button (click)="dialogRef.close('Option 1')">Option 1</button>

@@ -22,7 +22,7 @@ export const ExtraPagesRoutes: Routes = [
       { path: '500', component: Page500Component },
       { path: 'confirm-email', component: PageConfirmEmailComponent },
       { path: 'lock-screen', component: PageLockScreenComponent },
-      { path: 'maintenance', component: PageMaintenanceComponent, canActivate: [AuthGuard] },
+      { path: 'maintenance', component: PageMaintenanceComponent },
     ]
   }
 ];
