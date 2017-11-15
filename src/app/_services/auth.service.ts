@@ -7,6 +7,7 @@ import {
 } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
+import 'rxjs/Rx';
 import { environment } from '../../environments/environment';
 
 export const TOKEN_NAME: string = 'jwt_token';
