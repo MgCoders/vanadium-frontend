@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
 import 'rxjs/Rx';
 import { environment } from '../../environments/environment';
+import { Colaborador } from '../_models/Colaborador';
 
 export const TOKEN_NAME: string = 'jwt_token';
 
@@ -48,13 +49,13 @@ export class AuthService {
     return this.http.post(url, body.toString(), options)
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
-        const token = response.json() && response.json().token;
-        if (token) {
+        const colaborador: Colaborador = response.json();
+        if (colaborador.token) {
           // set token property
-          const role = this.jwt.decodeToken(token).role;
+          const role = this.jwt.decodeToken(colaborador.token).role;
           // store username and jwt token in local storage to keep user logged in between page refreshes
-          this.setToken(token);
-          localStorage.setItem('currentUser', JSON.stringify({email, role, token}));
+          this.setToken(colaborador.token);
+          localStorage.setItem('currentUser', JSON.stringify(colaborador));
           // return true to indicate successful login
           return true;
         } else {
