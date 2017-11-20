@@ -11,6 +11,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'proyectos', loadChildren: '../proyectos/proyectos.module#ProyectosModule' },
+      { path: 'cargos', loadChildren: '../cargos/cargos.module#CargosModule' },
       { path: 'chart', loadChildren: '../charts/charts.module#ChartsModule' },
       { path: 'form', loadChildren: '../forms/forms.module#MyFormsModule' },
       { path: 'page', loadChildren: '../pages/pages.module#PagesModule' },
