@@ -12,8 +12,8 @@ export class UserService {
     const url = `${environment.apiUrl}/users/`;
     this.http.get(url)
       .subscribe(
-        data => console.log(data),
-        err => console.log(err)
+      data => console.log(data),
+      err => console.log(err)
       );
   }
 
