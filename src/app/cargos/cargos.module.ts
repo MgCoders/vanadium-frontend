@@ -26,6 +26,9 @@ import { SelectCargoComponent } from './select-cargo/select-cargo.component';
     MatSelectModule,
     MatTooltipModule,
   ],
+  exports: [
+    SelectCargoComponent,
+  ],
   declarations: [CargosComponent, ListaCargosComponent, AltaCargoComponent, SelectCargoComponent]
 })
 export class CargosModule { }

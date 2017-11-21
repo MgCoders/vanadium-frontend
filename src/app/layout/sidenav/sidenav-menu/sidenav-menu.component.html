@@ -10,10 +10,17 @@
     </ul> 
   </li>
   <li>
-      <a mat-button href="#/app/tareas"><i class="nav-icon material-icons">settings</i><span class="nav-text">Tareas</span></a>
+    <a mat-button href="#/app/tareas"><i class="nav-icon material-icons">settings</i><span class="nav-text">Tareas</span></a>
+    <ul>
+      <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/tareas/lista']">Lista</a></li>
+      <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/tareas/alta']">Alta</a></li>      
+    </ul> 
+  </li>
+  <li>
+      <a mat-button href="#/app/colaboradores"><i class="nav-icon material-icons">accessibility</i><span class="nav-text">Colaboradores</span></a>
       <ul>
-        <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/tareas/lista']">Lista</a></li>
-        <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/tareas/alta']">Alta</a></li>      
+        <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/colaboradores/lista']">Lista</a></li>
+        <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/colaboradores/alta']">Alta</a></li>      
       </ul> 
     </li>
   <li>
