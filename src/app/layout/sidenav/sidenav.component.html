@@ -25,7 +25,13 @@
         </g>
       </g>
     </svg>-->
-    <a [routerLink]="['/']" class="brand">{{AppConfig.brand}}</a>
+    <div class="brand">
+      <a [routerLink]="['/']">
+        <img class="img-fluid" style="max-width: 65%" src="{{AppConfig.brandLogoUrl}}" alt="{{AppConfig.brand}}">
+      </a>
+      <!--<h2><a [routerLink]="['/']">{{AppConfig.brand}}</a></h2>-->
+    </div>
+    <!--<a [routerLink]="['/']" class="brand">{{AppConfig.brand}}</a>-->
     <a href="javascript:;" class="collapsednav-toggler" (click)="toggleCollapsedNav()">
       <i class="material-icons" *ngIf="this.AppConfig.navCollapsed">radio_button_unchecked</i>
       <i class="material-icons" *ngIf="!this.AppConfig.navCollapsed">radio_button_checked</i>
