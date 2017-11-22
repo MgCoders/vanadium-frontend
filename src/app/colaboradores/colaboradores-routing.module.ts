@@ -10,8 +10,8 @@ export const ColaboradoresRoutes: Routes = [
     component: ColaboradoresComponent,
     children: [
       { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
-      { path: 'lista', component: ListaColaboradoresComponent },
-      { path: 'alta', component: AltaColaboradorComponent },
+      { path: 'listacolaboradores', component: ListaColaboradoresComponent },
+      { path: 'altacolaborador', component: AltaColaboradorComponent },
     ]
   }
 ];
