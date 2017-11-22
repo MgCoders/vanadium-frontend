@@ -11,5 +11,4 @@ export class SelectCargoComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

@@ -5,7 +5,7 @@
     
         <div class="row">
           <div class="col-12" >
-            <a matTooltip="Volver a la Lista de Cargos" matTooltipPosition="above" mat-icon-button color="primary" [routerLink]="['/app/colaboradores/lista']">
+            <a matTooltip="Volver a la Lista de Cargos" matTooltipPosition="above" mat-icon-button color="primary" [routerLink]="['/app/colaboradores/listacolaboradores']">
               <mat-icon class="material-icons">reorder</mat-icon>
             </a>
           </div>
@@ -28,7 +28,7 @@
               </div>
               <div class="row">     
                   <div class="col-12 col-sm-6">
-                      <!-- <app-select-cargo></app-select-cargo> -->
+                      <app-select-cargo></app-select-cargo>
                     </div>       
                   <div class="col-12 col-sm-6">
                       <button mat-raised-button color="accent" class="btn-w-md">Guardar</button>
