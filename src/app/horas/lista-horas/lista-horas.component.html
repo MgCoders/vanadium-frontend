@@ -1,0 +1,132 @@
+<section class="container-fluid with-maxwidth chapter">
+  <article class="article">
+    <div class="row">
+      <h2 class="article-title padding-top-30 col-12 col-sm-6">Horas</h2>
+    </div>
+
+    <article class="article">
+      <div class="box box-default">
+        <div class="box-body row">
+          <div class="col-12 col-sm-2">
+            <app-select-colaborador></app-select-colaborador>
+          </div>
+          <div class="col-12 col-sm-2">
+            <app-select-proyecto></app-select-proyecto>
+          </div>
+          <div class="col-12 col-sm-2">
+            <app-select-tarea></app-select-tarea>
+          </div>
+          <div class="col-12 col-sm-1">
+            <mat-form-field class="full-width">
+              <input class="full-width" matInput [matDatepicker]="picker" placeholder="Día">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="HH - Desde" value="15">
+            </mat-input-container>
+          </div>
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="MM - Desde" value="30">
+            </mat-input-container>
+          </div>
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="HH - Hasta" value="15">
+            </mat-input-container>
+          </div>
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="MM - Hasta" value="30">
+            </mat-input-container>
+          </div>
+          <div class="col-12 col-sm-1">
+            <button mat-icon-button color="accent">
+              <mat-icon class="material-icons">play_arrow</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+      <table class="mdl-data-table">
+        <thead>
+          <tr>
+            <th class="text-primary text-large">23/11/2017</th>
+            <th></th>
+            <th></th>
+            <th></th>            
+            <th class="text-primary text-large">9 hs. 30m.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Proyecto 1</td>
+            <td>Tarea 1</td>
+            <td>09:00</td>
+            <td>16:00</td>
+            <td>7 hs.</td>
+            <td>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
+                <mat-icon class="material-icons">mode_edit</mat-icon>
+              </a>
+              <button mat-icon-button color="warn">
+                <mat-icon class="material-icons">delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Proyecto 1</td>
+            <td>Tarea 2</td>
+            <td>16:00</td>
+            <td>18:30</td>
+            <td>2 hs. 30m.</td>
+            <td>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
+                <mat-icon class="material-icons">mode_edit</mat-icon>
+              </a>
+              <button mat-icon-button color="warn">
+                <mat-icon class="material-icons">delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="mdl-data-table">
+          <thead>
+            <tr>
+              <th class="text-primary text-large">20/11/2017</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="text-primary text-large">6 hs. 30m.</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Proyecto 2</td>
+              <td>Tarea 1</td>
+              <td>10:30</td>
+              <td>17:00</td>
+              <td>6 hs. 30m.</td>
+              <td>
+                <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
+                  <mat-icon class="material-icons">mode_edit</mat-icon>
+                </a>
+                <button mat-icon-button color="warn">
+                  <mat-icon class="material-icons">delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </article>
+</section>

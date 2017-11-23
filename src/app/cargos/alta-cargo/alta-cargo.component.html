@@ -1,0 +1,44 @@
+<section class="container-fluid with-maxwidth chapter">
+
+  <article class="article">
+    <h2 class="article-title">Cargo</h2>
+
+    <div class="row">
+      <div class="col-12" >
+        <a matTooltip="Volver a la Lista de Cargos" matTooltipPosition="above" mat-icon-button color="primary" [routerLink]="['/app/cargos/lista']">
+          <mat-icon class="material-icons">reorder</mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <div class="box box-default">
+      <div class="box-body">
+        <form>
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <mat-input-container class="full-width">
+                <input matInput placeholder="Nombre" value="Dibujante">
+              </mat-input-container>
+            </div>
+            <div class="col-12 col-sm-6">
+                <mat-input-container class="full-width">
+                  <input matInput placeholder="Código" value="DI">
+                </mat-input-container>
+              </div>
+          </div>
+          <div class="row">     
+              <div class="col-12 col-sm-6">
+                  <mat-input-container class="full-width">
+                    <input matInput placeholder="Precio/Hora" value="15">
+                  </mat-input-container>
+                </div>       
+              <div class="col-12 col-sm-6">
+                  <button mat-raised-button color="accent" class="btn-w-md">Guardar</button>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </article>
+</section>

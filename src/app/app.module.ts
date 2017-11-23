@@ -121,7 +121,7 @@ import { AuthGuard } from './_guards/auth.guard';
     MatToolbarModule,
     MatTooltipModule,
     AppRoutingModule,
-
+    
     // Sub modules
     LayoutModule,
     SharedModule,

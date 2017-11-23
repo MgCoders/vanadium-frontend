@@ -1,7 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
-
+import { ListaProyectosComponent } from './lista-proyectos/lista-proyectos.component';
 import { AltaProyectoComponent } from './alta-proyecto/alta-proyecto.component';
-import { VerProyectosComponent } from './ver-proyectos/ver-proyectos.component';
 import { ProyectosComponent } from './proyectos.component';
 
 export const ProyectosRoutes: Routes = [
@@ -10,8 +9,8 @@ export const ProyectosRoutes: Routes = [
     component: ProyectosComponent,
     children: [
       { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
+      { path: 'lista', component: ListaProyectosComponent },
       { path: 'alta', component: AltaProyectoComponent },
-      { path: 'ver', component: VerProyectosComponent },
     ]
   }
 ];

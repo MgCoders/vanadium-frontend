@@ -86,6 +86,7 @@
     font-size: $data-table-header-font-size;
     color: $data-table-header-color;
     padding-bottom: 8px;
+    padding-top: 8px;
     box-sizing: border-box;
 
     &.mdl-data-table__header--sorted-ascending,

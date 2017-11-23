@@ -1,0 +1,81 @@
+<section class="container-fluid with-maxwidth chapter">
+  <article class="article">
+    <div class="row">
+      <h2 class="article-title padding-top-30 col-12 col-sm-6">Cargos</h2>
+      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
+          <a mat-raised-button color="accent" class="btn-w-md" [routerLink]="['/app/cargos/alta']">Crear Cargo</a>
+      </div>
+    </div>    
+    
+    <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+      <table class="mdl-data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th class="mdl-data-table__cell--non-numeric">Nombre</th>
+            <th class="mdl-data-table__cell--non-numeric">Código</th>
+            <th class="mdl-data-table__cell--non-numeric">Precio/Hora</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="mdl-data-table__cell--non-numeric">Dibujante</td>
+            <td class="mdl-data-table__cell--non-numeric">DI</td>
+            <td class="mdl-data-table__cell--non-numeric">15</td>
+            <td>
+              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">visibility</mat-icon></a>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">mode_edit</mat-icon></a>
+              <button mat-icon-button color="warn"><mat-icon class="material-icons">delete</mat-icon></button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="mdl-data-table__cell--non-numeric">Junior A</td>
+            <td class="mdl-data-table__cell--non-numeric">JA</td>
+            <td class="mdl-data-table__cell--non-numeric">17</td>
+            <td>
+              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">visibility</mat-icon></a>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">mode_edit</mat-icon></a>
+              <button mat-icon-button color="warn"><mat-icon class="material-icons">delete</mat-icon></button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="mdl-data-table__cell--non-numeric">Junior B</td>
+            <td class="mdl-data-table__cell--non-numeric">JB</td>
+            <td class="mdl-data-table__cell--non-numeric">19</td>
+            <td>
+              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">visibility</mat-icon></a>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">mode_edit</mat-icon></a>
+              <button mat-icon-button color="warn"><mat-icon class="material-icons">delete</mat-icon></button>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="mdl-data-table__cell--non-numeric">Senior</td>
+            <td class="mdl-data-table__cell--non-numeric">SE</td>
+            <td class="mdl-data-table__cell--non-numeric">20</td>
+            <td>
+              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">visibility</mat-icon></a>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">mode_edit</mat-icon></a>
+              <button mat-icon-button color="warn"><mat-icon class="material-icons">delete</mat-icon></button>
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="mdl-data-table__cell--non-numeric">Proyect Manager</td>
+            <td class="mdl-data-table__cell--non-numeric">PM</td>
+            <td class="mdl-data-table__cell--non-numeric">25</td>
+            <td>
+              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">visibility</mat-icon></a>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">mode_edit</mat-icon></a>
+              <button mat-icon-button color="warn"><mat-icon class="material-icons">delete</mat-icon></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</section>
