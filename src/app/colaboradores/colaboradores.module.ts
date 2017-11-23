@@ -27,6 +27,7 @@ import {
     MatTooltipModule,
     CargosModule,
   ],
-  declarations: [ColaboradoresComponent, ListaColaboradoresComponent, AltaColaboradorComponent, SelectColaboradorComponent]
+  declarations: [ColaboradoresComponent, ListaColaboradoresComponent, AltaColaboradorComponent, SelectColaboradorComponent],
+  exports:[SelectColaboradorComponent]
 })
 export class ColaboradoresModule { }
