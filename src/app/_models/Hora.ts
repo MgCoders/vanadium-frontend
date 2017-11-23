@@ -15,13 +15,13 @@ import * as models from './models';
 export interface Hora {
     id?: number;
 
-    dia: models.LocalDate;
+    dia: Date;
 
-    horaIn: models.LocalTime;
+    horaIn: Date;
 
-    horaOut: models.LocalTime;
+    horaOut: Date;
 
-    subtotal?: models.LocalTime;
+    subtotal?: Date;
 
     proyecto: models.Proyecto;
 
