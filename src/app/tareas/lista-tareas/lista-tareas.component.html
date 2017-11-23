@@ -1,17 +1,20 @@
 <section class="container-fluid with-maxwidth chapter">
   <article class="article">
-    <h2 class="article-title">Tareas</h2>
+
+    <div class="row">
+      <h2 class="article-title padding-top-30 col-12 col-sm-6">Tareas</h2>
+      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
+        <a mat-raised-button color="accent" class="btn-w-md" [routerLink]="['/app/tareas/alta']">Crear Tarea</a>
+      </div>
+    </div>
+
     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
       <table class="mdl-data-table">
         <thead>
           <tr>
             <th>#</th>
             <th class="mdl-data-table__cell--non-numeric">Descripción</th>
-            <th>
-              <a matTooltip="Crear una nueva Tarea" matTooltipPosition="above" mat-mini-fab color="primary" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">add</mat-icon>
-              </a>
-            </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

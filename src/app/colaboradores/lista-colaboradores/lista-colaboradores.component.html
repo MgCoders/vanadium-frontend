@@ -1,49 +1,64 @@
 <section class="container-fluid with-maxwidth chapter">
-    <article class="article">
-      <h2 class="article-title">Colaboradores</h2>
-      <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-        <table class="mdl-data-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th class="mdl-data-table__cell--non-numeric">Nombre</th>
-              <th class="mdl-data-table__cell--non-numeric">E-mail</th>
-              <th class="mdl-data-table__cell--non-numeric">Cargo</th>
-              <th class="mdl-data-table__cell--non-numeric">Role</th>
-              <th>
-                <a matTooltip="Crear un nuevo Colaborador" matTooltipPosition="above" mat-mini-fab color="primary" [routerLink]="['/app/colaboradores/altacolaborador']">
-                  <mat-icon class="material-icons">add</mat-icon>
-                </a>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td class="mdl-data-table__cell--non-numeric">Apellido1, Nombre1</td>
-              <td class="mdl-data-table__cell--non-numeric">n1apellido1@gmail.com</td>
-              <td class="mdl-data-table__cell--non-numeric">Dibujante</td>
-              <td class="mdl-data-table__cell--non-numeric">Role1</td>
-              <td>
-                <a mat-icon-button color="accent" [routerLink]="['/app/colaboradores/altacolaborador']"><mat-icon class="material-icons">visibility</mat-icon></a>
-                <a mat-icon-button color="primary" [routerLink]="['/app/colaboradores/altacolaborador']"><mat-icon class="material-icons">mode_edit</mat-icon></a>
-                <button mat-icon-button color="warn"><mat-icon class="material-icons">delete</mat-icon></button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td class="mdl-data-table__cell--non-numeric">Apellido2, Nombre2</td>
-              <td class="mdl-data-table__cell--non-numeric">n2apellido2@gmail.com</td>
-              <td class="mdl-data-table__cell--non-numeric">Junior A</td>
-              <td class="mdl-data-table__cell--non-numeric">Role2</td>
-              <td>
-                <a mat-icon-button color="accent" [routerLink]="['/app/colaboradores/altacolaborador']"><mat-icon class="material-icons">visibility</mat-icon></a>
-                <a mat-icon-button color="primary" [routerLink]="['/app/colaboradores/altacolaborador']"><mat-icon class="material-icons">mode_edit</mat-icon></a>
-                <button mat-icon-button color="warn"><mat-icon class="material-icons">delete</mat-icon></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <article class="article">
+
+    <div class="row">
+      <h2 class="article-title padding-top-30 col-12 col-sm-6">Colaboradores</h2>
+      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
+        <a mat-raised-button color="accent" class="btn-w-md" [routerLink]="['/app/colaboradores/altacolaborador']">Crear Colaborador</a>
       </div>
-    </article>
-  </section>
+    </div>
+
+    <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+      <table class="mdl-data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th class="mdl-data-table__cell--non-numeric">Nombre</th>
+            <th class="mdl-data-table__cell--non-numeric">E-mail</th>
+            <th class="mdl-data-table__cell--non-numeric">Cargo</th>
+            <th class="mdl-data-table__cell--non-numeric">Role</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="mdl-data-table__cell--non-numeric">Apellido1, Nombre1</td>
+            <td class="mdl-data-table__cell--non-numeric">n1apellido1@gmail.com</td>
+            <td class="mdl-data-table__cell--non-numeric">Dibujante</td>
+            <td class="mdl-data-table__cell--non-numeric">Role1</td>
+            <td>
+              <a mat-icon-button color="accent" [routerLink]="['/app/colaboradores/altacolaborador']">
+                <mat-icon class="material-icons">visibility</mat-icon>
+              </a>
+              <a mat-icon-button color="primary" [routerLink]="['/app/colaboradores/altacolaborador']">
+                <mat-icon class="material-icons">mode_edit</mat-icon>
+              </a>
+              <button mat-icon-button color="warn">
+                <mat-icon class="material-icons">delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="mdl-data-table__cell--non-numeric">Apellido2, Nombre2</td>
+            <td class="mdl-data-table__cell--non-numeric">n2apellido2@gmail.com</td>
+            <td class="mdl-data-table__cell--non-numeric">Junior A</td>
+            <td class="mdl-data-table__cell--non-numeric">Role2</td>
+            <td>
+              <a mat-icon-button color="accent" [routerLink]="['/app/colaboradores/altacolaborador']">
+                <mat-icon class="material-icons">visibility</mat-icon>
+              </a>
+              <a mat-icon-button color="primary" [routerLink]="['/app/colaboradores/altacolaborador']">
+                <mat-icon class="material-icons">mode_edit</mat-icon>
+              </a>
+              <button mat-icon-button color="warn">
+                <mat-icon class="material-icons">delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</section>

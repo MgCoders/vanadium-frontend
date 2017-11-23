@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'cargos', loadChildren: '../cargos/cargos.module#CargosModule' },
       { path: 'tareas', loadChildren: '../tareas/tareas.module#TareasModule' },
       { path: 'colaboradores', loadChildren: '../colaboradores/colaboradores.module#ColaboradoresModule' },
+      { path: 'proyectos', loadChildren: '../proyectos/proyectos.module#ProyectosModule' },
       { path: 'chart', loadChildren: '../charts/charts.module#ChartsModule' },
       { path: 'form', loadChildren: '../forms/forms.module#MyFormsModule' },
       { path: 'page', loadChildren: '../pages/pages.module#PagesModule' },

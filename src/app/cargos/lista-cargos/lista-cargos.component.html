@@ -1,6 +1,12 @@
 <section class="container-fluid with-maxwidth chapter">
   <article class="article">
-    <h2 class="article-title" style="padding-top: 30px;">Cargos</h2>
+    <div class="row">
+      <h2 class="article-title padding-top-30 col-12 col-sm-6">Cargos</h2>
+      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
+          <a mat-raised-button color="accent" class="btn-w-md" [routerLink]="['/app/cargos/alta']">Crear Cargo</a>
+      </div>
+    </div>    
+    
     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
       <table class="mdl-data-table">
         <thead>
@@ -9,11 +15,7 @@
             <th class="mdl-data-table__cell--non-numeric">Nombre</th>
             <th class="mdl-data-table__cell--non-numeric">Código</th>
             <th class="mdl-data-table__cell--non-numeric">Precio/Hora</th>
-            <th>
-              <a matTooltip="Crear un nuevo Cargo" matTooltipPosition="above" mat-mini-fab color="primary" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">add</mat-icon>
-              </a>
-            </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
