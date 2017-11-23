@@ -25,6 +25,7 @@ import { TareasRoutingModule } from './tareas-routing.module';
     MatSelectModule,
     MatTooltipModule
   ],
-  declarations: [TareasComponent, ListaTareasComponent, SelectTareaComponent, AltaTareaComponent]
+  declarations: [TareasComponent, ListaTareasComponent, SelectTareaComponent, AltaTareaComponent],
+  exports: [SelectTareaComponent]
 })
 export class TareasModule { }

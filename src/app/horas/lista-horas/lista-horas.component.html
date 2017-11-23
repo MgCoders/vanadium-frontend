@@ -8,26 +8,45 @@
       <div class="box box-default">
         <div class="box-body row">
           <div class="col-12 col-sm-2">
-              <app-select-colaborador></app-select-colaborador>
+            <app-select-colaborador></app-select-colaborador>
           </div>
           <div class="col-12 col-sm-2">
-              <mat-form-field class="full-width">
-                  <input class="full-width" matInput [matDatepicker]="picker" placeholder="Día">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+            <app-select-proyecto></app-select-proyecto>
           </div>
           <div class="col-12 col-sm-2">
-
+            <app-select-tarea></app-select-tarea>
           </div>
-          <div class="col-12 col-sm-2">
-
+          <div class="col-12 col-sm-1">
+            <mat-form-field class="full-width">
+              <input class="full-width" matInput [matDatepicker]="picker" placeholder="Día">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
-          <div class="col-12 col-sm-2">
-
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="HH - Desde" value="15">
+            </mat-input-container>
           </div>
-          <div class="col-12 col-sm-2">
-            
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="MM - Desde" value="30">
+            </mat-input-container>
+          </div>
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="HH - Hasta" value="15">
+            </mat-input-container>
+          </div>
+          <div class="col-6 col-sm-1">
+            <mat-input-container class="full-width">
+              <input matInput placeholder="MM - Hasta" value="30">
+            </mat-input-container>
+          </div>
+          <div class="col-12 col-sm-1">
+            <button mat-icon-button color="accent">
+              <mat-icon class="material-icons">play_arrow</mat-icon>
+            </button>
           </div>
         </div>
       </div>
@@ -37,23 +56,22 @@
       <table class="mdl-data-table">
         <thead>
           <tr>
-            <th>#</th>
-            <th class="mdl-data-table__cell--non-numeric">Nombre</th>
-            <th class="mdl-data-table__cell--non-numeric">Código</th>
-            <th class="mdl-data-table__cell--non-numeric">Precio/Hora</th>
+            <th class="text-primary text-large">23/11/2017</th>
+            <th></th>
+            <th></th>
+            <th></th>            
+            <th class="text-primary text-large">9 hs. 30m.</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td class="mdl-data-table__cell--non-numeric">Dibujante</td>
-            <td class="mdl-data-table__cell--non-numeric">DI</td>
-            <td class="mdl-data-table__cell--non-numeric">15</td>
+            <td>Proyecto 1</td>
+            <td>Tarea 1</td>
+            <td>09:00</td>
+            <td>16:00</td>
+            <td>7 hs.</td>
             <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
               <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
               </a>
@@ -63,65 +81,12 @@
             </td>
           </tr>
           <tr>
-            <td>2</td>
-            <td class="mdl-data-table__cell--non-numeric">Junior A</td>
-            <td class="mdl-data-table__cell--non-numeric">JA</td>
-            <td class="mdl-data-table__cell--non-numeric">17</td>
+            <td>Proyecto 1</td>
+            <td>Tarea 2</td>
+            <td>16:00</td>
+            <td>18:30</td>
+            <td>2 hs. 30m.</td>
             <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td class="mdl-data-table__cell--non-numeric">Junior B</td>
-            <td class="mdl-data-table__cell--non-numeric">JB</td>
-            <td class="mdl-data-table__cell--non-numeric">19</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td class="mdl-data-table__cell--non-numeric">Senior</td>
-            <td class="mdl-data-table__cell--non-numeric">SE</td>
-            <td class="mdl-data-table__cell--non-numeric">20</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td class="mdl-data-table__cell--non-numeric">Proyect Manager</td>
-            <td class="mdl-data-table__cell--non-numeric">PM</td>
-            <td class="mdl-data-table__cell--non-numeric">25</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
               <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
               </a>
@@ -132,6 +97,36 @@
           </tr>
         </tbody>
       </table>
+
+      <table class="mdl-data-table">
+          <thead>
+            <tr>
+              <th class="text-primary text-large">20/11/2017</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="text-primary text-large">6 hs. 30m.</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Proyecto 2</td>
+              <td>Tarea 1</td>
+              <td>10:30</td>
+              <td>17:00</td>
+              <td>6 hs. 30m.</td>
+              <td>
+                <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
+                  <mat-icon class="material-icons">mode_edit</mat-icon>
+                </a>
+                <button mat-icon-button color="warn">
+                  <mat-icon class="material-icons">delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
     </div>
   </article>
 </section>

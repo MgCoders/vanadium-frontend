@@ -25,6 +25,7 @@ import {
     MatSelectModule,
     MatTooltipModule
   ],
-  declarations: [ProyectosComponent, AltaProyectoComponent, ListaProyectosComponent, SelectProyectoComponent]
+  declarations: [ProyectosComponent, AltaProyectoComponent, ListaProyectosComponent, SelectProyectoComponent],
+  exports: [SelectProyectoComponent]
 })
 export class ProyectosModule { }

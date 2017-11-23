@@ -11,10 +11,13 @@ import {
   MatSelectModule,
   MatTooltipModule,
   MatToolbarModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatSliderModule
 } from '@angular/material';
 
 import { ColaboradoresModule } from '../colaboradores/colaboradores.module';
+import { ProyectosModule } from '../proyectos/proyectos.module';
+import { TareasModule } from '../tareas/tareas.module';
 
 @NgModule({
   imports: [
@@ -28,7 +31,10 @@ import { ColaboradoresModule } from '../colaboradores/colaboradores.module';
     MatTooltipModule,
     MatToolbarModule,
     MatDatepickerModule,
-    ColaboradoresModule
+    MatSliderModule,
+    ColaboradoresModule,
+    ProyectosModule,
+    TareasModule
   ],
   declarations: [HorasComponent, ListaHorasComponent]
 })
