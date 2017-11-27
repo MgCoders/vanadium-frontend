@@ -17,11 +17,11 @@ export class ColaboradorService {
     return this.http.get<Colaborador>(`${environment.apiUrl}/colaboradores/` + id);
   }
 
-  createColaborador(colaborador: Colaborador): Observable<Colaborador> {
+  createColaborador(colaborador: Colaborador): Observable<any> {
     return this.http.post(`${environment.apiUrl}/colaboradores/`, colaborador);
   }
 
-  editColaborador(colaborador: Colaborador): Observable<Colaborador> {
+  editColaborador(colaborador: Colaborador): Observable<any> {
         return this.http.put(`${environment.apiUrl}/colaboradores/` + colaborador.id, colaborador);
   }
 

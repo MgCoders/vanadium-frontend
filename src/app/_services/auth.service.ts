@@ -45,23 +45,19 @@ export class AuthService {
     body.set('email', email);
     body.set('password', password);
     const url = `${environment.apiUrl}/users/login`;
-    this.http.post(url, body.toString(), options)
-      .map((response: Response) => {
-        // login successful if there's a jwt token in the response
-        const colaborador: Colaborador = response.json();
-        if (colaborador.token) {
-          // set token property
-          const role = this.jwt.decodeToken(colaborador.token).role;
-          // store username and jwt token in local storage to keep user logged in between page refreshes
-          this.setToken(colaborador.token);
-          localStorage.setItem('currentUser', JSON.stringify(colaborador));
-          // return true to indicate successful login
-          return true;
-        } else {
-          this.handleErrorObservable(response);
-        }
-      });
-    return Observable.of(false);
+    return this.http.post(url, body.toString(), options)
+        .map((response: Response) => {
+          // login successful if there's a jwt token in the response
+          const user: Colaborador = response.json();
+          console.log(user);
+          if (user && user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            // return true to indicate successful login
+            return true;
+          } else {
+            this.handleErrorObservable(response);
+          }
+        });
   }
 
   private handleErrorObservable(error: Response | any) {

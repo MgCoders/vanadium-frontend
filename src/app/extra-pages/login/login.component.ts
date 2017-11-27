@@ -2,7 +2,7 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { UserService } from '../../_services/colaborador.service';
+import { ColaboradorService } from '../../_services/colaborador.service';
 import { AuthService } from '../../_services/auth.service';
 import {
   ActivatedRoute,
@@ -71,9 +71,7 @@ export class PageLoginComponent implements OnInit {
 
   // SnackBar
   openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 4000,
-    });
+    this.snackBar.open(message, action);
   }
 
   onResetForm() {
