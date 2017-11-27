@@ -72,7 +72,7 @@ import { SharedModule } from './shared/shared.module';
 
 // hmr
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
-import { UserService } from './_services/user.service';
+import { ColaboradorService } from './_services/colaborador.service';
 import { TokenInterceptor } from './_interceptors/token.interceptor';
 import {
   HTTP_INTERCEPTORS,
@@ -158,7 +158,7 @@ import { AuthGuard } from './_guards/auth.guard';
   bootstrap: [AppComponent],
   providers: [
     AuthService,
-    UserService,
+    ColaboradorService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

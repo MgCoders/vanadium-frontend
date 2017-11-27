@@ -2,7 +2,7 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { UserService } from '../../_services/user.service';
+import { UserService } from '../../_services/colaborador.service';
 import { AuthService } from '../../_services/auth.service';
 import {
   ActivatedRoute,

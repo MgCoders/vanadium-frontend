@@ -21,12 +21,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td class="mdl-data-table__cell--non-numeric">Apellido1, Nombre1</td>
-            <td class="mdl-data-table__cell--non-numeric">n1apellido1@gmail.com</td>
-            <td class="mdl-data-table__cell--non-numeric">Dibujante</td>
-            <td class="mdl-data-table__cell--non-numeric">Role1</td>
+          <tr *ngFor="let col of colaboradores">
+            <td>col.id</td>
+            <td class="mdl-data-table__cell--non-numeric">col.nombre</td>
+            <td class="mdl-data-table__cell--non-numeric">col.email</td>
+            <td class="mdl-data-table__cell--non-numeric">col.cargo.nombre</td>
+            <td class="mdl-data-table__cell--non-numeric">col.role</td>
             <td>
               <a mat-icon-button color="accent" [routerLink]="['/app/colaboradores/altacolaborador']">
                 <mat-icon class="material-icons">visibility</mat-icon>

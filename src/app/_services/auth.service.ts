@@ -38,7 +38,6 @@ export class AuthService {
     return (token != null) && !this.jwt.isTokenExpired(token);
   }
 
-
   login(email: string, password: string): Observable<boolean> {
     const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     const options = new RequestOptions({headers});
@@ -46,7 +45,7 @@ export class AuthService {
     body.set('email', email);
     body.set('password', password);
     const url = `${environment.apiUrl}/users/login`;
-    return this.http.post(url, body.toString(), options)
+    this.http.post(url, body.toString(), options)
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         const colaborador: Colaborador = response.json();
@@ -61,8 +60,8 @@ export class AuthService {
         } else {
           this.handleErrorObservable(response);
         }
-      })
-      .catch(this.handleErrorObservable);
+      });
+    return Observable.of(false);
   }
 
   private handleErrorObservable(error: Response | any) {
