@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AuthService } from '../../../_services/auth.service';
 
 @Component({
   selector: 'my-app-sidenav-menu',
@@ -6,4 +7,12 @@ import { Component, Input } from '@angular/core';
   templateUrl: './sidenav-menu.component.html'
 })
 
-export class AppSidenavMenuComponent {}
+export class AppSidenavMenuComponent {
+
+  constructor(private authService: AuthService) {
+  }
+
+  isAdmin() {
+    return this.authService.isAuthenticatedAndAdmin();
+  }
+}

@@ -11,7 +11,6 @@ import { AuthService } from '../_services/auth.service';
 @Injectable()
 export class AdminGuard implements CanActivate {
 
-
   constructor(private router: Router,
               private authService: AuthService) {
   }
@@ -22,7 +21,7 @@ export class AdminGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['extra/login'], { queryParams: { returnUrl: state.url }});
+    this.router.navigate([''], { queryParams: { returnUrl: state.url }});
     return false;
   }
 }

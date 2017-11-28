@@ -63,21 +63,15 @@
           </button>
           <mat-menu #userMenu="matMenu" x-position="before" y-position="below" overlapTrigger="true">
             <mat-list dense>
-              <mat-list-item>
-                <mat-icon mat-list-avatar>mail_outline</mat-icon>
-                <h4 mat-line>New mail from David</h4>
-                <p mat-line class="text-muted">5 minutes ago</p>
-              </mat-list-item>
-              <mat-list-item>
-                <mat-icon mat-list-avatar>chat_bubble_outline</mat-icon>
-                <h4 mat-line>Message from Jane</h4>
-                <p mat-line class="text-muted">15 minutes ago</p>
-              </mat-list-item>
-              <mat-list-item>
-                <mat-icon mat-list-avatar>person_outline</mat-icon>
-                <h4 mat-line>New member John joined</h4>
-                <p mat-line class="text-muted">1 hour ago</p>
-              </mat-list-item>
+              <button mat-menu-item>
+                <mat-icon>perm_identity</mat-icon>
+                <span>Perfil</span>
+              </button>
+
+                <button mat-menu-item (click)="logout()">
+                  <mat-icon>exit_to_app</mat-icon>
+                  <span>Salir</span>
+                </button>
             </mat-list>
           </mat-menu>
         </li>
