@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../_services/auth.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
 
   constructor(private router: Router,
@@ -18,8 +18,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.isAuthenticatedAndAdmin()) {
       return true;
     }
 

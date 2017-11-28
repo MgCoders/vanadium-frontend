@@ -57,9 +57,10 @@ export class PageLoginComponent implements OnInit {
     this.formSubmitted = true;
     this.authService.login(this.model.email, this.model.password)
       .subscribe((result) => {
+        console.info(result);
         if (result === true) {
-          this.router.navigate([this.returnUrl]);
-          console.log('LOGINA!');
+          this.router.navigateByUrl(this.returnUrl);
+          console.log('LOGINA!' + this.returnUrl);
         }
       } ,
       (err) => {

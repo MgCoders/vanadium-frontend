@@ -14,7 +14,7 @@ export const ExtraPagesRoutes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/app/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
+      { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
       { path: 'login', component: PageLoginComponent },
       { path: 'sign-up', component: PageSignUpComponent },
       { path: 'forgot-password', component: PageForgotPasswordComponent },

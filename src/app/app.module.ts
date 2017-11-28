@@ -1,40 +1,43 @@
-import { NgModule, ApplicationRef } from '@angular/core';
+import {
+    ApplicationRef,
+    NgModule
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-  MatStepperModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -61,133 +64,139 @@ import { AppFooterComponent } from './layout/footer/footer.component';
 import { AppSearchOverlayComponent } from './layout/search-overlay/search-overlay.component';
 import { SearchOverlayDirective } from './layout/search-overlay/search-overlay.directive';
 import { OpenSearchOverlaylDirective } from './layout/search-overlay/open-search-overlay.directive';
-
 // Pages
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageLayoutFullscreenComponent } from './page-layouts/fullscreen/fullscreen.component';
-
 // Sub modules
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
-
 // hmr
-import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
+import {
+    createNewHosts,
+    removeNgStyles
+} from '@angularclass/hmr';
 import { ColaboradorService } from './_services/colaborador.service';
 import { TokenInterceptor } from './_interceptors/token.interceptor';
 import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule
+    HTTP_INTERCEPTORS,
+    HttpClientModule
 } from '@angular/common/http';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatStepperModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    AppRoutingModule,
-    
-    // Sub modules
-    LayoutModule,
-    SharedModule,
-  ],
-  declarations: [
-    AppComponent,
-    // Layout
-    LayoutComponent,
-    PreloaderDirective,
-    // Header
-    AppHeaderComponent,
-    // Sidenav
-    AppSidenavComponent,
-    ToggleOffcanvasNavDirective,
-    AutoCloseMobileNavDirective,
-    AppSidenavMenuComponent,
-    AccordionNavDirective,
-    AppendSubmenuIconDirective,
-    HighlightActiveItemsDirective,
-    // Customizer
-    AppCustomizerComponent,
-    ToggleQuickviewDirective,
-    // Footer
-    AppFooterComponent,
-    // Search overlay
-    AppSearchOverlayComponent,
-    SearchOverlayDirective,
-    OpenSearchOverlaylDirective,
-    //
-    DashboardComponent,
-    // Pages
-    PageLayoutFullscreenComponent,
-  ],
-  bootstrap: [AppComponent],
-  providers: [
-    AuthService,
-    ColaboradorService,
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-    }
-  ]
+    imports: [
+        BrowserModule,
+        HttpModule,
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        MatStepperModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatNativeDateModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        MatSortModule,
+        MatTableModule,
+        MatTabsModule,
+        MatToolbarModule,
+        MatTooltipModule,
+        AppRoutingModule,
+
+        // Sub modules
+        LayoutModule,
+        SharedModule,
+    ],
+    declarations: [
+        AppComponent,
+        // Layout
+        LayoutComponent,
+        PreloaderDirective,
+        // Header
+        AppHeaderComponent,
+        // Sidenav
+        AppSidenavComponent,
+        ToggleOffcanvasNavDirective,
+        AutoCloseMobileNavDirective,
+        AppSidenavMenuComponent,
+        AccordionNavDirective,
+        AppendSubmenuIconDirective,
+        HighlightActiveItemsDirective,
+        // Customizer
+        AppCustomizerComponent,
+        ToggleQuickviewDirective,
+        // Footer
+        AppFooterComponent,
+        // Search overlay
+        AppSearchOverlayComponent,
+        SearchOverlayDirective,
+        OpenSearchOverlaylDirective,
+        //
+        DashboardComponent,
+        // Pages
+        PageLayoutFullscreenComponent,
+    ],
+    bootstrap: [AppComponent],
+    providers: [
+        AuthService,
+        ColaboradorService,
+        AuthGuard,
+        AdminGuard,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
+        }
+    ]
 })
 
 export class AppModule {
-  constructor(public appRef: ApplicationRef) {}
-  hmrOnInit(store) {
-    console.log('HMR store', store);
-  }
-  hmrOnDestroy(store) {
-    const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
-    // recreate elements
-    store.disposeOldHosts = createNewHosts(cmpLocation);
-    // remove styles
-    removeNgStyles();
-  }
-  hmrAfterDestroy(store) {
-    // display new elements
-    store.disposeOldHosts();
-    delete store.disposeOldHosts;
-  }
+    constructor(public appRef: ApplicationRef) {
+    }
+
+    hmrOnInit(store) {
+        console.log('HMR store', store);
+    }
+
+    hmrOnDestroy(store) {
+        const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
+        // recreate elements
+        store.disposeOldHosts = createNewHosts(cmpLocation);
+        // remove styles
+        removeNgStyles();
+    }
+
+    hmrAfterDestroy(store) {
+        // display new elements
+        store.disposeOldHosts();
+        delete store.disposeOldHosts;
+    }
 }
