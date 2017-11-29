@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogOverviewExampleDialogComponent } from '../../ui/components/dialog-overview-example-dialog.component';
 
@@ -9,9 +9,10 @@ import { DialogOverviewExampleDialogComponent } from '../../ui/components/dialog
 })
 export class AltaTareaComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialogRef: MatDialogRef<AltaTareaComponent>,
+              /* @Inject(MAT_DIALOG_DATA) public data: [Persona, Persona_Contacto, boolean], */) { }
 
   ngOnInit() {
-    
+
   }
 }
