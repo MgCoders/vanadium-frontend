@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogOverviewExampleDialogComponent } from '../../ui/components/dialog-overview-example-dialog.component';
 
 @Component({
   selector: 'app-alta-tarea',
@@ -7,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AltaTareaComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+    
   }
-
 }
