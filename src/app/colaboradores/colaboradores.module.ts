@@ -28,6 +28,6 @@ import {
     CargosModule,
   ],
   declarations: [ColaboradoresComponent, ListaColaboradoresComponent, AltaColaboradorComponent, SelectColaboradorComponent],
-  exports:[SelectColaboradorComponent]
+  exports: [SelectColaboradorComponent]
 })
 export class ColaboradoresModule { }
