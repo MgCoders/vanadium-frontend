@@ -23,7 +23,7 @@ export class AlertService {
         let errorMg: string = message;
 
         // Si es un error devuelto por el servidor.
-        if (message.status !== undefined) {
+/*         if (message.status !== undefined) {
 
             const body: any = JSON.parse(message._body);
             errorMg = '';
@@ -47,7 +47,7 @@ export class AlertService {
                 else
                     errorMg = body.Message;
             }
-        }
+        } */
 
         this.snackBar.open(errorMg, 'Cerrar', {
             duration: time,

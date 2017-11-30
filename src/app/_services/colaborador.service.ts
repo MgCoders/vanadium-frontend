@@ -24,5 +24,4 @@ export class ColaboradorService {
   editColaborador(colaborador: Colaborador): Observable<any> {
         return this.http.put(`${environment.apiUrl}/colaboradores/` + colaborador.id, colaborador);
   }
-
 }

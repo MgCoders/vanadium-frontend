@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ListaColaboradoresComponent } from './lista-colaboradores/lista-colaboradores.component';
 import { AltaColaboradorComponent } from './alta-colaborador/alta-colaborador.component';
 import { SelectColaboradorComponent } from './select-colaborador/select-colaborador.component';
@@ -17,6 +18,7 @@ import {
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     ColaboradoresRoutingModule,
     MatIconModule,
