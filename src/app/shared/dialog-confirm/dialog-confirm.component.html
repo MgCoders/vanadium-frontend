@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Confirmación</h1>
+<div mat-dialog-content>
+  {{data}}
+</div>
+<div mat-dialog-actions class="text-right">
+  <button mat-button color="warn" class="btn-w-md" [mat-dialog-close]="true" tabindex="2">Si!</button>
+  <button mat-button color="primary" class="btn-w-md" [mat-dialog-close]="false" tabindex="-1">No</button>
+</div>

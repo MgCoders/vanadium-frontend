@@ -18,6 +18,7 @@ import { SelectCargoComponent } from './select-cargo/select-cargo.component';
 
 import { CargoService } from '../_services/cargo.service';
 import { AlertService } from '../_services/alert.service';
+import { LayoutService } from '../layout/layout.service';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { AlertService } from '../_services/alert.service';
 
   providers: [
     CargoService,
-    AlertService
+    AlertService,
+    LayoutService
   ],
 
   entryComponents: [

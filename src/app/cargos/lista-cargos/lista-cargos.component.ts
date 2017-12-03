@@ -4,6 +4,8 @@ import { AltaCargoComponent } from '../alta-cargo/alta-cargo.component';
 import { CargoService } from '../../_services/cargo.service';
 import { AlertService } from '../../_services/alert.service';
 import { Cargo } from '../../_models/models';
+import { LayoutService } from '../../layout/layout.service';
+import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-lista-cargos',
@@ -16,24 +18,48 @@ export class ListaCargosComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               private cs: CargoService,
-              private as: AlertService) { }
+              private as: AlertService,
+              private layoutService: LayoutService) { }
 
   ngOnInit() {
     this.lista = new Array();
 
-    this.lista = new Array();
+    this.layoutService.updatePreloaderState('active');
     this.cs.getAll().subscribe(
       (data) => {
         this.lista = data;
+        this.layoutService.updatePreloaderState('hide');
       },
       (error) => {
-        /* this.as.error(error, 5000); */
+        this.layoutService.updatePreloaderState('hide');
+        this.as.error(error, 5000);
       });
   }
 
   NuevoCargo() {
     const dialog = this.dialog.open(AltaCargoComponent, {
       data: [undefined, this.lista],
+      width: '600px',
+    });
+  }
+
+  Eliminar(x: Cargo) {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: '¿Está seguro que desea eliminar el cargo ' + x.nombre + '?',
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          // TODO
+          this.as.success('Cargo eliminado correctamente.', 3000);
+        }
+    });
+  }
+
+  Editar(x: Cargo) {
+    const dialog = this.dialog.open(AltaCargoComponent, {
+      data: [x, this.lista],
       width: '600px',
     });
   }
