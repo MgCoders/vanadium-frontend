@@ -12,7 +12,7 @@
 
 import * as models from './models';
 
-export interface Cargo {
+export class Cargo {
     id?: number;
 
     nombre: string;
@@ -21,4 +21,10 @@ export interface Cargo {
 
     precioHora: number;
 
+    public constructor(c: Cargo) {
+        this.id = c.id;
+        this.nombre = c.nombre;
+        this.codigo = c.codigo;
+        this.precioHora = c.precioHora;
+    }
 }

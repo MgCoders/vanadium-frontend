@@ -28,6 +28,10 @@ export class ListaCargosComponent implements OnInit {
     this.cs.getAll().subscribe(
       (data) => {
         this.lista = data;
+        // tslint:disable-next-line:only-arrow-functions
+        this.lista.sort(function(a, b) {
+          return a.id - b.id;
+        });
         this.layoutService.updatePreloaderState('hide');
       },
       (error) => {

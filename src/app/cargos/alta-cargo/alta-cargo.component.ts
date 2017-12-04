@@ -26,7 +26,7 @@ export class AltaCargoComponent implements OnInit {
       this.cargoActual = {} as Cargo;
     } else {
       // TODO Copiar cargo
-      this.cargoActual = this.data[0];
+      this.cargoActual = new Cargo(this.data[0]);
     }
   }
 
@@ -41,7 +41,7 @@ export class AltaCargoComponent implements OnInit {
         (data) => {
           this.layoutService.updatePreloaderState('hide');
           this.as.success('Cargo agregado correctamente.', 3000);
-          this.data[1].push(this.cargoActual);
+          this.data[1].push(data);
           this.dialogRef.close();
         },
         (error) => {
@@ -53,6 +53,8 @@ export class AltaCargoComponent implements OnInit {
         (data) => {
           this.layoutService.updatePreloaderState('hide');
           this.as.success('Cargo actualizado correctamente.', 3000);
+          const index: number = this.data[1].indexOf(this.data[0]);
+          this.data[1][index] = data;
           this.dialogRef.close();
         },
         (error) => {
