@@ -20,17 +20,17 @@ export class SelectCargoComponent implements OnInit {
 
   private lista: Cargo[];
 
-  constructor(private cs: CargoService,
-              /* private as: AlertService */) { }
+  constructor(private service: CargoService,
+              private as: AlertService) { }
 
   ngOnInit() {
     this.lista = new Array();
-    this.cs.getAll().subscribe(
+    this.service.getAll().subscribe(
       (data) => {
         this.lista = data;
       },
       (error) => {
-        /* this.as.error(error, 5000); */
+        this.as.error(error, 5000);
       });
   }
 

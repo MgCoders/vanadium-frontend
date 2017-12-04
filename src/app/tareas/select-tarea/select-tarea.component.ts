@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TareaService } from '../../_services/tarea.service';
+import { AlertService } from '../../_services/alert.service';
+import { TipoTarea } from '../../_models/models';
 @Component({
   selector: 'app-select-tarea',
   templateUrl: './select-tarea.component.html',
@@ -7,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelectTareaComponent implements OnInit {
 
-  constructor() { }
+  @Input() object: any;
+  @Input() idModel: string;
+  @Input() placeHolder: string;
+  @Input() id: string;
+  @Input() desc: string;
+
+  @Output() onChange: EventEmitter<TipoTarea> = new EventEmitter<TipoTarea>();
+
+  private lista: TipoTarea[];
+
+  constructor(private service: TareaService,
+              private as: AlertService) { }
 
   ngOnInit() {
+    this.lista = new Array();
+    this.service.getAll().subscribe(
+      (data) => {
+        this.lista = data;
+      },
+      (error) => {
+        this.as.error(error, 5000);
+      });
   }
 
+  onChangeValue(evt: TipoTarea) {
+    this.onChange.emit(evt);
+  }
 }
