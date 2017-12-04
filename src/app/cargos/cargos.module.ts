@@ -10,10 +10,11 @@ import {
   MatTooltipModule,
   MatDialogModule,
 } from '@angular/material';
+
 import { CargosComponent } from './cargos.component';
+import { CargosRoutingModule } from './cargos-routing.module';
 import { ListaCargosComponent } from './lista-cargos/lista-cargos.component';
 import { AltaCargoComponent } from './alta-cargo/alta-cargo.component';
-import { CargosRoutingModule } from './cargos-routing.module';
 import { SelectCargoComponent } from './select-cargo/select-cargo.component';
 
 import { CargoService } from '../_services/cargo.service';
@@ -38,7 +39,12 @@ import { LayoutService } from '../layout/layout.service';
     SelectCargoComponent,
   ],
 
-  declarations: [CargosComponent, ListaCargosComponent, AltaCargoComponent, SelectCargoComponent],
+  declarations: [
+    CargosComponent,
+    ListaCargosComponent,
+    AltaCargoComponent,
+    SelectCargoComponent
+  ],
 
   providers: [
     CargoService,

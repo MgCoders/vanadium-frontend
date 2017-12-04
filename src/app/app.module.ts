@@ -86,8 +86,6 @@ import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { AdminGuard } from './_guards/admin.guard';
 
-import { AltaCargoComponent } from './cargos/alta-cargo/alta-cargo.component';
-
 @NgModule({
     imports: [
         BrowserModule,

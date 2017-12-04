@@ -17,11 +17,11 @@ export class CargoService {
     return this.http.get<Cargo>(`${environment.apiUrl}/cargos/` + id);
   }
 
-  create(cargo: Cargo): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/cargos/`, cargo);
+  create(x: Cargo): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/cargos/`, x);
   }
 
-  edit(cargo: Cargo): Observable<any> {
-        return this.http.put(`${environment.apiUrl}/cargos/` + cargo.id, cargo);
+  edit(x: Cargo): Observable<any> {
+        return this.http.put(`${environment.apiUrl}/cargos/` + x.id, x);
   }
 }

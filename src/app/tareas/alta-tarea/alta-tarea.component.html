@@ -1,32 +1,29 @@
-<section class="container-fluid with-maxwidth chapter">
-    
-      <article class="article">
-        <h2 class="article-title">Tarea</h2>
-    
-        <div class="row">
-          <div class="col-12" >
-            <a matTooltip="Volver a la Lista de Tareas" matTooltipPosition="above" mat-icon-button color="primary" [routerLink]="['/app/tareas/lista']">
-              <mat-icon class="material-icons">reorder</mat-icon>
-            </a>
-          </div>
+<h1 mat-dialog-title>Tarea</h1>
+
+<div mat-dialog-content class="box box-default">
+  <div class="box-body">
+    <form>
+      <div class="row">
+        <div class="col-12">
+          <mat-input-container class="full-width">
+            <input [(ngModel)]="tareaActual.nombre" matInput placeholder="Nombre" name="Nombre">
+          </mat-input-container>
         </div>
-    
-        <div class="box box-default">
-          <div class="box-body">
-            <form>
-              <div class="row">
-                <div class="col-12 col-sm-6">
-                  <mat-input-container class="full-width">
-                    <input matInput placeholder="Descripción de la Tarea" value="Coordinación">
-                  </mat-input-container>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <button mat-raised-button color="accent" class="btn-w-md">Guardar</button>
-                </div>
-              </div>
-            </form>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-input-container class="full-width">
+            <input [(ngModel)]="tareaActual.codigo" matInput placeholder="Código" name="Codigo">
+          </mat-input-container>
         </div>
-    
-      </article>
-    </section>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div mat-dialog-actions class="full-width">
+  <div class="full-width text-sm-right">
+    <button mat-button color="primary" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
+    <button mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
+  </div>
+</div>

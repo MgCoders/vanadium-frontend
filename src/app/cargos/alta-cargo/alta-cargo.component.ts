@@ -1,10 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { Cargo } from '../../_models/models';
+import { Cargo, CargoImp } from '../../_models/models';
 import { CargoService } from '../../_services/cargo.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
-import { setTimeout } from 'core-js/library/web/timers';
 
 @Component({
   selector: 'app-alta-cargo',
@@ -25,8 +24,7 @@ export class AltaCargoComponent implements OnInit {
     if (this.data[0] === undefined) {
       this.cargoActual = {} as Cargo;
     } else {
-      // TODO Copiar cargo
-      this.cargoActual = new Cargo(this.data[0]);
+      this.cargoActual = new CargoImp(this.data[0]);
     }
   }
 

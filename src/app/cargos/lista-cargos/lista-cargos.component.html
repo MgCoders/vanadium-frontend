@@ -3,10 +3,10 @@
     <div class="row">
       <h2 class="article-title padding-top-30 col-12 col-sm-6">Cargos</h2>
       <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
-          <button mat-raised-button color="accent" class="btn-w-md" (click)="NuevoCargo()">Crear Cargo</button>
+        <button mat-raised-button color="accent" class="btn-w-md" (click)="Nuevo()">Crear Cargo</button>
       </div>
-    </div>    
-    
+    </div>
+
     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
       <table class="mdl-data-table">
         <thead>
@@ -25,9 +25,12 @@
             <td class="mdl-data-table__cell--non-numeric">{{x.codigo}}</td>
             <td>{{x.precioHora | number:'1.2'}}</td>
             <td>
-              <!-- <a mat-icon-button color="accent" [routerLink]="['/app/cargos/alta']"><mat-icon class="material-icons">visibility</mat-icon></a> -->
-              <button mat-icon-button color="primary" (click)="Editar(x)"><mat-icon class="material-icons">mode_edit</mat-icon></button>
-              <button mat-icon-button color="warn"><mat-icon class="material-icons" (click)="Eliminar(x)">delete</mat-icon></button>
+              <button mat-icon-button color="primary" (click)="Editar(x)">
+                <mat-icon class="material-icons">mode_edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn">
+                <mat-icon class="material-icons" (click)="Eliminar(x)">delete</mat-icon>
+              </button>
             </td>
           </tr>
         </tbody>

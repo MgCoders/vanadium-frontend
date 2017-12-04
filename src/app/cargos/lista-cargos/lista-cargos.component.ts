@@ -17,7 +17,7 @@ export class ListaCargosComponent implements OnInit {
   private lista: Cargo[];
 
   constructor(public dialog: MatDialog,
-              private cs: CargoService,
+              private service: CargoService,
               private as: AlertService,
               private layoutService: LayoutService) { }
 
@@ -25,7 +25,7 @@ export class ListaCargosComponent implements OnInit {
     this.lista = new Array();
 
     this.layoutService.updatePreloaderState('active');
-    this.cs.getAll().subscribe(
+    this.service.getAll().subscribe(
       (data) => {
         this.lista = data;
         // tslint:disable-next-line:only-arrow-functions
@@ -40,7 +40,7 @@ export class ListaCargosComponent implements OnInit {
       });
   }
 
-  NuevoCargo() {
+  Nuevo() {
     const dialog = this.dialog.open(AltaCargoComponent, {
       data: [undefined, this.lista],
       width: '600px',

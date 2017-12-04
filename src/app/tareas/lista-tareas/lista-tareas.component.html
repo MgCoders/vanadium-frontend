@@ -4,7 +4,7 @@
     <div class="row">
       <h2 class="article-title padding-top-30 col-12 col-sm-6">Tareas</h2>
       <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
-        <button mat-raised-button color="accent" class="btn-w-md" (click)="CrearTarea()">Crear Tarea</button>
+        <button mat-raised-button color="accent" class="btn-w-md" (click)="Nuevo()">Crear Tarea</button>
       </div>
     </div>
 
@@ -14,97 +14,21 @@
           <tr>
             <th>#</th>
             <th class="mdl-data-table__cell--non-numeric">Descripción</th>
+            <th class="mdl-data-table__cell--non-numeric">Código</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td class="mdl-data-table__cell--non-numeric">Coordinación</td>
+          <tr *ngFor="let x of lista">
+            <td>{{x.id}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{x.nombre}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{x.codigo}}</td>
             <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/tareas/alta']">
+              <button mat-icon-button color="primary" (click)="Editar(x)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
               </button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td class="mdl-data-table__cell--non-numeric">Planos generales</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
               <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td class="mdl-data-table__cell--non-numeric">Planos de sector</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td class="mdl-data-table__cell--non-numeric">Detalles constructivos</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td class="mdl-data-table__cell--non-numeric">Planillas</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td class="mdl-data-table__cell--non-numeric">PET</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/tareas/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
+                <mat-icon class="material-icons" (click)="Eliminar(x)">delete</mat-icon>
               </button>
             </td>
           </tr>
