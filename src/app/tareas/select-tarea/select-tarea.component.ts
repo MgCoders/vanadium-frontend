@@ -2,11 +2,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TareaService } from '../../_services/tarea.service';
 import { AlertService } from '../../_services/alert.service';
 import { TipoTarea } from '../../_models/models';
+
 @Component({
   selector: 'app-select-tarea',
   templateUrl: './select-tarea.component.html',
   styleUrls: ['./select-tarea.component.scss']
 })
+
 export class SelectTareaComponent implements OnInit {
 
   @Input() object: any;

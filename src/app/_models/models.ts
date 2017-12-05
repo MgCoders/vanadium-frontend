@@ -4,5 +4,6 @@ export * from './Colaborador';
 export * from './Hora';
 export * from './MagnesiumStatus';
 export * from './Proyecto';
+export * from './ProyectoImp';
 export * from './TipoTarea';
 export * from './TipoTareaImp';
