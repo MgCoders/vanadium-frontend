@@ -34,7 +34,7 @@ export class SelectCargoComponent implements OnInit {
       });
   }
 
-  onChangeValue(evt: Cargo) {
-    this.onChange.emit(evt);
+  onChangeValue(evt) {
+    this.onChange.emit(this.lista.find((x) => x.id === evt.value));
   }
 }

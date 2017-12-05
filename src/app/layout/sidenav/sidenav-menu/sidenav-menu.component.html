@@ -28,62 +28,30 @@
   <li class="nav-divider" *ngIf="isAdmin()"></li>
 
   <li *ngIf="isAdmin()">
-    <a mat-button href="#/app/cargos">
+    <a mat-button [routerLink]="['/app/cargos/lista']">
       <i class="nav-icon material-icons">assignment_ind</i>
       <span class="nav-text">Cargos</span>
     </a>
-    <ul>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/cargos/lista']">Lista</a>
-      </li>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/cargos/alta']">Alta</a>
-      </li>
-    </ul>
   </li>
 
   <li *ngIf="isAdmin()">
-    <a mat-button href="#/app/tareas">
+    <a mat-button [routerLink]="['/app/tareas/lista']">
       <i class="nav-icon material-icons">settings</i>
       <span class="nav-text">Tareas</span>
     </a>
-    <ul>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/tareas/lista']">Lista</a>
-      </li>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/tareas/alta']">Alta</a>
-      </li>
-    </ul>
   </li>
 
   <li *ngIf="isAdmin()">
-    <a mat-button href="#/app/colaboradores">
+    <a mat-button [routerLink]="['/app/colaboradores/listacolaboradores']">
       <i class="nav-icon material-icons">accessibility</i>
       <span class="nav-text">Colaboradores</span>
     </a>
-    <ul>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/colaboradores/listacolaboradores']">Lista</a>
-      </li>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/colaboradores/altacolaborador']">Alta</a>
-      </li>
-    </ul>
   </li>
 
   <li *ngIf="isAdmin()">
-    <a mat-button href="#/app/proyectos">
+    <a mat-button [routerLink]="['/app/proyectos/lista']">
       <i class="nav-icon material-icons">equalizer</i>
       <span class="nav-text">Proyectos</span>
     </a>
-    <ul>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/proyectos/lista']">Lista</a>
-      </li>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/proyectos/alta']">Alta</a>
-      </li>
-    </ul>
   </li>
 </ul>

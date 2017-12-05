@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SelectCargoComponent } from '../../cargos/select-cargo/select-cargo.component';
-import { Cargo, Colaborador } from '../../_models/models';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { Colaborador, ColaboradorImp, Cargo } from '../../_models/models';
+import { ColaboradorService } from '../../_services/colaborador.service';
+import { AlertService } from '../../_services/alert.service';
+import { LayoutService } from '../../layout/layout.service';
 
 @Component({
   selector: 'app-alta-colaborador',
@@ -10,12 +13,61 @@ import { Cargo, Colaborador } from '../../_models/models';
 export class AltaColaboradorComponent implements OnInit {
 
   private colaboradorActual: Colaborador;
+  private cargoActual: Cargo;
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<AltaColaboradorComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: [Colaborador, Colaborador[]],
+              private cs: ColaboradorService,
+              private as: AlertService,
+              private layoutService: LayoutService) { }
 
   ngOnInit() {
-    this.colaboradorActual = {} as Colaborador;
-    this.colaboradorActual.cargo = {} as Cargo;
+    this.cargoActual = {} as Cargo;
+    if (this.data[0] === undefined) {
+      this.colaboradorActual = {} as Colaborador;
+      this.colaboradorActual.role = 'USER';
+      this.colaboradorActual.token = '';
+      this.colaboradorActual.password = '1234';
+    } else {
+      this.colaboradorActual = new ColaboradorImp(this.data[0]);
+    }
   }
 
+  Cerrar() {
+    this.dialogRef.close();
+  }
+
+  Guardar() {
+    this.layoutService.updatePreloaderState('active');
+    if (this.data[0] === undefined) {
+      this.cs.create(this.colaboradorActual).subscribe(
+        (data) => {
+          this.layoutService.updatePreloaderState('hide');
+          this.as.success('Colaborador agregado correctamente.', 3000);
+          this.data[1].push(data);
+          this.dialogRef.close();
+        },
+        (error) => {
+          this.layoutService.updatePreloaderState('hide');
+          this.as.error(error, 5000);
+        });
+    } else {
+      this.cs.edit(this.colaboradorActual).subscribe(
+        (data) => {
+          this.layoutService.updatePreloaderState('hide');
+          this.as.success('Colaborador actualizado correctamente.', 3000);
+          const index: number = this.data[1].indexOf(this.data[0]);
+          this.data[1][index] = data;
+          this.dialogRef.close();
+        },
+        (error) => {
+          this.layoutService.updatePreloaderState('hide');
+          this.as.error(error, 5000);
+        });
+    }
+  }
+
+  CargoOnChange(x: Cargo) {
+    this.colaboradorActual.cargo = x;
+  }
 }

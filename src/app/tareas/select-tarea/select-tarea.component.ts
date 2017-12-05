@@ -35,7 +35,7 @@ export class SelectTareaComponent implements OnInit {
       });
   }
 
-  onChangeValue(evt: TipoTarea) {
-    this.onChange.emit(evt);
+  onChangeValue(evt) {
+    this.onChange.emit(this.lista.find((x) => x.id === evt.value));
   }
 }

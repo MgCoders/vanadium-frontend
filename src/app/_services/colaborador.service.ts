@@ -9,19 +9,19 @@ export class ColaboradorService {
 
   constructor(public http: HttpClient) { }
 
-  getColaboradores(): Observable<Colaborador[]> {
+  getAll(): Observable<Colaborador[]> {
     return this.http.get<Colaborador[]>(`${environment.apiUrl}/colaboradores/`);
   }
 
-  getColaborador(id: number): Observable<Colaborador> {
+  get(id: number): Observable<Colaborador> {
     return this.http.get<Colaborador>(`${environment.apiUrl}/colaboradores/` + id);
   }
 
-  createColaborador(colaborador: Colaborador): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/colaboradores/`, colaborador);
+  create(x: Colaborador): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/colaboradores/`, x);
   }
 
-  editColaborador(colaborador: Colaborador): Observable<any> {
-        return this.http.put(`${environment.apiUrl}/colaboradores/` + colaborador.id, colaborador);
+  edit(x: Colaborador): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/colaboradores/` + x.id, x);
   }
 }

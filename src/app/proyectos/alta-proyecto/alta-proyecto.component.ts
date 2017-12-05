@@ -4,11 +4,13 @@ import { Proyecto, ProyectoImp } from '../../_models/models';
 import { ProyectoService } from '../../_services/proyecto.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
+
 @Component({
   selector: 'app-alta-proyecto',
   templateUrl: './alta-proyecto.component.html',
   styleUrls: ['./alta-proyecto.component.scss']
 })
+
 export class AltaProyectoComponent implements OnInit {
 
   private proyectoActual: Proyecto;

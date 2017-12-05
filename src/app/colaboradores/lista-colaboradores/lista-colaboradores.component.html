@@ -4,7 +4,7 @@
     <div class="row">
       <h2 class="article-title padding-top-30 col-12 col-sm-6">Colaboradores</h2>
       <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
-        <a mat-raised-button color="accent" class="btn-w-md" [routerLink]="['/app/colaboradores/altacolaborador']">Crear Colaborador</a>
+        <button mat-raised-button color="accent" class="btn-w-md" (click)="Nuevo()">Crear Colaborador</button>
       </div>
     </div>
 
@@ -21,39 +21,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let col of colaboradores">
-            <td>{{col.id}}</td>
-            <td class="mdl-data-table__cell--non-numeric">{{col.nombre}}</td>
-            <td class="mdl-data-table__cell--non-numeric">{{col.email}}</td>
-            <td class="mdl-data-table__cell--non-numeric">{{col.cargo.nombre}}</td>
-            <td class="mdl-data-table__cell--non-numeric">{{col.role}}</td>
+          <tr *ngFor="let x of lista">
+            <td>{{x.id}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{x.nombre}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{x.email}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{x.cargo.nombre}}</td>
+            <td class="mdl-data-table__cell--non-numeric">{{x.role}}</td>
             <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/colaboradores/altacolaborador']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/colaboradores/altacolaborador']">
+              <button mat-icon-button color="primary" (click)="Editar(x)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
               </button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td class="mdl-data-table__cell--non-numeric">Apellido2, Nombre2</td>
-            <td class="mdl-data-table__cell--non-numeric">n2apellido2@gmail.com</td>
-            <td class="mdl-data-table__cell--non-numeric">Junior A</td>
-            <td class="mdl-data-table__cell--non-numeric">Role2</td>
-            <td>
-              <a mat-icon-button color="accent" [routerLink]="['/app/colaboradores/altacolaborador']">
-                <mat-icon class="material-icons">visibility</mat-icon>
-              </a>
-              <a mat-icon-button color="primary" [routerLink]="['/app/colaboradores/altacolaborador']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
               <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
+                <mat-icon class="material-icons" (click)="Eliminar(x)">delete</mat-icon>
               </button>
             </td>
           </tr>
