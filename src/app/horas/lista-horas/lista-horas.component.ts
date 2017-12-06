@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Proyecto, TipoTarea, Hora, HoraImp, Cargo, TipoTareaImp } from '../../_models/models';
 
 @Component({
   selector: 'app-lista-horas',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaHorasComponent implements OnInit {
 
-  constructor() { }
+  private proyectoActual: Proyecto;
+  private tareaActual: TipoTarea;
+  private horaActual: Hora;
 
-  ngOnInit() {
+  constructor() {
+
   }
 
+  ngOnInit() {
+    this.tareaActual = {} as TipoTarea;
+    this.proyectoActual = {} as Proyecto;
+    this.horaActual = {} as HoraImp;
+  }
+
+  ProyectoOnChange(evt: Proyecto) {
+    this.horaActual.proyecto = evt;
+  }
+
+  TareaOnChange(evt: TipoTarea) {
+    this.horaActual.tipoTarea = evt;
+  }
+
+  HoraOnChange(evt){
+
+  }
 }

@@ -8,42 +8,31 @@
       <div class="box box-default">
         <div class="box-body row">
           <div class="col-12 col-sm-2">
-            <app-select-colaborador></app-select-colaborador>
-          </div>
-          <div class="col-12 col-sm-2">
-            <app-select-proyecto></app-select-proyecto>
-          </div>
-          <div class="col-12 col-sm-2">
-            <app-select-tarea></app-select-tarea>
-          </div>
-          <div class="col-12 col-sm-1">
             <mat-form-field class="full-width">
-              <input class="full-width" matInput [matDatepicker]="picker" placeholder="Día">
+              <input class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
-          <div class="col-6 col-sm-1">
-            <mat-input-container class="full-width">
-              <input matInput placeholder="HH - Desde" value="15">
-            </mat-input-container>
+
+          <div class="col-12 col-sm-2">
+            <app-select-proyecto [object]="proyectoActual" (onChange)="ProyectoOnChange($event)" idModel="id" placeHolder="PROYECTO"
+              id="id" desc="nombre"></app-select-proyecto>
           </div>
-          <div class="col-6 col-sm-1">
-            <mat-input-container class="full-width">
-              <input matInput placeholder="MM - Desde" value="30">
-            </mat-input-container>
+
+          <div class="col-12 col-sm-2">
+            <app-select-tarea [object]="tareaActual" (onChange)="TareaOnChange($event)" idModel="id" placeHolder="TAREA" id="id" desc="nombre"></app-select-tarea>
           </div>
-          <div class="col-6 col-sm-1">
-            <mat-input-container class="full-width">
-              <input matInput placeholder="HH - Hasta" value="15">
-            </mat-input-container>
+
+          <div class="col-6 col-sm-2">
+            <app-select-hora-desde [object]="horaActual" (onChange)="HoraOnChange($event)" idModel="horaInNumber" placeHolder="INICIO"></app-select-hora-desde>
           </div>
-          <div class="col-6 col-sm-1">
-            <mat-input-container class="full-width">
-              <input matInput placeholder="MM - Hasta" value="30">
-            </mat-input-container>
+
+          <div class="col-6 col-sm-2">
+            <app-select-hora-desde [object]="horaActual" (onChange)="HoraOnChange($event)" idModel="horaInNumber" placeHolder="FIN"></app-select-hora-desde>
           </div>
-          <div class="col-12 col-sm-1">
+
+          <div class="col-12 col-sm-2">
             <button mat-icon-button color="accent">
               <mat-icon class="material-icons">play_arrow</mat-icon>
             </button>
@@ -59,7 +48,7 @@
             <th class="text-primary text-large">23/11/2017</th>
             <th></th>
             <th></th>
-            <th></th>            
+            <th></th>
             <th class="text-primary text-large">9 hs. 30m.</th>
             <th></th>
           </tr>
@@ -99,34 +88,34 @@
       </table>
 
       <table class="mdl-data-table">
-          <thead>
-            <tr>
-              <th class="text-primary text-large">20/11/2017</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th class="text-primary text-large">6 hs. 30m.</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Proyecto 2</td>
-              <td>Tarea 1</td>
-              <td>10:30</td>
-              <td>17:00</td>
-              <td>6 hs. 30m.</td>
-              <td>
-                <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
-                  <mat-icon class="material-icons">mode_edit</mat-icon>
-                </a>
-                <button mat-icon-button color="warn">
-                  <mat-icon class="material-icons">delete</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <thead>
+          <tr>
+            <th class="text-primary text-large">20/11/2017</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th class="text-primary text-large">6 hs. 30m.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Proyecto 2</td>
+            <td>Tarea 1</td>
+            <td>10:30</td>
+            <td>17:00</td>
+            <td>6 hs. 30m.</td>
+            <td>
+              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
+                <mat-icon class="material-icons">mode_edit</mat-icon>
+              </a>
+              <button mat-icon-button color="warn">
+                <mat-icon class="material-icons">delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </article>
 </section>

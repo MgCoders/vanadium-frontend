@@ -3,6 +3,7 @@ export * from './CargoImp';
 export * from './Colaborador';
 export * from './ColaboradorImp';
 export * from './Hora';
+export * from './HoraImp';
 export * from './MagnesiumStatus';
 export * from './Proyecto';
 export * from './ProyectoImp';
