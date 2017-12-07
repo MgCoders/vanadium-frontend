@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+
+    sulfurapp:
+      image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:latest
+      environment:
+        VIRTUAL_HOST: ${VIRTUAL_HOST}
+        LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+        LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+      ports:
+        - 80
+
+
+networks:
+ default:
+   external:
+     name: nginx-proxy
