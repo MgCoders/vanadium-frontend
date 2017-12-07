@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #/bin/bash
 set -x
-echo Logging in to Amazon ECR...
+echo Logging in to Amazon ECR....
 $(aws ecr get-login --region us-east-1)
 echo cd sulfur-frontend-deploy en home
 cd /home/ubuntu/sulfur-frontend-deploy
