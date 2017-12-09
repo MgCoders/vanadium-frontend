@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Proyecto, TipoTarea, Hora, HoraImp, Cargo, TipoTareaImp } from '../../_models/models';
+import { HoraService } from '../../_services/hora.service';
+import { AuthService } from '../../_services/auth.service';
+import { AlertService } from '../../_services/alert.service';
+import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta.component';
 
 @Component({
   selector: 'app-lista-horas',
@@ -10,16 +14,21 @@ export class ListaHorasComponent implements OnInit {
 
   private proyectoActual: Proyecto;
   private tareaActual: TipoTarea;
-  private horaActual: Hora;
+  private horaActual: HoraImp;
 
-  constructor() {
+  @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 
-  }
+  constructor(private service: HoraService,
+              private as: AlertService) {}
 
   ngOnInit() {
     this.tareaActual = {} as TipoTarea;
     this.proyectoActual = {} as Proyecto;
     this.horaActual = {} as HoraImp;
+
+    this.horaActual.dia = new Date();
+    this.horaActual.horaInNumber = 0;
+    this.horaActual.horaOutNumber = 0;
   }
 
   ProyectoOnChange(evt: Proyecto) {
@@ -30,7 +39,10 @@ export class ListaHorasComponent implements OnInit {
     this.horaActual.tipoTarea = evt;
   }
 
-  HoraOnChange(evt){
+  HoraInOnChange(evt) {
+    this.horaHasta.loadValues(this.horaActual.horaInNumber);
+  }
 
+  HoraOutOnChange(evt){
   }
 }
