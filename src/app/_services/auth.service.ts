@@ -6,8 +6,8 @@ import {
     Response
 } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import { JwtHelper } from 'angular2-jwt';
-import 'rxjs/Rx';
 import { environment } from '../../environments/environment';
 import { Colaborador } from '../_models/Colaborador';
 

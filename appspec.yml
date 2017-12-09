@@ -3,7 +3,7 @@ os: linux
 
 files:
  - source: /
-   destination: /home/ubuntu/omicflows-backend-deploy
+   destination: /home/ubuntu/sulfur-frontend-deploy
 
 permissions:
  - object: /
