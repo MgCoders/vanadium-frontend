@@ -3,21 +3,17 @@ import * as models from './models';
 export class HoraImp implements models.Hora {
     id?: number;
 
-    dia: Date;
+    dia: string;
 
-    horaIn: Date;
+    horaIn: string;
 
-    horaOut: Date;
+    horaOut: string;
 
-    subtotal?: Date;
+    subtotal?: string;
 
     proyecto: models.Proyecto;
 
     tipoTarea: models.TipoTarea;
 
     colaborador: models.Colaborador;
-
-    horaInNumber: number;
-
-    horaOutNumber: number;
 }

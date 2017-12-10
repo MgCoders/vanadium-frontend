@@ -9,7 +9,7 @@
         <div class="box-body row">
           <div class="col-12 col-sm-2">
             <mat-form-field class="full-width">
-              <input [(ngModel)]="horaActual.dia" class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
+              <input [(ngModel)]="diaActual" class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -25,11 +25,13 @@
           </div>
 
           <div class="col-6 col-sm-2">
-            <app-select-hora-desde [object]="horaActual" (onChange)="HoraInOnChange($event)" idModel="horaInNumber" placeHolder="INICIO"></app-select-hora-desde>
+            <app-select-hora-desde [object]="inNumberActual" (onChange)="HoraInOnChange($event)"
+                                   placeHolder="INICIO"></app-select-hora-desde>
           </div>
 
           <div class="col-6 col-sm-2">
-            <app-select-hora-hasta name="horaHasta" [object]="horaActual" (onChange)="HoraOutOnChange($event)" idModel="horaOutNumber" placeHolder="FIN"></app-select-hora-hasta>
+            <app-select-hora-hasta name="horaHasta" [object]="outNumberActual" (onChange)="HoraOutOnChange($event)"
+                                   placeHolder="FIN"></app-select-hora-hasta>
           </div>
 
           <div class="col-12 col-sm-2">
@@ -45,7 +47,7 @@
       <table *ngFor='let x of lista' class="mdl-data-table">
         <thead>
           <tr>
-            <th class="text-primary text-large">{{x.horas[0].dia | date: 'dd/MM/yyyy'}}</th>
+            <th class="text-primary text-large">{{x.horas[0].dia}}</th>
             <th></th>
             <th></th>
             <th></th>

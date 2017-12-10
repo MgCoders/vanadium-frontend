@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output
+} from '@angular/core';
 import { AlertService } from '../../_services/alert.service';
 
 @Component({
@@ -20,13 +26,13 @@ export class SelectHoraHastaComponent implements OnInit {
   constructor(private as: AlertService) { }
 
   ngOnInit() {
-    this.lista = new Array();
+      this.lista = [];
     this.hourdiv = 4;
     this.loadValues(0);
   }
 
   public loadValues(desde: number) {
-    this.lista = new Array();
+      this.lista = [];
 
     const iter: number = 24 * this.hourdiv;
     for (let _i = desde; _i < iter; _i++) {
@@ -48,9 +54,11 @@ export class SelectHoraHastaComponent implements OnInit {
       }
       aux += ((_i % this.hourdiv) * (60 / this.hourdiv)).toString();
 
+        const val: string = aux;
+
       aux += ' (' + horasTotales + 'h. ' + minutosTotales + 'm.)';
 
-      this.lista.push({id: _i, desc: aux});
+        this.lista.push({id: _i, desc: aux, val});
     }
   }
 

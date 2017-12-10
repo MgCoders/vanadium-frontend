@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Hora } from '../_models/models';
 import { Observable } from 'rxjs/Observable';
@@ -18,6 +18,7 @@ export class HoraService {
   }
 
   create(x: Hora): Observable<any> {
+      console.info(JSON.stringify(x));
     return this.http.post(`${environment.apiUrl}/horas/`, x);
   }
 

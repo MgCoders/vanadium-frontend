@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  CommonModule,
+  DatePipe
+} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import {
-  MatIconModule,
   MatButtonModule,
-  MatInputModule,
-  MatSnackBarModule,
-  MatSelectModule,
-  MatTooltipModule,
-  MatToolbarModule,
   MatDatepickerModule,
-  MatSliderModule
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatSliderModule,
+  MatSnackBarModule,
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 
 import { HorasComponent } from './horas.component';
@@ -57,7 +60,8 @@ import { LayoutService } from '../layout/layout.service';
   providers: [
     HoraService,
     AlertService,
-    LayoutService
+    LayoutService,
+    DatePipe
   ],
 })
 export class HorasModule { }

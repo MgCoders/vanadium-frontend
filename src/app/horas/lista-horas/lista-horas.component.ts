@@ -1,12 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  Proyecto, TipoTarea, Hora, HoraImp, Cargo, TipoTareaImp,
-  User, Colaborador, ColaboradorImp
+  Component,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  Hora,
+  HoraImp,
+  Proyecto,
+  TipoTarea
 } from '../../_models/models';
 import { HoraService } from '../../_services/hora.service';
-import { AuthService } from '../../_services/auth.service';
 import { AlertService } from '../../_services/alert.service';
 import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-lista-horas',
@@ -17,28 +23,33 @@ export class ListaHorasComponent implements OnInit {
 
   private proyectoActual: Proyecto;
   private tareaActual: TipoTarea;
-  private horaActual: HoraImp;
+  private diaActual: Date;
+  private inActual: string;
+  private inNumberActual: number;
+  private outNumberActual: number;
+  private outActual: string;
   private listaHoras: Hora[];
-  private lista: Array<{ time: number, horas: Hora[] }>;
+  private lista: Array<{ time: string, horas: Hora[] }>;
 
   private hourdiv: number;
 
   @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 
   constructor(private service: HoraService,
-              private as: AlertService) { }
+              private as: AlertService,
+              private datePipe: DatePipe) {
+  }
 
   ngOnInit() {
     this.tareaActual = {} as TipoTarea;
     this.proyectoActual = {} as Proyecto;
-    this.horaActual = {} as HoraImp;
 
-    this.horaActual.dia = new Date();
-    this.horaActual.horaInNumber = 0;
-    this.horaActual.horaOutNumber = 0;
+    this.diaActual = new Date();
+    this.inNumberActual = 0;
+    this.outNumberActual = 0;
 
     this.hourdiv = 4;
-    this.lista = new Array();
+    this.lista = [];
 
     this.service.getAll().subscribe(
       (data) => {
@@ -52,78 +63,68 @@ export class ListaHorasComponent implements OnInit {
   }
 
   private OrdenarLista() {
-    this.lista = new Array<{ time: number, horas: Hora[] }>();
+    this.lista = [];
 
     // Ordenamos la lista por fecha en forma descendente.
     this.listaHoras.forEach((x) => {
-      if (this.lista.find((y) => y.time === x.dia.getTime()) === undefined) {
-        this.lista.push({ time: x.dia.getTime(), horas: new Array() });
-      }
-      this.lista.find((y) => y.time === x.dia.getTime()).horas.push(x);
+      // if (this.lista.find((y) => y.time === x.dia.getTime()) === undefined) {
+      this.lista.push({time: x.dia, horas: []});
+      //}
+      this.lista.find((y) => y.time === x.dia).horas.push(x);
     });
 
     // Ordenamos los registros de dias.
-    this.lista.sort((a: { time: number, horas: Hora[] }, b: { time: number, horas: Hora[] }) => {
-      return b.time - a.time;
-    });
+    //this.lista.sort((a: { time: number, horas: Hora[] }, b: { time: number, horas: Hora[] }) => {
+    //  return b.time - a.time;
+    //});
 
     // Dentro de cada dia ordenamos por la hora de inicio.
-    this.lista.forEach((x) => {
-      x.horas.sort((a: Hora, b: Hora) => {
-        return b.horaIn.getTime() - a.horaIn.getTime();
-      });
-    });
+    // this.lista.forEach((x) => {
+    //   x.horas.sort((a: Hora, b: Hora) => {
+    //  return b.horaIn.getTime() - a.horaIn.getTime();
+    //  });
+    //  });
   }
 
   ProyectoOnChange(evt: Proyecto) {
-    this.horaActual.proyecto = evt;
+    this.proyectoActual = evt;
   }
 
   TareaOnChange(evt: TipoTarea) {
-    this.horaActual.tipoTarea = evt;
+    this.tareaActual = evt;
   }
 
   HoraInOnChange(evt) {
-    this.horaHasta.loadValues(this.horaActual.horaInNumber);
+    this.horaHasta.loadValues(this.inNumberActual);
+    this.inActual = evt.value;
   }
 
   HoraOutOnChange(evt) {
+    console.info(evt);
+    this.outActual = evt.value;
   }
 
   AgregarOnClick() {
-    const u: User = JSON.parse(localStorage.getItem('currentUser'));
-    const c: Colaborador = {} as Colaborador;
-    //c.id = u.id;
+    const horaActual: HoraImp = new HoraImp();
+    horaActual.colaborador = JSON.parse(localStorage.getItem('currentUser'));
+    horaActual.dia = this.datePipe.transform(this.diaActual, 'dd-MM-yyyy');
+    horaActual.proyecto = this.proyectoActual;
+    horaActual.tipoTarea = this.tareaActual;
+    horaActual.horaIn = this.inActual;
+    horaActual.horaOut = this.outActual;
 
-    this.horaActual.colaborador = c;
-    this.horaActual.horaIn = new Date();
-    this.horaActual.horaIn.setTime(this.horaActual.dia.getTime());
-    this.horaActual.horaIn.setHours(Math.floor(this.horaActual.horaInNumber / this.hourdiv));
-    this.horaActual.horaIn.setMinutes((this.horaActual.horaInNumber % this.hourdiv) * (60 / this.hourdiv));
-    this.horaActual.horaOut = new Date();
-    this.horaActual.horaOut.setHours(Math.floor(this.horaActual.horaOutNumber / this.hourdiv));
-    this.horaActual.horaOut.setMinutes((this.horaActual.horaOutNumber % this.hourdiv) * (60 / this.hourdiv));
 
-    this.horaActual.dia.setHours(0);
-    this.horaActual.dia.setMinutes(0);
-    this.horaActual.dia.setSeconds(0);
-    this.horaActual.dia.setMilliseconds(0);
-
-    this.listaHoras.push(this.horaActual);
+    this.listaHoras.push(horaActual);
 
     this.tareaActual = {} as TipoTarea;
     this.proyectoActual = {} as Proyecto;
-    this.horaActual = {} as HoraImp;
 
-    this.horaActual.dia = new Date();
-    this.horaActual.horaInNumber = 0;
-    this.horaActual.horaOutNumber = 0;
 
     this.OrdenarLista();
     this.horaHasta.loadValues(0);
-/*     this.service.create(this.horaActual).subscribe(
+    this.service.create(horaActual).subscribe(
       (data) => { this.as.success('Registro agregado correctamente.', 3000); },
       (error) => { this.as.error(error, 5000); }
-    ); */
+    );
   }
 }
