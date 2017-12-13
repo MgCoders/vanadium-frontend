@@ -11,6 +11,7 @@ import {
 } from '../../_models/models';
 import { HoraService } from '../../_services/hora.service';
 import { AlertService } from '../../_services/alert.service';
+import { AuthService } from '../../_services/auth.service';
 import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta.component';
 import { DatePipe } from '@angular/common';
 
@@ -24,12 +25,10 @@ export class ListaHorasComponent implements OnInit {
   private proyectoActual: Proyecto;
   private tareaActual: TipoTarea;
   private diaActual: Date;
-  private inActual: string;
-  private inNumberActual: number;
-  private outNumberActual: number;
-  private outActual: string;
   private listaHoras: Hora[];
-  private lista: Array<{ time: string, horas: Hora[] }>;
+  private horaActual: Hora;
+  private lista: Array<{ time: number, horas: Hora[], subHoras: number, subMinutos: number }>;
+  private fDesde: Date;
 
   private hourdiv: number;
 
@@ -37,21 +36,35 @@ export class ListaHorasComponent implements OnInit {
 
   constructor(private service: HoraService,
               private as: AlertService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
     this.tareaActual = {} as TipoTarea;
     this.proyectoActual = {} as Proyecto;
+    this.horaActual = {} as Hora;
 
     this.diaActual = new Date();
-    this.inNumberActual = 0;
-    this.outNumberActual = 0;
+    this.horaActual.horaIn = '00:00';
+    this.horaActual.horaOut = '00:00';
 
     this.hourdiv = 4;
     this.lista = [];
 
-    this.service.getAll().subscribe(
+    this.fDesde = new Date();
+    if (this.fDesde.getMonth() === 0) {
+      this.fDesde.setMonth(11);
+      this.fDesde.setFullYear(this.fDesde.getFullYear() - 1);
+    } else {
+      this.fDesde.setMonth(this.fDesde.getMonth() - 1);
+    }
+
+    this.LoadHoras();
+  }
+
+  private LoadHoras() {
+    this.service.getPorUsuarioYFecha(this.authService.getCurrentUser().id, this.fDesde, new Date()).subscribe(
       (data) => {
         this.listaHoras = data;
         this.OrdenarLista();
@@ -63,68 +76,90 @@ export class ListaHorasComponent implements OnInit {
   }
 
   private OrdenarLista() {
-    this.lista = [];
+
+    this.lista = new Array<{ time: number, horas: Hora[], subHoras: number, subMinutos: number }>();
 
     // Ordenamos la lista por fecha en forma descendente.
     this.listaHoras.forEach((x) => {
-      // if (this.lista.find((y) => y.time === x.dia.getTime()) === undefined) {
-      this.lista.push({time: x.dia, horas: []});
-      //}
-      this.lista.find((y) => y.time === x.dia).horas.push(x);
+
+      const dateAux: Date = this.dateFromString(x.dia);
+      if (this.lista.find((y) => y.time === dateAux.getTime()) === undefined) {
+        this.lista.push({ time: dateAux.getTime(), horas: new Array(), subHoras: 0, subMinutos: 0 });
+      }
+      this.lista.find((y) => y.time === dateAux.getTime()).horas.push(x);
     });
 
     // Ordenamos los registros de dias.
-    //this.lista.sort((a: { time: number, horas: Hora[] }, b: { time: number, horas: Hora[] }) => {
-    //  return b.time - a.time;
-    //});
+    this.lista.sort((a: { time: number, horas: Hora[], subHoras: number, subMinutos: number }, b: { time: number, horas: Hora[], subHoras: number, subMinutos: number }) => {
+      return b.time - a.time;
+    });
 
     // Dentro de cada dia ordenamos por la hora de inicio.
-    // this.lista.forEach((x) => {
-    //   x.horas.sort((a: Hora, b: Hora) => {
-    //  return b.horaIn.getTime() - a.horaIn.getTime();
-    //  });
-    //  });
+    this.lista.forEach((x) => {
+      x.horas.sort((a: Hora, b: Hora) => {
+        const dia: Date = new Date(x.time);
+        return (new Date(dia.getFullYear(),
+                         dia.getMonth(),
+                         dia.getDay(),
+                         +b.horaIn.split(':')[0],
+                         +b.horaIn.split(':')[1]).getTime() -
+
+                    new Date(dia.getFullYear(),
+                         dia.getMonth(),
+                         dia.getDay(),
+                         +a.horaIn.split(':')[0],
+                         +a.horaIn.split(':')[1]).getTime());
+      });
+
+      x.horas.forEach((y) => {
+        x.subHoras += +y.subtotal.split(':')[0];
+        x.subMinutos += +y.subtotal.split(':')[1];
+      });
+    });
   }
 
   ProyectoOnChange(evt: Proyecto) {
-    this.proyectoActual = evt;
+    this.horaActual.proyecto = evt;
   }
 
   TareaOnChange(evt: TipoTarea) {
-    this.tareaActual = evt;
+    this.horaActual.tipoTarea = evt;
   }
 
   HoraInOnChange(evt) {
-    this.horaHasta.loadValues(this.inNumberActual);
-    this.inActual = evt.value;
+    this.horaHasta.loadValues(evt.id);
   }
 
   HoraOutOnChange(evt) {
-    console.info(evt);
-    this.outActual = evt.value;
+  }
+
+  fDesdeOnChange(evt) {
+    this.LoadHoras();
   }
 
   AgregarOnClick() {
-    const horaActual: HoraImp = new HoraImp();
-    horaActual.colaborador = JSON.parse(localStorage.getItem('currentUser'));
-    horaActual.dia = this.datePipe.transform(this.diaActual, 'dd-MM-yyyy');
-    horaActual.proyecto = this.proyectoActual;
-    horaActual.tipoTarea = this.tareaActual;
-    horaActual.horaIn = this.inActual;
-    horaActual.horaOut = this.outActual;
 
+    this.horaActual.colaborador = this.authService.getCurrentUser();
+    this.horaActual.dia = this.datePipe.transform(this.diaActual, 'dd-MM-yyyy');
 
-    this.listaHoras.push(horaActual);
-
-    this.tareaActual = {} as TipoTarea;
-    this.proyectoActual = {} as Proyecto;
-
-
-    this.OrdenarLista();
-    this.horaHasta.loadValues(0);
-    this.service.create(horaActual).subscribe(
-      (data) => { this.as.success('Registro agregado correctamente.', 3000); },
-      (error) => { this.as.error(error, 5000); }
+    this.service.create(this.horaActual).subscribe(
+      (data) => {
+        this.as.success('Registro agregado correctamente.', 3000);
+        this.listaHoras.push(data);
+        this.OrdenarLista();
+        this.horaHasta.loadValues(0);
+        this.horaActual = {} as Hora;
+        this.tareaActual = {} as TipoTarea;
+        this.proyectoActual = {} as Proyecto;
+      },
+      (error) => {
+        this.as.error(error, 5000);
+      }
     );
+  }
+
+  dateFromString(str: string): Date {
+    const aux: string[] = str.split('-');
+    return new Date(+aux[2], +aux[1] - 1, +aux[0]);
   }
 }

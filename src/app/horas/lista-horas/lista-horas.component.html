@@ -25,13 +25,11 @@
           </div>
 
           <div class="col-6 col-sm-2">
-            <app-select-hora-desde [object]="inNumberActual" (onChange)="HoraInOnChange($event)"
-                                   placeHolder="INICIO"></app-select-hora-desde>
+            <app-select-hora-desde name="horaDesde" idModel="horaIn" [object]="horaActual" (onChange)="HoraInOnChange($event)" placeHolder="INICIO"></app-select-hora-desde>
           </div>
 
           <div class="col-6 col-sm-2">
-            <app-select-hora-hasta name="horaHasta" [object]="outNumberActual" (onChange)="HoraOutOnChange($event)"
-                                   placeHolder="FIN"></app-select-hora-hasta>
+            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN"></app-select-hora-hasta>
           </div>
 
           <div class="col-12 col-sm-2">
@@ -43,6 +41,16 @@
       </div>
     </article>
 
+    <div class="row">
+      <div class="col-12 text-right">
+        <mat-form-field>
+          <input [(ngModel)]="fDesde" (dateChange)="fDesdeOnChange($event)" class="full-width" matInput [matDatepicker]="pickerFDesde" placeholder="Fecha Desde">
+          <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFDesde></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
       <table *ngFor='let x of lista' class="mdl-data-table">
         <thead>
@@ -51,7 +59,7 @@
             <th></th>
             <th></th>
             <th></th>
-            <th class="text-primary text-large">xxx</th>
+            <th class="text-primary text-large">{{x.subHoras}}h. {{x.subMinutos}}m.</th>
             <th></th>
           </tr>
         </thead>
@@ -59,9 +67,9 @@
           <tr *ngFor="let y of x.horas">
             <td>{{y.proyecto.nombre}}</td>
             <td>{{y.tipoTarea.nombre}}</td>
-            <td>INICIO</td>
-            <td>FIN</td>
-            <td>TOTAL</td>
+            <td>{{y.horaIn}}</td>
+            <td>{{y.horaOut}}</td>
+            <td>{{y.subtotal}}</td>
             <td>
               <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
