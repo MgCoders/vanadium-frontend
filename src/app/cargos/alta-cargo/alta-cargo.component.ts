@@ -37,9 +37,9 @@ export class AltaCargoComponent implements OnInit {
     if (this.data[0] === undefined) {
       this.cs.create(this.cargoActual).subscribe(
         (data) => {
-          this.layoutService.updatePreloaderState('hide');
           this.as.success('Cargo agregado correctamente.', 3000);
           this.data[1].push(data);
+          this.layoutService.updatePreloaderState('hide');
           this.dialogRef.close();
         },
         (error) => {

@@ -9,7 +9,7 @@
         <div class="box-body row">
           <div class="col-12 col-sm-2">
             <mat-form-field class="full-width">
-              <input class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
+              <input [(ngModel)]="diaActual" name="dia" class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -25,15 +25,15 @@
           </div>
 
           <div class="col-6 col-sm-2">
-            <app-select-hora-desde [object]="horaActual" (onChange)="HoraOnChange($event)" idModel="horaInNumber" placeHolder="INICIO"></app-select-hora-desde>
+            <app-select-hora-desde name="horaDesde" idModel="horaIn" [object]="horaActual" (onChange)="HoraInOnChange($event)" placeHolder="INICIO"></app-select-hora-desde>
           </div>
 
           <div class="col-6 col-sm-2">
-            <app-select-hora-desde [object]="horaActual" (onChange)="HoraOnChange($event)" idModel="horaInNumber" placeHolder="FIN"></app-select-hora-desde>
+            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN" horaStart="00:00"></app-select-hora-hasta>
           </div>
 
           <div class="col-12 col-sm-2">
-            <button mat-icon-button color="accent">
+            <button (click)="AgregarOnClick()" mat-icon-button color="accent">
               <mat-icon class="material-icons">play_arrow</mat-icon>
             </button>
           </div>
@@ -41,76 +41,41 @@
       </div>
     </article>
 
-    <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-      <table class="mdl-data-table">
-        <thead>
-          <tr>
-            <th class="text-primary text-large">23/11/2017</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th class="text-primary text-large">9 hs. 30m.</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Proyecto 1</td>
-            <td>Tarea 1</td>
-            <td>09:00</td>
-            <td>16:00</td>
-            <td>7 hs.</td>
-            <td>
-              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Proyecto 1</td>
-            <td>Tarea 2</td>
-            <td>16:00</td>
-            <td>18:30</td>
-            <td>2 hs. 30m.</td>
-            <td>
-              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
-                <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
-              <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="row">
+      <div class="col-12 text-right">
+        <mat-form-field>
+          <input [(ngModel)]="fDesde" (dateChange)="fDesdeOnChange($event)" class="full-width" matInput [matDatepicker]="pickerFDesde" placeholder="Fecha Desde">
+          <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFDesde></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
 
-      <table class="mdl-data-table">
+    <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+      <table *ngFor='let x of lista' class="mdl-data-table">
         <thead>
           <tr>
-            <th class="text-primary text-large">20/11/2017</th>
+            <th class="text-primary text-large">{{x.horas[0].dia}}</th>
             <th></th>
             <th></th>
             <th></th>
-            <th class="text-primary text-large">6 hs. 30m.</th>
+            <th class="text-primary text-large">{{x.subHoras}}h. {{x.subMinutos}}m.</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Proyecto 2</td>
-            <td>Tarea 1</td>
-            <td>10:30</td>
-            <td>17:00</td>
-            <td>6 hs. 30m.</td>
+          <tr *ngFor="let y of x.horas">
+            <td>{{y.proyecto.nombre}}</td>
+            <td>{{y.tipoTarea.nombre}}</td>
+            <td>{{y.horaIn}}</td>
+            <td>{{y.horaOut}}</td>
+            <td>{{y.subtotal}}</td>
             <td>
-              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
+              <button mat-icon-button color="primary" (click)="Editar(y)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
+              </button>
               <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
+                <mat-icon class="material-icons" (click)="Eliminar(y)">delete</mat-icon>
               </button>
             </td>
           </tr>
