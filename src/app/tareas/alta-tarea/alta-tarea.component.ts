@@ -12,7 +12,7 @@ import { LayoutService } from '../../layout/layout.service';
 })
 export class AltaTareaComponent implements OnInit {
 
-  private tareaActual: TipoTarea;
+  public tareaActual: TipoTarea;
 
   constructor(public dialogRef: MatDialogRef<AltaTareaComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [TipoTarea, TipoTarea[]],

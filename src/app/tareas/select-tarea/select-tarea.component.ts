@@ -19,7 +19,7 @@ export class SelectTareaComponent implements OnInit {
 
   @Output() onChange: EventEmitter<TipoTarea> = new EventEmitter<TipoTarea>();
 
-  private lista: TipoTarea[];
+  public lista: TipoTarea[];
 
   constructor(private service: TareaService,
               private as: AlertService) { }

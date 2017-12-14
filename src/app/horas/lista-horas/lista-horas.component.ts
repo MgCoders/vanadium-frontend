@@ -26,13 +26,13 @@ import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confi
 })
 export class ListaHorasComponent implements OnInit {
 
-  private proyectoActual: Proyecto;
-  private tareaActual: TipoTarea;
-  private diaActual: Date;
-  private listaHoras: Hora[];
-  private horaActual: Hora;
-  private lista: Array<{ time: number, horas: Hora[], subHoras: number, subMinutos: number }>;
-  private fDesde: Date;
+  public proyectoActual: Proyecto;
+  public tareaActual: TipoTarea;
+  public diaActual: Date;
+  public listaHoras: Hora[];
+  public horaActual: Hora;
+  public lista: Array<{ time: number, horas: Hora[], subHoras: number, subMinutos: number }>;
+  public fDesde: Date;
 
   @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 

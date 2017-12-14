@@ -18,7 +18,7 @@ export class SelectCargoComponent implements OnInit {
 
   @Output() onChange: EventEmitter<Cargo> = new EventEmitter<Cargo>();
 
-  private lista: Cargo[];
+  public lista: Cargo[];
 
   constructor(private service: CargoService,
               private as: AlertService) { }

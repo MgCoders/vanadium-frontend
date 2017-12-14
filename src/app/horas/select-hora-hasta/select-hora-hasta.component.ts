@@ -21,8 +21,8 @@ export class SelectHoraHastaComponent implements OnInit {
 
   @Output() onChange: EventEmitter<{id: number, desc: string, hora: string}> = new EventEmitter<{id: number, desc: string, hora: string}>();
 
-  private lista: any[];
-  private hourdiv: number;
+  public lista: any[];
+  public hourdiv: number;
 
   constructor(private as: AlertService) { }
 
