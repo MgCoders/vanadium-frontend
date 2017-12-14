@@ -12,8 +12,8 @@ import { LayoutService } from '../../layout/layout.service';
 })
 export class AltaColaboradorComponent implements OnInit {
 
-  private colaboradorActual: Colaborador;
-  private cargoActual: Cargo;
+  public colaboradorActual: Colaborador;
+  public cargoActual: Cargo;
 
   constructor(public dialogRef: MatDialogRef<AltaColaboradorComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Colaborador, Colaborador[]],

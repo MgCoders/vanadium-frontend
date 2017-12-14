@@ -14,7 +14,7 @@ import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confi
 })
 export class ListaTareasComponent implements OnInit {
 
-  private lista: TipoTarea[];
+  public lista: TipoTarea[];
 
   constructor(public dialog: MatDialog,
               private service: TareaService,

@@ -19,7 +19,7 @@ export class SelectProyectoComponent implements OnInit {
 
   @Output() onChange: EventEmitter<Proyecto> = new EventEmitter<Proyecto>();
 
-  private lista: Proyecto[];
+  public lista: Proyecto[];
 
   constructor(private service: ProyectoService,
               private as: AlertService) { }

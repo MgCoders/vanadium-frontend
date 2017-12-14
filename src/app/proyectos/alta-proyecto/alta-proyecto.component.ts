@@ -13,7 +13,7 @@ import { LayoutService } from '../../layout/layout.service';
 
 export class AltaProyectoComponent implements OnInit {
 
-  private proyectoActual: Proyecto;
+  public proyectoActual: Proyecto;
 
   constructor(public dialogRef: MatDialogRef<AltaProyectoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Proyecto, Proyecto[]],
