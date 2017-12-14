@@ -3,13 +3,13 @@ import * as models from './models';
 export class HoraImp implements models.Hora {
     id?: number;
 
-    dia: Date;
+    dia: string;
 
-    horaIn: Date;
+    horaIn: string;
 
-    horaOut: Date;
+    horaOut: string;
 
-    subtotal?: Date;
+    subtotal?: string;
 
     proyecto: models.Proyecto;
 
@@ -17,7 +17,14 @@ export class HoraImp implements models.Hora {
 
     colaborador: models.Colaborador;
 
-    horaInNumber: number;
-
-    horaOutNumber: number;
+    constructor(x: models.Hora) {
+        this.id = x.id;
+        this.dia = x.dia;
+        this.horaIn = x.horaIn;
+        this.horaOut = x.horaOut;
+        this.subtotal = x.subtotal;
+        this.proyecto = x.proyecto;
+        this.tipoTarea = x.tipoTarea;
+        this.colaborador = x.colaborador;
+    }
 }

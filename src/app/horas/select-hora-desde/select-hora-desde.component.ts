@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AlertService } from '../../_services/alert.service';
+import { strictEqual } from 'assert';
 
 @Component({
   selector: 'app-select-hora-desde',
@@ -12,7 +13,7 @@ export class SelectHoraDesdeComponent implements OnInit {
   @Input() idModel: string;
   @Input() placeHolder: string;
 
-  @Output() onChange: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onChange: EventEmitter<{id: number, desc: string, hora: string}> = new EventEmitter<{id: number, desc: string, hora: string}>();
 
   private lista: any[];
   private hourdiv: number;
@@ -38,11 +39,11 @@ export class SelectHoraDesdeComponent implements OnInit {
       }
       aux += ((_i % this.hourdiv) * (60 / this.hourdiv)).toString();
 
-      this.lista.push({id: _i, desc: aux});
+      this.lista.push({id: _i, desc: aux, hora: aux});
     }
   }
 
   onChangeValue(evt) {
-    this.onChange.emit(evt);
+    this.onChange.emit(this.lista.find((x) => x.hora === evt.value));
   }
 }
