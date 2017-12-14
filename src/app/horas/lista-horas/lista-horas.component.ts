@@ -12,6 +12,7 @@ import {
 import { HoraService } from '../../_services/hora.service';
 import { AlertService } from '../../_services/alert.service';
 import { AuthService } from '../../_services/auth.service';
+import { LayoutService } from '../../layout/layout.service';
 import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta.component';
 import { DatePipe } from '@angular/common';
 
@@ -37,7 +38,8 @@ export class ListaHorasComponent implements OnInit {
   constructor(private service: HoraService,
               private as: AlertService,
               private datePipe: DatePipe,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private layoutService: LayoutService) {
   }
 
   ngOnInit() {
@@ -64,13 +66,22 @@ export class ListaHorasComponent implements OnInit {
   }
 
   private LoadHoras() {
+    this.layoutService.updatePreloaderState('active');
     this.service.getPorUsuarioYFecha(this.authService.getCurrentUser().id, this.fDesde, new Date()).subscribe(
       (data) => {
         this.listaHoras = data;
         this.OrdenarLista();
+        if (this.lista.length > 0) {
+          this.horaActual.proyecto = this.lista[0].horas[0].proyecto;
+          this.proyectoActual = this.lista[0].horas[0].proyecto;
+          this.horaActual.tipoTarea = this.lista[0].horas[0].tipoTarea;
+          this.tareaActual = this.lista[0].horas[0].tipoTarea;
+          this.layoutService.updatePreloaderState('hide');
+        }
       },
       (error) => {
         this.as.error(error, 5000);
+        this.layoutService.updatePreloaderState('hide');
       }
     );
   }
@@ -142,6 +153,7 @@ export class ListaHorasComponent implements OnInit {
     this.horaActual.colaborador = this.authService.getCurrentUser();
     this.horaActual.dia = this.datePipe.transform(this.diaActual, 'dd-MM-yyyy');
 
+    this.layoutService.updatePreloaderState('active');
     this.service.create(this.horaActual).subscribe(
       (data) => {
         this.as.success('Registro agregado correctamente.', 3000);
@@ -149,11 +161,13 @@ export class ListaHorasComponent implements OnInit {
         this.OrdenarLista();
         this.horaHasta.loadValues(0);
         this.horaActual = {} as Hora;
-        this.tareaActual = {} as TipoTarea;
-        this.proyectoActual = {} as Proyecto;
+        this.horaActual.tipoTarea = this.tareaActual;
+        this.horaActual.proyecto = this.proyectoActual;
+        this.layoutService.updatePreloaderState('hide');
       },
       (error) => {
         this.as.error(error, 5000);
+        this.layoutService.updatePreloaderState('hide');
       }
     );
   }
