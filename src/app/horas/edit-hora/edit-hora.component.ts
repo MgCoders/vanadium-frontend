@@ -14,10 +14,10 @@ import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta
 })
 export class EditHoraComponent implements OnInit {
 
-  private horaActual: Hora;
-  private proyectoActual: Proyecto;
-  private tareaActual: TipoTarea;
-  private diaActual: Date;
+  public horaActual: Hora;
+  public proyectoActual: Proyecto;
+  public tareaActual: TipoTarea;
+  public diaActual: Date;
 
   @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 

@@ -14,7 +14,7 @@ import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confi
 })
 export class ListaProyectosComponent implements OnInit {
 
-  private lista: Proyecto[];
+  public lista: Proyecto[];
 
   constructor(public dialog: MatDialog,
               private service: ProyectoService,

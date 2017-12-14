@@ -14,7 +14,7 @@ import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confi
 })
 export class ListaColaboradoresComponent implements OnInit {
 
-  private lista: Colaborador[];
+  public lista: Colaborador[];
 
   constructor(public dialog: MatDialog,
               private service: ColaboradorService,

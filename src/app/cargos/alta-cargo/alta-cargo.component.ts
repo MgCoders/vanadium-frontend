@@ -12,7 +12,7 @@ import { LayoutService } from '../../layout/layout.service';
 })
 export class AltaCargoComponent implements OnInit {
 
-  private cargoActual: Cargo;
+  public cargoActual: Cargo;
 
   constructor(public dialogRef: MatDialogRef<AltaCargoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Cargo, Cargo[]],
