@@ -16,4 +16,15 @@ export class HoraImp implements models.Hora {
     tipoTarea: models.TipoTarea;
 
     colaborador: models.Colaborador;
+
+    constructor(x: models.Hora) {
+        this.id = x.id;
+        this.dia = x.dia;
+        this.horaIn = x.horaIn;
+        this.horaOut = x.horaOut;
+        this.subtotal = x.subtotal;
+        this.proyecto = x.proyecto;
+        this.tipoTarea = x.tipoTarea;
+        this.colaborador = x.colaborador;
+    }
 }

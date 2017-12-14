@@ -9,7 +9,7 @@
         <div class="box-body row">
           <div class="col-12 col-sm-2">
             <mat-form-field class="full-width">
-              <input [(ngModel)]="diaActual" class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
+              <input [(ngModel)]="diaActual" name="dia" class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -29,7 +29,7 @@
           </div>
 
           <div class="col-6 col-sm-2">
-            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN"></app-select-hora-hasta>
+            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN" horaStart="00:00"></app-select-hora-hasta>
           </div>
 
           <div class="col-12 col-sm-2">
@@ -71,11 +71,11 @@
             <td>{{y.horaOut}}</td>
             <td>{{y.subtotal}}</td>
             <td>
-              <a mat-icon-button color="primary" [routerLink]="['/app/cargos/alta']">
+              <button mat-icon-button color="primary" (click)="Editar(y)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
-              </a>
+              </button>
               <button mat-icon-button color="warn">
-                <mat-icon class="material-icons">delete</mat-icon>
+                <mat-icon class="material-icons" (click)="Eliminar(y)">delete</mat-icon>
               </button>
             </td>
           </tr>

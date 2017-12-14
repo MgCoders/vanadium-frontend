@@ -14,7 +14,8 @@ import {
   MatSliderModule,
   MatSnackBarModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDialogModule,
 } from '@angular/material';
 
 import { HorasComponent } from './horas.component';
@@ -30,6 +31,7 @@ import { SelectHoraHastaComponent } from './select-hora-hasta/select-hora-hasta.
 import { HoraService } from '../_services/hora.service';
 import { AlertService } from '../_services/alert.service';
 import { LayoutService } from '../layout/layout.service';
+import { EditHoraComponent } from './edit-hora/edit-hora.component';
 
 @NgModule({
   imports: [
@@ -47,21 +49,27 @@ import { LayoutService } from '../layout/layout.service';
     MatSliderModule,
     ColaboradoresModule,
     ProyectosModule,
-    TareasModule
+    TareasModule,
+    MatDialogModule
   ],
 
   declarations: [
     HorasComponent,
     ListaHorasComponent,
     SelectHoraDesdeComponent,
-    SelectHoraHastaComponent
+    SelectHoraHastaComponent,
+    EditHoraComponent
   ],
 
   providers: [
     HoraService,
     AlertService,
     LayoutService,
-    DatePipe
+    DatePipe,
   ],
+
+  entryComponents: [
+    EditHoraComponent,
+  ]
 })
 export class HorasModule { }

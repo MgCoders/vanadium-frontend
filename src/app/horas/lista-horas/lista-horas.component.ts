@@ -15,6 +15,9 @@ import { AuthService } from '../../_services/auth.service';
 import { LayoutService } from '../../layout/layout.service';
 import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta.component';
 import { DatePipe } from '@angular/common';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { EditHoraComponent } from '../edit-hora/edit-hora.component';
+import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-lista-horas',
@@ -31,15 +34,14 @@ export class ListaHorasComponent implements OnInit {
   private lista: Array<{ time: number, horas: Hora[], subHoras: number, subMinutos: number }>;
   private fDesde: Date;
 
-  private hourdiv: number;
-
   @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 
   constructor(private service: HoraService,
               private as: AlertService,
               private datePipe: DatePipe,
               private authService: AuthService,
-              private layoutService: LayoutService) {
+              private layoutService: LayoutService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -51,7 +53,6 @@ export class ListaHorasComponent implements OnInit {
     this.horaActual.horaIn = '00:00';
     this.horaActual.horaOut = '00:00';
 
-    this.hourdiv = 4;
     this.lista = [];
 
     this.fDesde = new Date();
@@ -125,6 +126,10 @@ export class ListaHorasComponent implements OnInit {
       x.horas.forEach((y) => {
         x.subHoras += +y.subtotal.split(':')[0];
         x.subMinutos += +y.subtotal.split(':')[1];
+        if (x.subMinutos >= 60 ) {
+          x.subMinutos = x.subMinutos - 60;
+          x.subHoras ++;
+        }
       });
     });
   }
@@ -139,6 +144,7 @@ export class ListaHorasComponent implements OnInit {
 
   HoraInOnChange(evt) {
     this.horaHasta.loadValues(evt.id);
+    this.horaActual.horaOut = evt.hora;
   }
 
   HoraOutOnChange(evt) {
@@ -168,12 +174,39 @@ export class ListaHorasComponent implements OnInit {
       (error) => {
         this.as.error(error, 5000);
         this.layoutService.updatePreloaderState('hide');
-      }
-    );
+      });
   }
 
   dateFromString(str: string): Date {
     const aux: string[] = str.split('-');
     return new Date(+aux[2], +aux[1] - 1, +aux[0]);
+  }
+
+  Editar(x: Hora) {
+    const dialog = this.dialog.open(EditHoraComponent, {
+      data: [x, this.listaHoras],
+      width: '500px',
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        this.OrdenarLista();
+    });
+  }
+
+  Eliminar(x: Hora) {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: '¿Está seguro que desea eliminar la hora ' + x.id + '?',
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          // TODO LLamar al servicio.
+          this.listaHoras.splice(this.listaHoras.indexOf(x), 1);
+          this.OrdenarLista();
+          this.as.success('Hora eliminada correctamente.', 3000);
+        }
+    });
   }
 }

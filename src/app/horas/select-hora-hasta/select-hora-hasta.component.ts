@@ -17,6 +17,7 @@ export class SelectHoraHastaComponent implements OnInit {
   @Input() object: any;
   @Input() idModel: string;
   @Input() placeHolder: string;
+  @Input() horaStart: string;
 
   @Output() onChange: EventEmitter<{id: number, desc: string, hora: string}> = new EventEmitter<{id: number, desc: string, hora: string}>();
 
@@ -28,7 +29,10 @@ export class SelectHoraHastaComponent implements OnInit {
   ngOnInit() {
       this.lista = [];
       this.hourdiv = 4;
-      this.loadValues(0);
+      const h: number = +this.horaStart.split(':')[0];
+      const m: number = +this.horaStart.split(':')[1];
+      const startVal: number = (h * 4) + ((m * this.hourdiv) / 60);
+      this.loadValues(startVal);
   }
 
   public loadValues(desde: number) {
@@ -61,8 +65,10 @@ export class SelectHoraHastaComponent implements OnInit {
 
       this.lista.push({id: _i, desc: aux, hora: horaStr});
     }
+  }
 
-    this.object[this.idModel] = this.lista[0].hora;
+  public getIndexOfValue(val: string): number {
+    return this.lista.indexOf((x) => x.hora === val);
   }
 
   onChangeValue(evt) {
