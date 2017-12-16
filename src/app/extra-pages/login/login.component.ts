@@ -37,6 +37,9 @@ export class PageLoginComponent implements OnInit {
 
   ngOnInit(): void {
     // reset login status
+    if (this.authService.getCurrentUser() != null) {
+      this.model['email'] = this.authService.getCurrentUser().email;
+    }
     this.authService.logout();
 
     // get return url from route parameters or default to '/'

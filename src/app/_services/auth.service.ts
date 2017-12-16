@@ -31,13 +31,21 @@ export class AuthService {
     }
 
     public isAuthenticated(): boolean {
-        const token = this.getToken();
-        return (token != null) && !this.jwt.isTokenExpired(token);
+        try {
+            const token = this.getToken();
+            return (token != null) && !this.jwt.isTokenExpired(token);
+        } catch (e) {
+            return false;
+        }
     }
 
     public isAuthenticatedAndAdmin(): boolean {
-        const token = this.getToken();
-        return (token != null) && !this.jwt.isTokenExpired(token) && (this.getCurrentUser() && this.getCurrentUser().role === 'ADMIN');
+        try {
+            const token = this.getToken();
+            return (token != null) && !this.jwt.isTokenExpired(token) && (this.getCurrentUser() && this.getCurrentUser().role === 'ADMIN');
+        } catch (e) {
+            return false;
+        }
     }
 
     login(email: string, password: string): Observable<boolean> {
