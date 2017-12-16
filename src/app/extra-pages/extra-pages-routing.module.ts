@@ -1,4 +1,7 @@
-import { Routes, RouterModule } from '@angular/router';
+import {
+    RouterModule,
+    Routes
+} from '@angular/router';
 
 import { PageLoginComponent } from './login/login.component';
 import { PageSignUpComponent } from './sign-up/sign-up.component';
@@ -8,7 +11,7 @@ import { Page500Component } from './500/500.component';
 import { PageConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { PageLockScreenComponent } from './lock-screen/lock-screen.component';
 import { PageMaintenanceComponent } from './maintenance/maintenance.component';
-import { AuthGuard } from '../_guards/auth.guard';
+import { PageNewPasswordComponent } from './new-password/new-password.component';
 
 export const ExtraPagesRoutes: Routes = [
   {
@@ -18,6 +21,7 @@ export const ExtraPagesRoutes: Routes = [
       { path: 'login', component: PageLoginComponent },
       { path: 'sign-up', component: PageSignUpComponent },
       { path: 'forgot-password', component: PageForgotPasswordComponent },
+        {path: 'new-password', component: PageNewPasswordComponent},
       { path: '404', component: Page404Component },
       { path: '500', component: Page500Component },
       { path: 'confirm-email', component: PageConfirmEmailComponent },
