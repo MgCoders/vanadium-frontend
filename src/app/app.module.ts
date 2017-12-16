@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AvatarModule } from 'ngx-avatar';
+
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -125,6 +127,7 @@ import { AdminGuard } from './_guards/admin.guard';
         MatToolbarModule,
         MatTooltipModule,
         AppRoutingModule,
+        AvatarModule,
 
         // Sub modules
         LayoutModule,
