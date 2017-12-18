@@ -7,4 +7,4 @@ echo cd sulfur-frontend-deploy en home
 cd /home/ubuntu/sulfur-frontend-deploy
 cp ../conf/sulfur-frontend-deploy.env /home/ubuntu/sulfur-frontend-deploy/.env
 echo docker-compose up
-docker-compose -f docker-compose.production.yml build && docker-compose -f docker-compose.production.yml up -d
+docker-compose -f docker-compose.production.yml pull && docker-compose -f docker-compose.production.yml up -d

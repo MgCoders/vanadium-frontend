@@ -7,6 +7,7 @@ import {
 } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import { JwtHelper } from 'angular2-jwt';
 import { environment } from '../../environments/environment';
 import { Colaborador } from '../_models/Colaborador';
@@ -30,13 +31,21 @@ export class AuthService {
     }
 
     public isAuthenticated(): boolean {
-        const token = this.getToken();
-        return (token != null) && !this.jwt.isTokenExpired(token);
+        try {
+            const token = this.getToken();
+            return (token != null) && !this.jwt.isTokenExpired(token);
+        } catch (e) {
+            return false;
+        }
     }
 
     public isAuthenticatedAndAdmin(): boolean {
-        const token = this.getToken();
-        return (token != null) && !this.jwt.isTokenExpired(token) && (this.getCurrentUser() && this.getCurrentUser().role === 'ADMIN');
+        try {
+            const token = this.getToken();
+            return (token != null) && !this.jwt.isTokenExpired(token) && (this.getCurrentUser() && this.getCurrentUser().role === 'ADMIN');
+        } catch (e) {
+            return false;
+        }
     }
 
     login(email: string, password: string): Observable<boolean> {
@@ -59,6 +68,24 @@ export class AuthService {
                     this.handleErrorObservable(response);
                 }
             });
+    }
+
+    resetPassword(email: string) {
+        return this.http.post(`${environment.apiUrl}/users/recuperar/` + email, {});
+    }
+
+    resetEmail(token: string): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/users/recuperar/` + token)
+            .map((res: Response) => res.json());
+    }
+
+    changePassword(token: string, password: string) {
+        const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+        const options = new RequestOptions({headers});
+        const body = new URLSearchParams();
+        body.set('token', token);
+        body.set('password', password);
+        return this.http.put(`${environment.apiUrl}/users/recuperar/`, body.toString(), options);
     }
 
     private handleErrorObservable(error: Response | any) {

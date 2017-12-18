@@ -2,7 +2,6 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { ColaboradorService } from '../../_services/colaborador.service';
 import { AuthService } from '../../_services/auth.service';
 import {
   ActivatedRoute,
@@ -38,6 +37,9 @@ export class PageLoginComponent implements OnInit {
 
   ngOnInit(): void {
     // reset login status
+    if (this.authService.getCurrentUser() != null) {
+      this.model['email'] = this.authService.getCurrentUser().email;
+    }
     this.authService.logout();
 
     // get return url from route parameters or default to '/'
@@ -65,7 +67,7 @@ export class PageLoginComponent implements OnInit {
       } ,
       (err) => {
         console.log('NO LOG');
-        this.openSnackBar(err, 'Ok')   ;
+        this.openSnackBar(err, 'Ok');
         this.onResetForm();
     });
   }
