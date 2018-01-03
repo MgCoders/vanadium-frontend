@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { Cargo, CargoImp } from '../../_models/models';
+import { Cargo } from '../../_models/models';
+import { CargoImp } from '../../_models/CargoImp';
 import { CargoService } from '../../_services/cargo.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';

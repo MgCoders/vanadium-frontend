@@ -5,10 +5,10 @@ import {
 } from '@angular/core';
 import {
   Hora,
-  HoraImp,
   Proyecto,
   TipoTarea
 } from '../../_models/models';
+import { HoraImp } from '../../_models/HoraImp';
 import { HoraService } from '../../_services/hora.service';
 import { AlertService } from '../../_services/alert.service';
 import { AuthService } from '../../_services/auth.service';
