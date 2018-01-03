@@ -12,23 +12,11 @@
 
 import * as models from './models';
 
-export interface Hora {
-    id?: number;
+export interface HoraDetalle {
+    proyecto: models.Proyecto;
 
-    dia: string;
+    tipoTarea: models.TipoTarea;
 
-    horaIn: string;
-
-    horaOut: string;
-
-    subtotal?: string;
-
-    colaborador: models.Colaborador;
-
-    horaDetalleList?: models.HoraDetalle[];
-
-    completa?: boolean;
-
-    subtotalDetalles?: Date;
+    duracion?: Date;
 
 }

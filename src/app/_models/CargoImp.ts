@@ -8,12 +8,15 @@ export class CargoImp implements models.Cargo {
 
     codigo: string;
 
-    precioHora: number;
+    precioHoraHistoria?: models.PrecioHora[];
 
     public constructor(x: models.Cargo) {
         this.id = x.id;
         this.nombre = x.nombre;
         this.codigo = x.codigo;
-        this.precioHora = x.precioHora;
+
+        x.precioHoraHistoria.forEach((y) => {
+            this.precioHoraHistoria.push(new models.PrecioHoraImp(y));
+        });
     }
 }

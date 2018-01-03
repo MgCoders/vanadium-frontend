@@ -7,13 +7,11 @@ export class ColaboradorImp {
 
     nombre: string;
 
-    cargo: models.Cargo;
+    cargo?: models.Cargo;
 
     role: string;
 
     token?: string;
-
-    password: string;
 
     public constructor(x: models.Colaborador) {
         this.id = x.id;

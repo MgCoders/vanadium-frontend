@@ -30,8 +30,8 @@ export class EditHoraComponent implements OnInit {
 
   ngOnInit() {
     this.horaActual = new HoraImp(this.data[0]);
-    this.proyectoActual = this.horaActual.proyecto;
-    this.tareaActual = this.horaActual.tipoTarea;
+    //this.proyectoActual = this.horaActual.proyecto;
+    //this.tareaActual = this.horaActual.tipoTarea;
     this.diaActual = this.dateFromString(this.horaActual.dia);
   }
 
@@ -40,11 +40,11 @@ export class EditHoraComponent implements OnInit {
   }
 
   ProyectoOnChange(evt: Proyecto) {
-    this.horaActual.proyecto = evt;
+    //this.horaActual.proyecto = evt;
   }
 
   TareaOnChange(evt: TipoTarea) {
-    this.horaActual.tipoTarea = evt;
+    //this.horaActual.tipoTarea = evt;
   }
 
   HoraInOnChange(evt) {

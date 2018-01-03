@@ -73,10 +73,10 @@ export class ListaHorasComponent implements OnInit {
         this.listaHoras = data;
         this.OrdenarLista();
         if (this.lista.length > 0) {
-          this.horaActual.proyecto = this.lista[0].horas[0].proyecto;
-          this.proyectoActual = this.lista[0].horas[0].proyecto;
-          this.horaActual.tipoTarea = this.lista[0].horas[0].tipoTarea;
-          this.tareaActual = this.lista[0].horas[0].tipoTarea;
+          //this.horaActual.proyecto = this.lista[0].horas[0].proyecto;
+          //this.proyectoActual = this.lista[0].horas[0].proyecto;
+          //this.horaActual.tipoTarea = this.lista[0].horas[0].tipoTarea;
+          //this.tareaActual = this.lista[0].horas[0].tipoTarea;
           this.layoutService.updatePreloaderState('hide');
         }
       },
@@ -135,11 +135,11 @@ export class ListaHorasComponent implements OnInit {
   }
 
   ProyectoOnChange(evt: Proyecto) {
-    this.horaActual.proyecto = evt;
+    //this.horaActual.proyecto = evt;
   }
 
   TareaOnChange(evt: TipoTarea) {
-    this.horaActual.tipoTarea = evt;
+    //this.horaActual.tipoTarea = evt;
   }
 
   HoraInOnChange(evt) {
@@ -167,8 +167,8 @@ export class ListaHorasComponent implements OnInit {
         this.OrdenarLista();
         this.horaHasta.loadValues(0);
         this.horaActual = {} as Hora;
-        this.horaActual.tipoTarea = this.tareaActual;
-        this.horaActual.proyecto = this.proyectoActual;
+        //this.horaActual.tipoTarea = this.tareaActual;
+        //this.horaActual.proyecto = this.proyectoActual;
         this.layoutService.updatePreloaderState('hide');
       },
       (error) => {

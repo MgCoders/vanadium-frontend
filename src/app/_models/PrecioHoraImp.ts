@@ -12,23 +12,13 @@
 
 import * as models from './models';
 
-export interface Hora {
-    id?: number;
+export class PrecioHoraImp implements models.PrecioHora {
+    precioHora: number;
 
-    dia: string;
+    vigenciaDesde: string;
 
-    horaIn: string;
-
-    horaOut: string;
-
-    subtotal?: string;
-
-    colaborador: models.Colaborador;
-
-    horaDetalleList?: models.HoraDetalle[];
-
-    completa?: boolean;
-
-    subtotalDetalles?: Date;
-
+    constructor(x: models.PrecioHora) {
+        this.precioHora = x.precioHora;
+        this.vigenciaDesde = x.vigenciaDesde;
+    }
 }

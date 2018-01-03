@@ -27,7 +27,6 @@ export class AltaColaboradorComponent implements OnInit {
       this.colaboradorActual = {} as Colaborador;
       this.colaboradorActual.role = 'USER';
       this.colaboradorActual.token = '';
-      this.colaboradorActual.password = '1234';
     } else {
       this.colaboradorActual = new ColaboradorImp(this.data[0]);
     }

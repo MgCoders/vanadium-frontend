@@ -12,23 +12,13 @@
 
 import * as models from './models';
 
-export interface Hora {
-    id?: number;
+export interface EstimacionDetalle {
+    tipoTarea: models.TipoTarea;
 
-    dia: string;
+    cargo: models.Cargo;
 
-    horaIn: string;
+    cantidadHoras: number;
 
-    horaOut: string;
-
-    subtotal?: string;
-
-    colaborador: models.Colaborador;
-
-    horaDetalleList?: models.HoraDetalle[];
-
-    completa?: boolean;
-
-    subtotalDetalles?: Date;
+    precioTotal: number;
 
 }
