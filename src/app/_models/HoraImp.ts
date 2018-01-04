@@ -29,6 +29,7 @@ export class HoraImp implements models.Hora {
         this.completa = x.completa;
         this.subtotalDetalles = x.subtotalDetalles;
 
+        this.horaDetalleList = new Array();
         x.horaDetalleList.forEach((y) => {
             this.horaDetalleList.push(new models.HoraDetalleImp(y));
         });

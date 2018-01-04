@@ -15,6 +15,7 @@ export class CargoImp implements models.Cargo {
         this.nombre = x.nombre;
         this.codigo = x.codigo;
 
+        this.precioHoraHistoria = new Array();
         x.precioHoraHistoria.forEach((y) => {
             this.precioHoraHistoria.push(new models.PrecioHoraImp(y));
         });
