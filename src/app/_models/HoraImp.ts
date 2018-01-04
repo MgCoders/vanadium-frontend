@@ -11,11 +11,13 @@ export class HoraImp implements models.Hora {
 
     subtotal?: string;
 
-    proyecto: models.Proyecto;
-
-    tipoTarea: models.TipoTarea;
-
     colaborador: models.Colaborador;
+
+    horaDetalleList?: models.HoraDetalle[];
+
+    completa?: boolean;
+
+    subtotalDetalles?: Date;
 
     constructor(x: models.Hora) {
         this.id = x.id;
@@ -23,8 +25,13 @@ export class HoraImp implements models.Hora {
         this.horaIn = x.horaIn;
         this.horaOut = x.horaOut;
         this.subtotal = x.subtotal;
-        this.proyecto = x.proyecto;
-        this.tipoTarea = x.tipoTarea;
         this.colaborador = x.colaborador;
+        this.completa = x.completa;
+        this.subtotalDetalles = x.subtotalDetalles;
+
+        this.horaDetalleList = new Array();
+        x.horaDetalleList.forEach((y) => {
+            this.horaDetalleList.push(new models.HoraDetalleImp(y));
+        });
     }
 }

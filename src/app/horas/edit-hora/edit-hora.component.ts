@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { Hora, HoraImp, Proyecto, TipoTarea } from '../../_models/models';
+import { Hora, Proyecto, TipoTarea } from '../../_models/models';
+import { HoraImp } from '../../_models/HoraImp';
 import { HoraService } from '../../_services/hora.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
@@ -30,8 +31,8 @@ export class EditHoraComponent implements OnInit {
 
   ngOnInit() {
     this.horaActual = new HoraImp(this.data[0]);
-    this.proyectoActual = this.horaActual.proyecto;
-    this.tareaActual = this.horaActual.tipoTarea;
+    //this.proyectoActual = this.horaActual.proyecto;
+    //this.tareaActual = this.horaActual.tipoTarea;
     this.diaActual = this.dateFromString(this.horaActual.dia);
   }
 
@@ -40,11 +41,11 @@ export class EditHoraComponent implements OnInit {
   }
 
   ProyectoOnChange(evt: Proyecto) {
-    this.horaActual.proyecto = evt;
+    //this.horaActual.proyecto = evt;
   }
 
   TareaOnChange(evt: TipoTarea) {
-    this.horaActual.tipoTarea = evt;
+    //this.horaActual.tipoTarea = evt;
   }
 
   HoraInOnChange(evt) {

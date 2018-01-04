@@ -19,12 +19,10 @@ export interface Colaborador {
 
     nombre: string;
 
-    cargo: models.Cargo;
+    cargo?: models.Cargo;
 
     role: string;
 
     token?: string;
-
-    password: string;
 
 }
