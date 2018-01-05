@@ -20,7 +20,7 @@ export class HoraDetalleImp implements models.HoraDetalle {
 
     tipoTarea: models.TipoTarea;
 
-    duracion?: Date;
+    duracion?: string;
 
     constructor(x: HoraDetalle) {
         this.proyecto = x.proyecto;

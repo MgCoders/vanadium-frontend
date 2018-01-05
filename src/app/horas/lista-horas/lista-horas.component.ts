@@ -7,7 +7,8 @@ import {
   Hora,
   Proyecto,
   TipoTarea,
-  HoraDetalle
+  HoraDetalle,
+  HoraDetalleImp
 } from '../../_models/models';
 import { HoraImp } from '../../_models/HoraImp';
 import { HoraService } from '../../_services/hora.service';
@@ -39,11 +40,11 @@ export class ListaHorasComponent implements OnInit {
   @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 
   constructor(private service: HoraService,
-    private as: AlertService,
-    private datePipe: DatePipe,
-    private authService: AuthService,
-    private layoutService: LayoutService,
-    public dialog: MatDialog) {
+              private as: AlertService,
+              private datePipe: DatePipe,
+              private authService: AuthService,
+              private layoutService: LayoutService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -53,8 +54,12 @@ export class ListaHorasComponent implements OnInit {
     this.horaDetalleActual = {} as HoraDetalle;
 
     this.diaActual = new Date();
-    this.horaActual.horaIn = '00:00';
-    this.horaActual.horaOut = '00:00';
+    const horas: string = this.diaActual.getHours().toString().length === 1 ? '0' + this.diaActual.getHours().toString() : this.diaActual.getHours().toString();
+    const minutos: number = (Math.round(this.diaActual.getMinutes() / 15) * 15);
+    const minutosStr: string = minutos.toString().length === 1 ? '0' + minutos.toString() : minutos.toString();
+    this.horaActual.horaIn = horas + ':' + minutosStr;
+    this.horaHasta.loadValuesFromStr(this.horaActual.horaIn);
+    this.horaActual.horaOut = this.horaActual.horaIn;
 
     //this.lista = [];
 
@@ -202,7 +207,9 @@ export class ListaHorasComponent implements OnInit {
 
   AgregarOnClick() {
     const aux: Hora = new HoraImp(this.horaActual);
-    aux.horaDetalleList.push(this.horaDetalleActual);
+    const aux2: HoraDetalle = new HoraDetalleImp(this.horaDetalleActual);
+    aux2.duracion = 'PT' + aux2.duracion.split(':')[0] + 'H' + aux2.duracion.split(':')[1] + 'M';
+    aux.horaDetalleList.push(aux2);
     this.service.edit(aux).subscribe(
       (data) => {
         this.as.success('Registro agregado correctamente.', 3000);

@@ -22,7 +22,7 @@ export class SelectHoraHastaComponent implements OnInit {
   @Output() onChange: EventEmitter<{id: number, desc: string, hora: string}> = new EventEmitter<{id: number, desc: string, hora: string}>();
 
   public lista: any[];
-  public hourdiv: number;
+  public hourdiv: number = 4;
 
   constructor(private as: AlertService) { }
 
@@ -65,6 +65,12 @@ export class SelectHoraHastaComponent implements OnInit {
 
       this.lista.push({id: _i, desc: aux, hora: horaStr});
     }
+  }
+
+  public loadValuesFromStr(desde: string) {
+    const aux: string[] = desde.split(':');
+    const x: number = +aux[0] * this.hourdiv + (+aux[1] / (60 / this.hourdiv));
+    this.loadValues(x);
   }
 
   public getIndexOfValue(val: string): number {
