@@ -13,12 +13,6 @@
     </a>
   </li>
   <li>
-    <a mat-button>
-      <i class="nav-icon material-icons">equalizer</i>
-      <span class="nav-text">Reportes</span>
-    </a>
-  </li>
-  <li>
     <a mat-button href="javascript:;" myToggleQuickview="customizer">
       <i class="nav-icon material-icons">settings</i>
       <span class="nav-text">Opciones</span>
@@ -26,6 +20,14 @@
   </li>
 
   <li class="nav-divider" *ngIf="isAdmin()"></li>
+  <li *ngIf="isAdmin()">
+      <a mat-button href="#/app/reportes"><i class="nav-icon material-icons">equalizer</i><span class="nav-text">Reportes</span></a>
+      <ul>
+          <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/responsive']"><span>T1</span></a></li>
+          <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/static']"><span>T2</span></a></li>
+          <li><a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/data-table']"><span>T3</span></a></li>
+      </ul>
+  </li>
 
   <li *ngIf="isAdmin()">
     <a mat-button [routerLink]="['/app/cargos/lista']">
