@@ -17,6 +17,6 @@ export interface HoraDetalle {
 
     tipoTarea: models.TipoTarea;
 
-    duracion?: Date;
+    duracion?: string;
 
 }
