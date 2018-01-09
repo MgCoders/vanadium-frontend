@@ -23,8 +23,7 @@
           </div>
 
           <div class="col-6 col-sm-3">
-            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN"
-              horaStart="00:00"></app-select-hora-hasta>
+            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN"></app-select-hora-hasta>
           </div>
 
           <div class="col-12 col-sm-3">
@@ -56,33 +55,34 @@
         </div>
 
 
-        <div class="box-body row" *ngIf="horaActual !== undefined && horaActual.id !== undefined && horaActual.horaDetalleList !== undefined && horaActual.horaDetalleList.length > 0">
-          <div class="col-12 col-sm-12">
-            <table class="mdl-data-table">
-              <thead>
-                <tr>
-                  <th>Proyecto</th>
-                  <th>Tarea</th>
-                  <th>Tiempo</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor='let x of horaActual.horaDetalleList'>
-                  <td>{{x.proyecto.nombre}}</td>
-                  <td>{{x.tipoTarea.nombre}}</td>
-                  <td>{{x.duracion}}</td>
-                  <td>
-                    <button mat-icon-button color="warn">
-                      <mat-icon class="material-icons" (click)="EliminarTiempo(x)">delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="box box-default table-box table-responsive mdl-shadow--2dp" *ngIf="horaActual !== undefined && horaActual.id !== undefined && horaActual.horaDetalleList !== undefined && horaActual.horaDetalleList.length > 0">
+          <table class="mdl-data-table">
+            <thead>
+              <tr>
+                <th>Proyecto</th>
+                <th>Tarea</th>
+                <th>Tiempo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let x of horaActual.horaDetalleList'>
+                <td>
+                  <span *ngIf="x.proyecto !== undefined">{{x.proyecto.nombre}}</span>
+                </td>
+                <td>
+                  <span *ngIf="x.tipoTarea !== undefined">{{x.tipoTarea.nombre}}</span>
+                </td>
+                <td>{{x.duracion}}</td>
+                <td>
+                  <button mat-icon-button color="warn">
+                    <mat-icon class="material-icons" (click)="EliminarTiempo(x)">delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
       </div>
     </article>
 

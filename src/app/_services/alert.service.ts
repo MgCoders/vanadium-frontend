@@ -20,7 +20,13 @@ export class AlertService {
     }
 
     error(message: any, time: number, keepAfterNavigationChange = false) {
-        let errorMg: string = message;
+        let errorMg: string = '';
+        if (message.error !== undefined) {
+            errorMg = message.error;
+        } else {
+            errorMg = message;
+        }
+
 
         // Si es un error devuelto por el servidor.
 /*         if (message.status !== undefined) {
