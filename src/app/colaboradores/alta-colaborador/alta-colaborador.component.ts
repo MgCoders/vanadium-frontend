@@ -38,6 +38,7 @@ export class AltaColaboradorComponent implements OnInit {
 
   Guardar() {
     this.layoutService.updatePreloaderState('active');
+
     if (this.data[0] === undefined) {
       this.cs.create(this.colaboradorActual).subscribe(
         (data) => {
