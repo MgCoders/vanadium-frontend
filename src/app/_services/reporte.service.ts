@@ -19,14 +19,14 @@ export class ReporteService {
   }
 
   getHorasProyectoTipoTareaXCargo(proyecto: Proyecto, tarea: TipoTarea): Observable<HorasProyectoTipoTareaXCargo[]> {
-    return this.http.get<HorasProyectoTipoTareaXCargo[]>(`${environment.apiUrl}/reportes/horas/proyecto/`+ proyecto.id + `/tarea/` + tarea.id);
+    return this.http.get<HorasProyectoTipoTareaXCargo[]>(`${environment.apiUrl}/reportes/horas/proyecto/` + proyecto.id + `/tarea/` + tarea.id);
   }
 
-  getEstimacionProyectoTipoTareaXCargo(): Observable<EstimacionProyectoTipoTareaXCargo[]> {
-    return this.http.get<EstimacionProyectoTipoTareaXCargo[]>(`${environment.apiUrl}/estimaciones/proyecto/tarea/`);
+  getEstimacionProyectoTipoTareaXCargo(proyecto: Proyecto, tarea: TipoTarea): Observable<EstimacionProyectoTipoTareaXCargo[]> {
+    return this.http.get<EstimacionProyectoTipoTareaXCargo[]>(`${environment.apiUrl}/reportes/horas/proyecto/` + proyecto.id + `/tarea/` + tarea.id);
   }
 
-  getHorasProyectoXCargo(): Observable<HorasProyectoXCargo[]> {
-    return this.http.get<HorasProyectoXCargo[]>(`${environment.apiUrl}/horas/proyecto/`);
+  getHorasProyectoXCargo(proyecto: Proyecto): Observable<HorasProyectoXCargo[]> {
+    return this.http.get<HorasProyectoXCargo[]>(`${environment.apiUrl}/reportes/horas/proyecto/` + proyecto.id);
   }
 }

@@ -1,6 +1,6 @@
 import {
-  Component,
-  OnInit
+    Component,
+    OnInit
 } from '@angular/core';
 import { AlertService } from '../../_services/alert.service';
 import { ReporteService } from '../../_services/reporte.service';
@@ -11,57 +11,79 @@ import { Proyecto } from '../../_models/Proyecto';
 import { TipoTarea } from '../../_models/TipoTarea';
 import { LayoutService } from '../../layout/layout.service';
 import { HorasProyectoTipoTareaXCargo } from '../../_models/HorasProyectoTipoTareaXCargo';
+import { CargoService } from '../../_services/cargo.service';
+import { HorasProyectoXCargo } from '../../_models/HorasProyectoXCargo';
+import { expressionChangedAfterItHasBeenCheckedError } from '@angular/core/src/view/errors';
 
 @Component({
-  selector: 'horas-reporte',
-  styles: [],
-  templateUrl: './horas-reporte.component.html'
+    selector: 'horas-reporte',
+    styles: [],
+    templateUrl: './horas-reporte.component.html'
 })
 
 export class HorasReporteComponent implements OnInit {
 
-  public proyectoActual: Proyecto;
-  public tareaActual: TipoTarea;
-  public horasProyectoTipoTareaXCargo: HorasProyectoTipoTareaXCargo[];
+    public proyectoActual: Proyecto;
+    public tareaActual: TipoTarea;
+    public horasPTXC: Array<{ tarea: TipoTarea, horas: HorasProyectoTipoTareaXCargo[] }> = [];
+    public tareas: TipoTarea[];
+    public proyectos: Proyecto[];
 
-  constructor(private reporteService: ReporteService,
-              private alertService: AlertService,
-              private proyectoService: ProyectoService,
-              private tareaService: TareaService,
-              private authService: AuthService,
-              private layoutService: LayoutService) { }
-
-  ngOnInit(): void {
-    this.layoutService.updatePreloaderState('active');
-    this.tareaActual = {} as TipoTarea;
-    this.proyectoActual = {} as Proyecto;
-    this.layoutService.updatePreloaderState('hide');
-  }
-
-  proyectoSeleccionado(proyecto: Proyecto) {
-    this.proyectoActual = proyecto;
-    this.proyectoOTareaSeleccionados();
-  }
-
-  tareaSeleccionada(tarea: TipoTarea) {
-    this.tareaActual = tarea;
-    this.proyectoOTareaSeleccionados();
-  }
-
-  proyectoOTareaSeleccionados() {
-    if (this.proyectoActual.id && this.tareaActual.id) {
-      this.layoutService.updatePreloaderState('active');
-
-      this.reporteService.getHorasProyectoTipoTareaXCargo(this.proyectoActual, this.tareaActual).subscribe(
-          (data) => {
-            this.horasProyectoTipoTareaXCargo = data;
-          },
-          (error) => {
-            this.alertService.error(error, 5000);
-          });
-
-      this.layoutService.updatePreloaderState('hide');
+    constructor(private reporteService: ReporteService,
+                private alertService: AlertService,
+                private proyectoService: ProyectoService,
+                private tareaService: TareaService,
+                private authService: AuthService,
+                private layoutService: LayoutService,
+                private cargoService: CargoService) {
     }
-  }
+
+    ngOnInit(): void {
+        this.layoutService.updatePreloaderState('active');
+        this.tareaActual = {} as TipoTarea;
+        this.proyectoActual = {} as Proyecto;
+        this.tareaService.getAll().subscribe(
+            (data) => this.tareas = data,
+            (error) => this.alertService.error(error, 5000));
+        this.proyectoService.getAll().subscribe(
+            (data) => this.proyectos = data,
+            (error) => this.alertService.error(error, 5000));
+        this.layoutService.updatePreloaderState('hide');
+    }
+
+    proyectoSeleccionado(proyecto: Proyecto) {
+        this.proyectoActual = proyecto;
+        this.proyectoOTareaSeleccionados();
+    }
+
+    tareaSeleccionada(tarea: TipoTarea) {
+        this.tareaActual = tarea;
+        this.proyectoOTareaSeleccionados();
+    }
+
+    proyectoOTareaSeleccionados() {
+        this.layoutService.updatePreloaderState('active');
+        this.horasPTXC = [];
+
+        if (this.proyectoActual.id && this.tareaActual.id) {
+
+            const tarea = this.tareaActual;
+            this.reporteService.getHorasProyectoTipoTareaXCargo(this.proyectoActual, tarea).subscribe(
+                (horas) => this.horasPTXC.push({ tarea, horas }),
+                (error) => this.alertService.error(error, 5000));
+
+        } else if (this.proyectoActual.id) {
+
+            this.tareas.forEach((tarea) => {
+                this.reporteService.getHorasProyectoTipoTareaXCargo(this.proyectoActual, tarea).subscribe(
+                    (horas) => this.horasPTXC.push({ tarea, horas }),
+                    (error) => this.alertService.error(error, 5000));
+            });
+
+
+        }
+        this.layoutService.updatePreloaderState('hide');
+
+    }
 
 }

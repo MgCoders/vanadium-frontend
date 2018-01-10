@@ -50,6 +50,7 @@ import { AlertService } from '../_services/alert.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { LayoutService } from '../layout/layout.service';
+import { CargoService } from '../_services/cargo.service';
 
 @NgModule({
     imports: [
@@ -102,7 +103,8 @@ import { LayoutService } from '../layout/layout.service';
         AuthService,
         TareaService,
         ReporteService,
-        LayoutService
+        LayoutService,
+        CargoService
     ]
 })
 

@@ -13,82 +13,27 @@
       </div>
     </div>
 
-    <div *ngIf="proyectoActual.id && tareaActual.id" class="row">
-      <div class="col-xl-6">
+    <div *ngIf="proyectoActual.id" class="row">
+      <div class="col-xl-6" *ngFor="let horaPTXC of horasPTXC; trackBy: index;">
         <div class="box box-transparent">
-          <div class="box-header no-padding-h">Basic table</div>
+          <div class="box-header no-padding-h">{{horaPTXC.tarea.nombre}}</div>
           <div class="box-body no-padding-h">
 
             <div class="box box-default table-box mdl-shadow--2dp">
               <table class="mdl-data-table">
                 <thead>
-                  <tr>
-                    <th class="mdl-data-table__cell--non-numeric">#</th>
-                    <th class="mdl-data-table__cell--non-numeric">Material</th>
-                    <th>Quantity</th>
-                    <th>Unit price</th>
-                  </tr>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">Cargo</th>
+                  <th>Horas</th>
+                  <th>Unit price</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">1</td>
-                    <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                    <td>25</td>
-                    <td>$2.90</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">2</td>
-                    <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-                    <td>50</td>
-                    <td>$1.25</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">3</td>
-                    <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-                    <td>10</td>
-                    <td>$2.35</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-6">
-        <div class="box box-transparent">
-          <div class="box-header no-padding-h">Striped table</div>
-          <div class="box-body no-padding-h">
-
-            <div class="box box-default table-box mdl-shadow--2dp">
-              <table class="mdl-data-table table-striped">
-                <thead>
-                  <tr>
-                    <th class="mdl-data-table__cell--non-numeric">#</th>
-                    <th class="mdl-data-table__cell--non-numeric">Material</th>
-                    <th>Quantity</th>
-                    <th>Unit price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">1</td>
-                    <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                    <td>25</td>
-                    <td>$2.90</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">2</td>
-                    <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-                    <td>50</td>
-                    <td>$1.25</td>
-                  </tr>
-                  <tr>
-                    <td class="mdl-data-table__cell--non-numeric">3</td>
-                    <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-                    <td>10</td>
-                    <td>$2.35</td>
-                  </tr>
+                <tr *ngFor="let hora of horaPTXC.horas;">
+                  <td class="mdl-data-table__cell--non-numeric">{{hora.cargo.nombre}}</td>
+                  <td>{{hora.cantidadHoras}}</td>
+                  <td>$2.90</td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -97,7 +42,6 @@
         </div>
       </div>
     </div>
-
   </article>
 
 </section>
