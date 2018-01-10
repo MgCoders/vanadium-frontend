@@ -43,7 +43,7 @@
             <app-select-tarea [object]="tareaActual" (onChange)="TareaOnChange($event)" idModel="id" placeHolder="TAREA" id="id" desc="nombre"></app-select-tarea>
           </div>
 
-          <div class="col-12 col-sm-3">
+<!--           <div class="col-12 col-sm-3">
             <app-select-hora-desde name="tiempo" idModel="duracion" [object]="horaDetalleActual" placeHolder="Tiempo"></app-select-hora-desde>
           </div>
 
@@ -51,7 +51,34 @@
             <button (click)="AgregarOnClick()" mat-icon-button color="accent">
               <mat-icon class="material-icons">play_arrow</mat-icon>
             </button>
+          </div> -->
+
+          <div class="col-12 col-sm-2">
+              <mat-form-field class="full-width">
+                <button (click)="horasOnClick()" matSuffix mat-icon-button color="accent">
+                  <mat-icon class="material-icons">replay_5</mat-icon>
+                </button>
+                <input matInput type="number" placeholder="Horas" [(ngModel)]="horasInt" [formControl]="horasFC">
+                <mat-error *ngIf="horasFC.invalid">Debe ser un número entre 0 y 23</mat-error>
+              </mat-form-field>
+            </div>
+
+          <div class="col-12 col-sm-2">
+            <mat-form-field class="full-width">
+              <button (click)="minutosOnClick()" matSuffix mat-icon-button color="accent">
+                <mat-icon class="material-icons">replay_10</mat-icon>
+              </button>
+              <input matInput type="number" placeholder="Minutos" [(ngModel)]="minutosInt" [formControl]="minutosFC">
+              <mat-error *ngIf="minutosFC.invalid">Debe ser un número entre 0 y 59</mat-error>
+            </mat-form-field>
           </div>
+
+          <div class="col-12 col-sm-2">
+            <button [disabled]="minutosFC.invalid || horasFC.invalid || horaDetalleActual.proyecto === undefined || horaDetalleActual.tipoTarea === undefined" (click)="AgregarOnClick()" mat-icon-button color="accent">
+              <mat-icon class="material-icons">play_arrow</mat-icon>
+            </button>
+          </div>
+
         </div>
 
 
@@ -61,8 +88,11 @@
               <tr>
                 <th>Proyecto</th>
                 <th>Tarea</th>
-                <th>Tiempo</th>
-                <th></th>
+                <th>Tiempo (Dif.: {{GetDiferencia()}})</th>
+                <th>
+                  <mat-icon *ngIf="horaActual !== undefined && horaActual.completa" color="accent" class="material-icons">done</mat-icon>
+                  <mat-icon *ngIf="horaActual !== undefined && !horaActual.completa" color="warn" class="material-icons">error</mat-icon>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -73,7 +103,7 @@
                 <td>
                   <span *ngIf="x.tipoTarea !== undefined">{{x.tipoTarea.nombre}}</span>
                 </td>
-                <td>{{x.duracion}}</td>
+                <td>{{x.duracion | myTimePipe:'HH hs. mm min.'}}</td>
                 <td>
                   <button mat-icon-button color="warn">
                     <mat-icon class="material-icons" (click)="EliminarTiempo(x)">delete</mat-icon>
@@ -115,8 +145,8 @@
             <td>{{x.dia}}</td>
             <td>{{x.horaIn}}</td>
             <td>{{x.horaOut}}</td>
-            <td>{{x.subtotal}}</td>
-            <td>{{x.subtotalDetalles}}</td>
+            <td>{{x.subtotal | myTimePipe:'HH hs. mm min.'}}</td>
+            <td>{{x.subtotalDetalles | myTimePipe:'HH hs. mm min.'}}</td>
             <td>
               <mat-icon *ngIf="x.completa" color="accent" class="material-icons">done</mat-icon>
               <mat-icon *ngIf="!x.completa" color="warn" class="material-icons">error</mat-icon>

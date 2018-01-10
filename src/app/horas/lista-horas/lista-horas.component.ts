@@ -17,9 +17,14 @@ import { AuthService } from '../../_services/auth.service';
 import { LayoutService } from '../../layout/layout.service';
 import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta.component';
 import { DatePipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { EditHoraComponent } from '../edit-hora/edit-hora.component';
 import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confirm.component';
+
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { TimePipe } from '../../_pipes/time.pipe';
 
 @Component({
   selector: 'app-lista-horas',
@@ -41,11 +46,19 @@ export class ListaHorasComponent implements OnInit {
 
   public hourdiv: number = 4;
 
+  public horasInt: number;
+  public minutosInt: number;
+
+  public minutosFC = new FormControl('', [Validators.required, Validators.max(59), Validators.min(0)]);
+  public horasFC = new FormControl('', [Validators.required, Validators.max(23), Validators.min(0)]);
+
   @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 
   constructor(private service: HoraService,
               private as: AlertService,
               private datePipe: DatePipe,
+              private decimalPipe: DecimalPipe,
+              private timePipe: TimePipe,
               private authService: AuthService,
               private layoutService: LayoutService,
               public dialog: MatDialog) {
@@ -168,6 +181,12 @@ export class ListaHorasComponent implements OnInit {
 
   AgregarOnClick() {
     const aux: Hora = new HoraImp(this.horaActual);
+
+    // Si se carga con los inputs
+    if (this.horasInt !== undefined && this.minutosInt !== undefined) {
+      this.horaDetalleActual.duracion = this.decimalPipe.transform(this.horasInt, '2.0-0') + ':' + this.decimalPipe.transform(this.minutosInt, '2.0-0');
+    }
+
     const aux2: HoraDetalle = new HoraDetalleImp(this.horaDetalleActual);
     aux2.duracion = 'PT' + aux2.duracion.split(':')[0] + 'H' + aux2.duracion.split(':')[1] + 'M';
     aux.horaDetalleList.push(aux2);
@@ -181,6 +200,10 @@ export class ListaHorasComponent implements OnInit {
         this.horaDetalleActual = {} as HoraDetalle;
         this.proyectoActual = {} as Proyecto;
         this.tareaActual = {} as TipoTarea;
+        this.horasInt = undefined;
+        this.minutosInt = undefined;
+        this.horasFC.markAsUntouched();
+        this.minutosFC.markAsUntouched();
         this.layoutService.updatePreloaderState('hide');
       },
       (error) => {
@@ -263,5 +286,39 @@ export class ListaHorasComponent implements OnInit {
     }
     const minutosStr: string = minutos.toString().length === 1 ? '0' + minutos.toString() : minutos.toString();
     return horas + ':' + minutosStr;
+  }
+
+  horasOnClick() {
+    if (this.horasInt === undefined) {
+      this.horasInt = 0;
+      return;
+    }
+
+    if (this.horasInt + 5 > 24) {
+      return;
+    }
+
+    this.horasInt += 5;
+  }
+
+  minutosOnClick() {
+    if (this.minutosInt === undefined) {
+      this.minutosInt = 0;
+      return;
+    }
+
+    if (this.minutosInt + 5 > 59) {
+      return;
+    }
+
+    this.minutosInt += 10;
+  }
+
+  GetDiferencia() {
+    const h1 = this.timePipe.transform(this.horaActual.subtotal, ['minutos']);
+    const h2 = this.timePipe.transform(this.horaActual.subtotalDetalles, ['minutos']);
+    const horas = Math.trunc((h1 - h2) / 60);
+    const minutos = (h1 - h2) - Math.trunc((h1 - h2) / 60) * 60;
+    return horas + ' hs. ' + minutos + ' min.';
   }
 }
