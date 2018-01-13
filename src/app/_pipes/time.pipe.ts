@@ -7,6 +7,8 @@ export class TimePipe implements PipeTransform {
   transform(value: string, args: string[]): any {
     if (!value) { return value; }
 
+    if (value === undefined) { return ''; }
+
     let horas: string = /[0-9]+H/.exec(value) === null || /[0-9]+H/.exec(value) === undefined ? '' : /[0-9]+H/.exec(value).toString();
     let minutos: string = /[0-9]+M/.exec(value) === null || /[0-9]+M/.exec(value) === undefined ? '' : /[0-9]+M/.exec(value).toString();
 

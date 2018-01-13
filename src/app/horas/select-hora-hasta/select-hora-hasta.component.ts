@@ -26,6 +26,7 @@ export class SelectHoraHastaComponent implements OnInit {
   constructor(private as: AlertService) { }
 
   ngOnInit() {
+    this.loadValues(0);
   }
 
   public loadValues(desde: number) {
