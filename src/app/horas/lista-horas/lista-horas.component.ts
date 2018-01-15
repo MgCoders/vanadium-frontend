@@ -17,9 +17,14 @@ import { AuthService } from '../../_services/auth.service';
 import { LayoutService } from '../../layout/layout.service';
 import { SelectHoraHastaComponent } from '../select-hora-hasta/select-hora-hasta.component';
 import { DatePipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { EditHoraComponent } from '../edit-hora/edit-hora.component';
 import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confirm.component';
+
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { TimePipe } from '../../_pipes/time.pipe';
 
 @Component({
   selector: 'app-lista-horas',
@@ -28,20 +33,35 @@ import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confi
 })
 export class ListaHorasComponent implements OnInit {
 
+  public listaHoras: Hora[];
+
+  public horaActual: Hora;
+  public horaActualCopia: Hora;
+  public diaActual: Date;
+
+  public horaDetalleActual: HoraDetalle;
   public proyectoActual: Proyecto;
   public tareaActual: TipoTarea;
-  public diaActual: Date;
-  public listaHoras: Hora[];
-  public horaActual: Hora;
-  public horaDetalleActual: HoraDetalle;
-  //public lista: Array<{ time: number, horas: Hora[], subHoras: number, subMinutos: number }>;
+
   public fDesde: Date;
+
+  public hourdiv: number = 4;
+
+  public horasInt: number;
+  public minutosInt: number;
+
+  public minutosFC = new FormControl('', [Validators.required, Validators.max(59), Validators.min(0)]);
+  public horasFC = new FormControl('', [Validators.required, Validators.max(23), Validators.min(0)]);
+
+  public editandoHora: boolean;
 
   @ViewChild(SelectHoraHastaComponent) horaHasta: SelectHoraHastaComponent;
 
   constructor(private service: HoraService,
               private as: AlertService,
               private datePipe: DatePipe,
+              private decimalPipe: DecimalPipe,
+              private timePipe: TimePipe,
               private authService: AuthService,
               private layoutService: LayoutService,
               public dialog: MatDialog) {
@@ -52,16 +72,16 @@ export class ListaHorasComponent implements OnInit {
     this.proyectoActual = {} as Proyecto;
     this.horaActual = {} as Hora;
     this.horaDetalleActual = {} as HoraDetalle;
+    this.editandoHora = true;
+    this.horasInt = 0;
+    this.minutosInt = 0;
 
     this.diaActual = new Date();
-    const horas: string = this.diaActual.getHours().toString().length === 1 ? '0' + this.diaActual.getHours().toString() : this.diaActual.getHours().toString();
-    const minutos: number = (Math.round(this.diaActual.getMinutes() / 15) * 15);
-    const minutosStr: string = minutos.toString().length === 1 ? '0' + minutos.toString() : minutos.toString();
-    this.horaActual.horaIn = horas + ':' + minutosStr;
+    this.horaActual.horaIn = this.GetHoraActualStr(this.diaActual);
     this.horaHasta.loadValuesFromStr(this.horaActual.horaIn);
     this.horaActual.horaOut = this.horaActual.horaIn;
 
-    //this.lista = [];
+    this.editandoHora = false;
 
     this.fDesde = new Date();
     if (this.fDesde.getMonth() === 0) {
@@ -71,21 +91,39 @@ export class ListaHorasComponent implements OnInit {
       this.fDesde.setMonth(this.fDesde.getMonth() - 1);
     }
 
-    this.LoadHoras();
+    this.LoadHoras(true, true, true);
   }
 
-  private LoadHoras() {
+  private LoadHoras(setHora: boolean, setProyectoTarea: boolean, setHoraInOut: boolean) {
     this.layoutService.updatePreloaderState('active');
-    this.service.getPorUsuarioYFecha(this.authService.getCurrentUser().id, this.fDesde, new Date()).subscribe(
+    this.service.getPorUsuarioYFecha(this.authService.getCurrentUser().id, this.fDesde, (new Date())).subscribe(
       (data) => {
         this.listaHoras = data;
-        this.OrdenarLista2();
-        if (this.listaHoras.length > 0 && this.listaHoras[0].horaDetalleList.length > 0) {
+
+        // Si existe un dia sin completar y hay que setearlo se busca y se setea.
+        if (setHora) {
+          const ultimaHoraSinCargar: Hora = this.listaHoras.find((x) => !x.completa);
+          if (ultimaHoraSinCargar !== undefined) {
+            this.editandoHora = false;
+            this.horaActual = ultimaHoraSinCargar;
+            this.horaHasta.loadValuesFromStr(this.horaActual.horaIn);
+          }
+        }
+
+        this.OrdenarLista();
+
+        if (setProyectoTarea && this.listaHoras.length > 0 && this.listaHoras[0].horaDetalleList.length > 0) {
           this.horaDetalleActual.proyecto = this.listaHoras[0].horaDetalleList[0].proyecto;
           this.proyectoActual = this.listaHoras[0].horaDetalleList[0].proyecto;
           this.horaDetalleActual.tipoTarea = this.listaHoras[0].horaDetalleList[0].tipoTarea;
           this.tareaActual = this.listaHoras[0].horaDetalleList[0].tipoTarea;
         }
+
+        if (this.listaHoras.length > 0 && !this.editandoHora) {
+          this.horaActual.horaIn = this.listaHoras[0].horaIn;
+          this.horaActual.horaOut = this.listaHoras[0].horaOut;
+        }
+
         this.layoutService.updatePreloaderState('hide');
       },
       (error) => {
@@ -95,54 +133,7 @@ export class ListaHorasComponent implements OnInit {
     );
   }
 
-  /*   private OrdenarLista() {
-  
-      this.lista = new Array<{ time: number, horas: Hora[], subHoras: number, subMinutos: number }>();
-  
-      // Ordenamos la lista por fecha en forma descendente.
-      this.listaHoras.forEach((x) => {
-  
-        const dateAux: Date = this.dateFromString(x.dia);
-        if (this.lista.find((y) => y.time === dateAux.getTime()) === undefined) {
-          this.lista.push({ time: dateAux.getTime(), horas: new Array(), subHoras: 0, subMinutos: 0 });
-        }
-        this.lista.find((y) => y.time === dateAux.getTime()).horas.push(x);
-      });
-  
-      // Ordenamos los registros de dias.
-      this.lista.sort((a: { time: number, horas: Hora[], subHoras: number, subMinutos: number }, b: { time: number, horas: Hora[], subHoras: number, subMinutos: number }) => {
-        return b.time - a.time;
-      });
-  
-      // Dentro de cada dia ordenamos por la hora de inicio.
-      this.lista.forEach((x) => {
-        x.horas.sort((a: Hora, b: Hora) => {
-          const dia: Date = new Date(x.time);
-          return (new Date(dia.getFullYear(),
-                           dia.getMonth(),
-                           dia.getDay(),
-                           +b.horaIn.split(':')[0],
-                           +b.horaIn.split(':')[1]).getTime() -
-  
-                      new Date(dia.getFullYear(),
-                           dia.getMonth(),
-                           dia.getDay(),
-                           +a.horaIn.split(':')[0],
-                           +a.horaIn.split(':')[1]).getTime());
-        });
-  
-        x.horas.forEach((y) => {
-          x.subHoras += +y.subtotal.split(':')[0];
-          x.subMinutos += +y.subtotal.split(':')[1];
-          if (x.subMinutos >= 60 ) {
-            x.subMinutos = x.subMinutos - 60;
-            x.subHoras ++;
-          }
-        });
-      });
-    } */
-
-  private OrdenarLista2() {
+  private OrdenarLista() {
     this.listaHoras.sort((a: Hora, b: Hora) => {
       return this.dateFromString(b.dia).getTime() - this.dateFromString(a.dia).getTime();
     });
@@ -165,7 +156,7 @@ export class ListaHorasComponent implements OnInit {
   }
 
   fDesdeOnChange(evt) {
-    this.LoadHoras();
+    this.LoadHoras(true, false, false);
   }
 
   GuardarOnClick() {
@@ -178,11 +169,9 @@ export class ListaHorasComponent implements OnInit {
       this.service.create(this.horaActual).subscribe(
         (data) => {
           this.as.success('Registro agregado correctamente.', 3000);
-          this.listaHoras.push(data);
-          this.OrdenarLista2();
-          this.horaHasta.loadValues(0);
           this.horaActual = data;
-          this.layoutService.updatePreloaderState('hide');
+          this.LoadHoras(false, false, false);
+          this.editandoHora = false;
         },
         (error) => {
           this.as.error(error, 5000);
@@ -192,11 +181,9 @@ export class ListaHorasComponent implements OnInit {
       this.service.edit(this.horaActual).subscribe(
         (data) => {
           this.as.success('Registro actualizado correctamente.', 3000);
-          const index: number = this.listaHoras.indexOf(this.horaActual);
-          this.listaHoras[index] = data;
           this.horaActual = data;
-          this.OrdenarLista2();
-          this.layoutService.updatePreloaderState('hide');
+          this.LoadHoras(false, false, false);
+          this.editandoHora = false;
         },
         (error) => {
           this.as.error(error, 5000);
@@ -207,6 +194,12 @@ export class ListaHorasComponent implements OnInit {
 
   AgregarOnClick() {
     const aux: Hora = new HoraImp(this.horaActual);
+
+    // Si se carga con los inputs
+    if (this.horasInt !== undefined && this.minutosInt !== undefined) {
+      this.horaDetalleActual.duracion = this.decimalPipe.transform(this.horasInt, '2.0-0') + ':' + this.decimalPipe.transform(this.minutosInt, '2.0-0');
+    }
+
     const aux2: HoraDetalle = new HoraDetalleImp(this.horaDetalleActual);
     aux2.duracion = 'PT' + aux2.duracion.split(':')[0] + 'H' + aux2.duracion.split(':')[1] + 'M';
     aux.horaDetalleList.push(aux2);
@@ -214,13 +207,19 @@ export class ListaHorasComponent implements OnInit {
       (data) => {
         this.as.success('Registro agregado correctamente.', 3000);
         const index: number = this.listaHoras.indexOf(this.horaActual);
-        this.listaHoras[index] = data;
+        this.listaHoras[index] = new HoraImp(data);
         this.horaActual = data;
-        this.OrdenarLista2();
         this.horaDetalleActual = {} as HoraDetalle;
         this.proyectoActual = {} as Proyecto;
         this.tareaActual = {} as TipoTarea;
-        this.layoutService.updatePreloaderState('hide');
+        this.horasInt = 0;
+        this.minutosInt = 0;
+        this.horasFC.markAsUntouched();
+        this.minutosFC.markAsUntouched();
+        this.LoadHoras(false, false, false);
+        if (data.completa) {
+          this.Nuevo();
+        }
       },
       (error) => {
         this.as.error(error, 5000);
@@ -234,7 +233,15 @@ export class ListaHorasComponent implements OnInit {
   }
 
   Editar(x: Hora) {
-    this.horaActual = x;
+    this.horaActual = new HoraImp(x);
+    this.editandoHora = true;
+    this.horaHasta.loadValuesFromStr(x.horaIn);
+    this.horaDetalleActual = {} as HoraDetalle;
+    this.horasInt = 0;
+    this.minutosInt = 0;
+    this.tareaActual = {} as TipoTarea;
+    this.proyectoActual = {} as Proyecto;
+    this.editandoHora = false;
   }
 
   Eliminar(x: Hora) {
@@ -270,7 +277,7 @@ export class ListaHorasComponent implements OnInit {
               const index: number = this.listaHoras.indexOf(this.horaActual);
               this.listaHoras[index] = data;
               this.horaActual = data;
-              this.OrdenarLista2();
+              this.LoadHoras(false, false, false);
               this.layoutService.updatePreloaderState('hide');
             },
             (error) => {
@@ -283,9 +290,78 @@ export class ListaHorasComponent implements OnInit {
 
   Nuevo() {
     this.horaActual = {} as Hora;
-    this.horaHasta.loadValues(0);
     this.diaActual = new Date();
-    this.horaActual.horaIn = '00:00';
-    this.horaActual.horaOut = '00:00';
+    this.editandoHora = true;
+    this.horaActual.horaIn = this.GetHoraActualStr(this.diaActual);
+    this.horaHasta.loadValuesFromStr(this.horaActual.horaIn);
+    this.horaActual.horaOut = this.horaActual.horaIn;
+    if (this.listaHoras.length > 0) {
+      this.horaActual.horaIn = this.listaHoras[0].horaIn;
+      this.horaActual.horaOut = this.listaHoras[0].horaOut;
+      this.horaHasta.loadValuesFromStr(this.horaActual.horaIn);
+    }
+    this.horaDetalleActual = {} as HoraDetalle;
+    this.proyectoActual = {} as Proyecto;
+    this.tareaActual = {} as TipoTarea;
+    this.horasInt = 0;
+    this.minutosInt = 0;
+    this.horasFC.markAsUntouched();
+    this.minutosFC.markAsUntouched();
+  }
+
+  GetHoraActualStr(ahora: Date) {
+    let minutos: number = (Math.round(ahora.getMinutes() / (60 / this.hourdiv)) * (60 / this.hourdiv));
+    const hotasInt: number = minutos === 60 ? ahora.getHours() + 1 :  ahora.getHours();
+    const horas: string = hotasInt.toString().length === 1 ? '0' + hotasInt.toString() : hotasInt.toString();
+    if (minutos === 60) {
+      minutos = 0;
+    }
+    const minutosStr: string = minutos.toString().length === 1 ? '0' + minutos.toString() : minutos.toString();
+    return horas + ':' + minutosStr;
+  }
+
+  horasOnClick() {
+    if (this.horasInt === undefined) {
+      this.horasInt = 0;
+      return;
+    }
+
+    if (this.horasInt + 5 > 24) {
+      return;
+    }
+
+    this.horasInt += 5;
+  }
+
+  minutosOnClick() {
+    if (this.minutosInt === undefined) {
+      this.minutosInt = 0;
+      return;
+    }
+
+    if (this.minutosInt + 15 > 59) {
+      return;
+    }
+
+    this.minutosInt += 15;
+  }
+
+  GetTotalCargado() {
+    let minutosTotalesCargados: number = 0;
+    this.horaActual.horaDetalleList.forEach((x) => {
+      minutosTotalesCargados += this.timePipe.transform(x.duracion, ['minutos']);
+    });
+
+    const horas = Math.trunc((minutosTotalesCargados) / 60);
+    const minutos = (minutosTotalesCargados) - Math.trunc((minutosTotalesCargados) / 60) * 60;
+    return horas + ' hs. ' + minutos + ' min.';
+  }
+
+  Cancelar() {
+    this.editandoHora = false;
+  }
+
+  EditarHora() {
+    this.editandoHora = true;
   }
 }

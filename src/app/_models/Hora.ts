@@ -29,6 +29,6 @@ export interface Hora {
 
     completa?: boolean;
 
-    subtotalDetalles?: Date;
+    subtotalDetalles?: string;
 
 }
