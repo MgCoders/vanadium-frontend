@@ -28,10 +28,10 @@
             <td class="mdl-data-table__cell--non-numeric"><span *ngIf="x.cargo != undefined">{{x.cargo.nombre}}</span></td>
             <td class="mdl-data-table__cell--non-numeric">{{x.role}}</td>
             <td>
-              <button mat-icon-button color="primary" (click)="Editar(x)">
+              <button matTooltipPosition="above" matTooltip="Editar Colaborador." mat-icon-button color="primary" (click)="Editar(x)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn">
+              <button matTooltipPosition="above" matTooltip="Eliminar Colaborador." mat-icon-button color="warn">
                 <mat-icon class="material-icons" (click)="Eliminar(x)">delete</mat-icon>
               </button>
             </td>
