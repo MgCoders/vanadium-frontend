@@ -17,7 +17,7 @@ export class HoraImp implements models.Hora {
 
     completa?: boolean;
 
-    subtotalDetalles?: Date;
+    subtotalDetalles?: string;
 
     constructor(x: models.Hora) {
         this.id = x.id;

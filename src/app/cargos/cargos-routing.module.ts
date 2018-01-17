@@ -1,9 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { ListaCargosComponent } from './lista-cargos/lista-cargos.component';
-import { AltaCargoComponent } from './alta-cargo/alta-cargo.component';
 import { CargosComponent } from './cargos.component';
 import { AdminGuard } from '../_guards/admin.guard';
+import { HistoricoPrecioCargoComponent } from './historico-precio-cargo/historico-precio-cargo.component';
 
 export const CargosRoutes: Routes = [
   {
@@ -13,7 +13,7 @@ export const CargosRoutes: Routes = [
     children: [
       { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
       { path: 'lista', component: ListaCargosComponent },
-      { path: 'alta', component: AltaCargoComponent },
+      { path: 'historicoprecio/:id', component: HistoricoPrecioCargoComponent },
     ]
   }
 ];

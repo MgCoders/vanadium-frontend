@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import {
   CommonModule,
-  DatePipe
+  DatePipe,
+  DecimalPipe
 } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   MatButtonModule,
@@ -16,6 +17,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatDialogModule,
+  MatCardModule,
 } from '@angular/material';
 
 import { HorasComponent } from './horas.component';
@@ -33,9 +35,12 @@ import { AlertService } from '../_services/alert.service';
 import { LayoutService } from '../layout/layout.service';
 import { EditHoraComponent } from './edit-hora/edit-hora.component';
 
+import { TimePipe } from '../_pipes/time.pipe';
+
 @NgModule({
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     HorasRoutingModule,
     MatIconModule,
@@ -50,7 +55,9 @@ import { EditHoraComponent } from './edit-hora/edit-hora.component';
     ColaboradoresModule,
     ProyectosModule,
     TareasModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSliderModule,
+    MatCardModule,
   ],
 
   declarations: [
@@ -58,7 +65,8 @@ import { EditHoraComponent } from './edit-hora/edit-hora.component';
     ListaHorasComponent,
     SelectHoraDesdeComponent,
     SelectHoraHastaComponent,
-    EditHoraComponent
+    EditHoraComponent,
+    TimePipe
   ],
 
   providers: [
@@ -66,6 +74,8 @@ import { EditHoraComponent } from './edit-hora/edit-hora.component';
     AlertService,
     LayoutService,
     DatePipe,
+    DecimalPipe,
+    TimePipe
   ],
 
   entryComponents: [

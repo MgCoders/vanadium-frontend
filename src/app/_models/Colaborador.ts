@@ -24,6 +24,4 @@ export interface Colaborador {
     role: string;
 
     token?: string;
-
-    password: string;
 }

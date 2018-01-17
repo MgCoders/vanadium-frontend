@@ -1,7 +1,7 @@
 <section class="container-fluid with-maxwidth chapter">
   <article class="article">
     <div class="row">
-      <h2 class="article-title padding-top-30 col-12 col-sm-6">Horas</h2>
+      <h2 class="article-title padding-top-30 col-12 col-sm-6">Registro de Horas</h2>
       <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
         <button mat-raised-button color="accent" class="btn-w-md" (click)="Nuevo()">Nuevo Día</button>
       </div>
@@ -9,8 +9,8 @@
 
     <article class="article">
       <div class="box box-default">
-        <div class="box-body row">
-          <div class="col-12 col-sm-3">
+        <div [hidden]="!editandoHora" class="box-body row">
+          <div class="col-12 col-sm-2 paddingLeftRigth">
             <mat-form-field class="full-width">
               <input [(ngModel)]="diaActual" name="dia" class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -18,33 +18,43 @@
             </mat-form-field>
           </div>
 
-          <div class="col-6 col-sm-3">
+          <div class="col-6 col-sm-3 paddingLeftRigth">
             <app-select-hora-desde name="horaDesde" idModel="horaIn" [object]="horaActual" (onChange)="HoraInOnChange($event)" placeHolder="INICIO"></app-select-hora-desde>
           </div>
 
-          <div class="col-6 col-sm-3">
-            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN"
-              horaStart="00:00"></app-select-hora-hasta>
+          <div class="col-6 col-sm-3 paddingLeftRigth">
+            <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN"></app-select-hora-hasta>
           </div>
 
-          <div class="col-12 col-sm-3">
-            <button mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
+          <div class="col-12 col-sm-4 text-right paddingLeftRigth">
+            <button *ngIf="horaActual.id === undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
+            <button *ngIf="horaActual.id !== undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Editar</button>
+            <button *ngIf="horaActual.id !== undefined" mat-raised-button color="dark" class="btn-w-md" (click)="Cancelar()">Cancelar</button>
           </div>
         </div>
 
 
-        <div class="box-body row" *ngIf="horaActual !== undefined && horaActual.id !== undefined">
+        <div id="rowAddHora" class="box-body row" [hidden]="editandoHora || horaActual === undefined || horaActual.id === undefined">
 
-          <div class="col-12 col-sm-3">
+          <div class="col-12 col-sm-3 paddingLeftRigth">
+            <span *ngIf="horaActual !== undefined && horaActual.dia !== undefined && horaActual.subtotal !== undefined">
+              <b>{{ horaActual.dia }}</b> <br/> {{horaActual.subtotal | myTimePipe:'HH hs. mm min.'}}
+            </span>
+            <button  (click)="EditarHora()" mat-icon-button color="primary">
+              <mat-icon class="material-icons">mode_edit</mat-icon>
+            </button>
+          </div>
+
+          <div class="col-12 col-sm-3 paddingLeftRigth">
             <app-select-proyecto [object]="proyectoActual" (onChange)="ProyectoOnChange($event)" idModel="id" placeHolder="PROYECTO"
               id="id" desc="nombre"></app-select-proyecto>
           </div>
 
-          <div class="col-12 col-sm-3">
+          <div class="col-12 col-sm-3 paddingLeftRigth">
             <app-select-tarea [object]="tareaActual" (onChange)="TareaOnChange($event)" idModel="id" placeHolder="TAREA" id="id" desc="nombre"></app-select-tarea>
           </div>
 
-          <div class="col-12 col-sm-3">
+<!--           <div class="col-12 col-sm-3">
             <app-select-hora-desde name="tiempo" idModel="duracion" [object]="horaDetalleActual" placeHolder="Tiempo"></app-select-hora-desde>
           </div>
 
@@ -52,37 +62,70 @@
             <button (click)="AgregarOnClick()" mat-icon-button color="accent">
               <mat-icon class="material-icons">play_arrow</mat-icon>
             </button>
+          </div> -->
+
+          <div class="col-12 col-sm-1 paddingLeftRigth">
+              <mat-form-field class="full-width">
+                <button (click)="horasOnClick()" matSuffix mat-icon-button color="accent">
+                  <mat-icon class="material-icons">replay</mat-icon>
+                </button>
+                <input matInput type="number" placeholder="Horas" [(ngModel)]="horasInt" [formControl]="horasFC">
+                <mat-error *ngIf="horasFC.invalid">Debe ser un número entre 0 y 23</mat-error>
+              </mat-form-field>
+            </div>
+
+          <div class="col-12 col-sm-1 paddingLeftRigth">
+            <mat-form-field class="full-width">
+              <button (click)="minutosOnClick()" matSuffix mat-icon-button color="accent">
+                <mat-icon class="material-icons">replay</mat-icon>
+              </button>
+              <input matInput type="number" placeholder="Minutos" [(ngModel)]="minutosInt" [formControl]="minutosFC">
+              <mat-error *ngIf="minutosFC.invalid">Debe ser un número entre 0 y 59</mat-error>
+            </mat-form-field>
           </div>
+
+          <div class="col-12 col-sm-1 paddingLeftRigth">
+            <button matTooltipPosition="above" matTooltip="Agregar Registro" [disabled]="minutosFC.invalid || horasFC.invalid || horaDetalleActual.proyecto === undefined || horaDetalleActual.tipoTarea === undefined" (click)="AgregarOnClick()" mat-icon-button color="accent">
+              <mat-icon class="material-icons">add</mat-icon>
+            </button>
+          </div>
+
         </div>
 
 
-        <div class="box-body row" *ngIf="horaActual !== undefined && horaActual.id !== undefined && horaActual.horaDetalleList !== undefined && horaActual.horaDetalleList.length > 0">
-          <div class="col-12 col-sm-12">
-            <table class="mdl-data-table">
-              <thead>
-                <tr>
-                  <th>Proyecto</th>
-                  <th>Tarea</th>
-                  <th>Tiempo</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor='let x of horaActual.horaDetalleList'>
-                  <td>{{x.proyecto.nombre}}</td>
-                  <td>{{x.tipoTarea.nombre}}</td>
-                  <td>{{x.duracion}}</td>
-                  <td>
-                    <button mat-icon-button color="warn">
-                      <mat-icon class="material-icons" (click)="EliminarTiempo(x)">delete</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="box box-default table-box table-responsive mdl-shadow--2dp"
+               *ngIf="!editandoHora && horaActual !== undefined && horaActual.id !== undefined && horaActual.horaDetalleList !== undefined && horaActual.horaDetalleList.length > 0">
+          <table class="mdl-data-table">
+            <thead>
+              <tr>
+                <th>Proyecto</th>
+                <th>Tarea</th>
+                <th>Tiempo<br/> 
+                    Total: {{GetTotalCargado()}}</th>
+                <th>
+                  <mat-icon matTooltipPosition="above" matTooltip="Día completado correctamente." *ngIf="horaActual !== undefined && horaActual.completa" color="accent" class="material-icons">done</mat-icon>
+                  <mat-icon matTooltipPosition="above" matTooltip="Día incompleto. Faltan registros de horas." *ngIf="horaActual !== undefined && !horaActual.completa" color="warn" class="material-icons">error</mat-icon>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let x of horaActual.horaDetalleList'>
+                <td>
+                  <span *ngIf="x.proyecto !== undefined">{{x.proyecto.nombre}}</span>
+                </td>
+                <td>
+                  <span *ngIf="x.tipoTarea !== undefined">{{x.tipoTarea.nombre}}</span>
+                </td>
+                <td>{{x.duracion | myTimePipe:'HH hs. mm min.'}}</td>
+                <td>
+                  <button mat-icon-button color="warn">
+                    <mat-icon class="material-icons" (click)="EliminarTiempo(x)">delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
       </div>
     </article>
 
@@ -115,17 +158,17 @@
             <td>{{x.dia}}</td>
             <td>{{x.horaIn}}</td>
             <td>{{x.horaOut}}</td>
-            <td>{{x.subtotal}}</td>
-            <td>{{x.subtotalDetalles}}</td>
+            <td>{{x.subtotal | myTimePipe:'HH hs. mm min.'}}</td>
+            <td>{{x.subtotalDetalles | myTimePipe:'HH hs. mm min.'}}</td>
             <td>
-              <mat-icon *ngIf="x.completa" color="accent" class="material-icons">done</mat-icon>
-              <mat-icon *ngIf="!x.completa" color="warn" class="material-icons">error</mat-icon>
+              <mat-icon matTooltipPosition="above" matTooltip="Día completado correctamente." *ngIf="x.completa" color="accent" class="material-icons">done</mat-icon>
+              <mat-icon matTooltipPosition="above" matTooltip="Día incompleto. Faltan registros de horas." *ngIf="!x.completa" color="warn" class="material-icons">error</mat-icon>
             </td>
             <td>
-              <button mat-icon-button color="primary" (click)="Editar(x)">
+              <button matTooltipPosition="above" matTooltip="Editar Día. Agregar/Quitar registro de horas." mat-icon-button color="primary" (click)="Editar(x)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn">
+              <button matTooltipPosition="above" matTooltip="Eliminar Día." mat-icon-button color="warn">
                 <mat-icon class="material-icons" (click)="Eliminar(x)">delete</mat-icon>
               </button>
             </td>
