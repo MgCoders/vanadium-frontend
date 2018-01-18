@@ -10,7 +10,7 @@
     <article class="article">
       <div class="box box-default">
         <div [hidden]="!editandoHora" class="box-body row">
-          <div class="col-12 col-sm-2 paddingLeftRigth">
+          <div class="col-12 col-sm-2">
             <mat-form-field class="full-width">
               <input [(ngModel)]="diaActual" name="dia" class="full-width" matInput [matDatepicker]="picker" placeholder="FECHA">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -18,15 +18,15 @@
             </mat-form-field>
           </div>
 
-          <div class="col-6 col-sm-3 paddingLeftRigth">
+          <div class="col-6 col-sm-3">
             <app-select-hora-desde name="horaDesde" idModel="horaIn" [object]="horaActual" (onChange)="HoraInOnChange($event)" placeHolder="INICIO"></app-select-hora-desde>
           </div>
 
-          <div class="col-6 col-sm-3 paddingLeftRigth">
+          <div class="col-6 col-sm-3">
             <app-select-hora-hasta name="horaHasta" idModel="horaOut" [object]="horaActual" (onChange)="HoraOutOnChange($event)" placeHolder="FIN"></app-select-hora-hasta>
           </div>
 
-          <div class="col-12 col-sm-4 text-right paddingLeftRigth">
+          <div class="col-12 col-sm-4 text-right">
             <button *ngIf="horaActual.id === undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
             <button *ngIf="horaActual.id !== undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Editar</button>
             <button *ngIf="horaActual.id !== undefined" mat-raised-button color="dark" class="btn-w-md" (click)="Cancelar()">Cancelar</button>
@@ -36,7 +36,7 @@
 
         <div id="rowAddHora" class="box-body row" [hidden]="editandoHora || horaActual === undefined || horaActual.id === undefined">
 
-          <div class="col-12 col-sm-3 paddingLeftRigth">
+          <div class="col-12 col-sm-3">
             <span *ngIf="horaActual !== undefined && horaActual.dia !== undefined && horaActual.subtotal !== undefined">
               <b>{{ horaActual.dia }}</b> <br/> {{horaActual.subtotal | myTimePipe:'HH hs. mm min.'}}
             </span>
@@ -45,12 +45,12 @@
             </button>
           </div>
 
-          <div class="col-12 col-sm-3 paddingLeftRigth">
+          <div class="col-12 col-sm-3">
             <app-select-proyecto [object]="proyectoActual" (onChange)="ProyectoOnChange($event)" idModel="id" placeHolder="PROYECTO"
               id="id" desc="nombre"></app-select-proyecto>
           </div>
 
-          <div class="col-12 col-sm-3 paddingLeftRigth">
+          <div class="col-12 col-sm-3">
             <app-select-tarea [object]="tareaActual" (onChange)="TareaOnChange($event)" idModel="id" placeHolder="TAREA" id="id" desc="nombre"></app-select-tarea>
           </div>
 
@@ -141,7 +141,7 @@
     </div>
 
     <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-      <table class="mdl-data-table">
+      <table *ngIf="listaHoras !== undefined && listaHoras.length > 0" class="mdl-data-table">
         <thead>
           <tr>
             <th>Día</th>

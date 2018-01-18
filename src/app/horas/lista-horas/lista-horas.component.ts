@@ -119,11 +119,6 @@ export class ListaHorasComponent implements OnInit {
           this.tareaActual = this.listaHoras[0].horaDetalleList[0].tipoTarea;
         }
 
-        if (this.listaHoras.length > 0 && !this.editandoHora) {
-          this.horaActual.horaIn = this.listaHoras[0].horaIn;
-          this.horaActual.horaOut = this.listaHoras[0].horaOut;
-        }
-
         this.layoutService.updatePreloaderState('hide');
       },
       (error) => {
@@ -183,6 +178,9 @@ export class ListaHorasComponent implements OnInit {
           this.as.success('Registro actualizado correctamente.', 3000);
           this.horaActual = data;
           this.LoadHoras(false, false, false);
+          if (data.completa) {
+            this.Nuevo();
+          }
           this.editandoHora = false;
         },
         (error) => {
@@ -219,6 +217,7 @@ export class ListaHorasComponent implements OnInit {
         this.LoadHoras(false, false, false);
         if (data.completa) {
           this.Nuevo();
+          this.editandoHora = false;
         }
       },
       (error) => {
