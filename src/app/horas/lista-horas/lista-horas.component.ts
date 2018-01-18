@@ -157,6 +157,12 @@ export class ListaHorasComponent implements OnInit {
   GuardarOnClick() {
 
     this.horaActual.colaborador = this.authService.getCurrentUser();
+
+    if (this.diaActual.getTime() > (new Date()).getTime()) {
+      this.as.error('No se pueden cargar horas de días futuros.', 5000);
+      return;
+    }
+
     this.horaActual.dia = this.datePipe.transform(this.diaActual, 'dd-MM-yyyy');
 
     this.layoutService.updatePreloaderState('active');
