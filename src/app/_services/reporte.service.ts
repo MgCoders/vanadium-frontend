@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Proyecto } from '../_models/models';
 import { Observable } from 'rxjs/Observable';
@@ -18,8 +18,12 @@ export class ReporteService {
     return this.http.get<HorasProyectoTipoTareaCargoXColaborador[]>(`${environment.apiUrl}/horas/proyecto/tarea/cargo/`);
   }
 
-  getHorasProyectoTipoTareaXCargo(proyecto: Proyecto, tarea: TipoTarea): Observable<HorasReporte1[]> {
+  getReporte1(proyecto: Proyecto, tarea: TipoTarea): Observable<HorasReporte1[]> {
     return this.http.get<HorasReporte1[]>(`${environment.apiUrl}/reportes/horas/proyecto/` + proyecto.id + `/tarea/` + tarea.id);
+  }
+
+  getReporte1Totales(proyecto: Proyecto): Observable<HorasReporte1[]> {
+    return this.http.get<HorasReporte1[]>(`${environment.apiUrl}/reportes/horas/proyecto/` + proyecto.id);
   }
 
   getEstimacionProyectoTipoTareaXCargo(proyecto: Proyecto, tarea: TipoTarea): Observable<EstimacionProyectoTipoTareaXCargo[]> {

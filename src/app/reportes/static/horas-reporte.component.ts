@@ -12,8 +12,6 @@ import { TipoTarea } from '../../_models/TipoTarea';
 import { LayoutService } from '../../layout/layout.service';
 import { HorasReporte1 } from '../../_models/HorasProyectoTipoTareaXCargo';
 import { CargoService } from '../../_services/cargo.service';
-import { HorasProyectoXCargo } from '../../_models/HorasProyectoXCargo';
-import { expressionChangedAfterItHasBeenCheckedError } from '@angular/core/src/view/errors';
 
 @Component({
     selector: 'horas-reporte',
@@ -26,6 +24,7 @@ export class HorasReporteComponent implements OnInit {
     public proyectoActual: Proyecto;
     public tareaActual: TipoTarea;
     public horasPTXC: Array<{ tarea: TipoTarea, horas: HorasReporte1[] }> = [];
+    public totales: HorasReporte1[];
     public tareas: TipoTarea[];
     public proyectos: Proyecto[];
 
@@ -68,22 +67,36 @@ export class HorasReporteComponent implements OnInit {
         if (this.proyectoActual.id && this.tareaActual.id) {
 
             const tarea = this.tareaActual;
-            this.reporteService.getHorasProyectoTipoTareaXCargo(this.proyectoActual, tarea).subscribe(
+            this.reporteService.getReporte1(this.proyectoActual, tarea).subscribe(
                 (horas) => this.horasPTXC.push({ tarea, horas }),
+                (error) => this.alertService.error(error, 5000));
+            this.reporteService.getReporte1Totales(this.proyectoActual).subscribe(
+                (horas) => this.totales = horas,
                 (error) => this.alertService.error(error, 5000));
 
         } else if (this.proyectoActual.id) {
 
             this.tareas.forEach((tarea) => {
-                this.reporteService.getHorasProyectoTipoTareaXCargo(this.proyectoActual, tarea).subscribe(
+                this.reporteService.getReporte1(this.proyectoActual, tarea).subscribe(
                     (horas) => this.horasPTXC.push({ tarea, horas }),
                     (error) => this.alertService.error(error, 5000));
             });
+            this.reporteService.getReporte1Totales(this.proyectoActual).subscribe(
+                (horas) => this.totales = horas,
+                (error) => this.alertService.error(error, 5000));
 
 
         }
         this.layoutService.updatePreloaderState('hide');
 
+    }
+
+    getFilas(horasReporte: HorasReporte1[]) {
+        return horasReporte.filter((item) => item.cargo != null);
+    }
+
+    getTotal(horasReporte: HorasReporte1[]) {
+        return horasReporte.filter((item) => item.cargo == null);
     }
 
 }
