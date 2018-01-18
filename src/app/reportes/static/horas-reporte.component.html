@@ -24,15 +24,19 @@
                 <thead>
                 <tr>
                   <th class="mdl-data-table__cell--non-numeric">Cargo</th>
-                  <th>Horas</th>
-                  <th>Unit price</th>
+                  <th matTooltip="Horas Estimadas">Estimación</th>
+                  <th matTooltip="Precio Estimado">$</th>
+                  <th matTooltip="Horas Cargadas">Real</th>
+                  <th matTooltip="Precio Total Real">$</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let hora of horaPTXC.horas;">
                   <td class="mdl-data-table__cell--non-numeric">{{hora.cargo.nombre}}</td>
+                  <td>{{hora.cantidadHorasEstimadas}}</td>
+                  <td>{{hora.precioEstimado}}</td>
                   <td>{{hora.cantidadHoras}}</td>
-                  <td>$2.90</td>
+                  <td>{{hora.precioTotal}}</td>
                 </tr>
                 </tbody>
               </table>

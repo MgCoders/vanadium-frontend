@@ -10,7 +10,7 @@ import { AuthService } from '../../_services/auth.service';
 import { Proyecto } from '../../_models/Proyecto';
 import { TipoTarea } from '../../_models/TipoTarea';
 import { LayoutService } from '../../layout/layout.service';
-import { HorasProyectoTipoTareaXCargo } from '../../_models/HorasProyectoTipoTareaXCargo';
+import { HorasReporte1 } from '../../_models/HorasProyectoTipoTareaXCargo';
 import { CargoService } from '../../_services/cargo.service';
 import { HorasProyectoXCargo } from '../../_models/HorasProyectoXCargo';
 import { expressionChangedAfterItHasBeenCheckedError } from '@angular/core/src/view/errors';
@@ -25,7 +25,7 @@ export class HorasReporteComponent implements OnInit {
 
     public proyectoActual: Proyecto;
     public tareaActual: TipoTarea;
-    public horasPTXC: Array<{ tarea: TipoTarea, horas: HorasProyectoTipoTareaXCargo[] }> = [];
+    public horasPTXC: Array<{ tarea: TipoTarea, horas: HorasReporte1[] }> = [];
     public tareas: TipoTarea[];
     public proyectos: Proyecto[];
 

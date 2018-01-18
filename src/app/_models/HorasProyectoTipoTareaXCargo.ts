@@ -12,13 +12,12 @@
 
 import * as models from './models';
 
-export interface HorasProyectoTipoTareaXCargo {
+export interface HorasReporte1 {
     cantidadHoras?: number;
-
     proyecto?: models.Proyecto;
-
     tipoTarea?: models.TipoTarea;
-
     cargo?: models.Cargo;
-
+    precioTotal: number;
+    cantidadHorasEstimadas: number;
+    precioEstimado: number;
 }
