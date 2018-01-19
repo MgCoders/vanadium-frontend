@@ -38,7 +38,7 @@ import { ReportesRoutingModule } from './reportes-routing.module';
 import { ReportesComponent } from './reportes.component';
 
 import { TableResponsiveComponent } from './responsive/responsive.component';
-import { HorasReporteComponent } from './static/horas-reporte.component';
+import { HorasReporteComponent } from './reporte1/horas-reporte.component';
 import { TableDataTableComponent } from './data-table/data-table.component';
 import { ProyectosModule } from '../proyectos/proyectos.module';
 import { TareasModule } from '../tareas/tareas.module';

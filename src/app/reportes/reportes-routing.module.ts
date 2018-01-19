@@ -4,7 +4,7 @@ import {
 } from '@angular/router';
 
 import { ReportesComponent } from './reportes.component';
-import { HorasReporteComponent } from './static/horas-reporte.component';
+import { HorasReporteComponent } from './reporte1/horas-reporte.component';
 import { AdminGuard } from '../_guards/admin.guard';
 
 export const ReportesRoutes: Routes = [

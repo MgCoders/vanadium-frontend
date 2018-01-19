@@ -87,6 +87,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { AdminGuard } from './_guards/admin.guard';
+import { AlertService } from './_services/alert.service';
 
 @NgModule({
     imports: [
@@ -166,6 +167,7 @@ import { AdminGuard } from './_guards/admin.guard';
     providers: [
         AuthService,
         ColaboradorService,
+        AlertService,
         AuthGuard,
         AdminGuard,
         {
