@@ -63,11 +63,12 @@ export class HorasReporteComponent implements OnInit {
     proyectoOTareaSeleccionados() {
         this.layoutService.updatePreloaderState('active');
         this.horasPTXC = [];
+        this.totales = null;
 
         if (this.proyectoActual.id && this.tareaActual.id) {
 
             const tarea = this.tareaActual;
-            this.reporteService.getReporte1(this.proyectoActual, tarea).subscribe(
+            this.reporteService.getReporte1(this.proyectoActual, this.tareaActual).subscribe(
                 (horas) => this.horasPTXC.push({ tarea, horas }),
                 (error) => this.alertService.error(error, 5000));
             this.reporteService.getReporte1Totales(this.proyectoActual).subscribe(
