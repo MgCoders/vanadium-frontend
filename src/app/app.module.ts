@@ -90,6 +90,7 @@ import { AdminGuard } from './_guards/admin.guard';
 import { AlertService } from './_services/alert.service';
 import { NotificacionService } from './_services/notificacion.service';
 import { DatePipe } from '@angular/common';
+import { VerticalTimelineModule } from 'angular-vertical-timeline';
 
 @NgModule({
     imports: [
@@ -135,6 +136,7 @@ import { DatePipe } from '@angular/common';
         // Sub modules
         LayoutModule,
         SharedModule,
+        VerticalTimelineModule
     ],
     declarations: [
         AppComponent,
