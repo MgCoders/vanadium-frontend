@@ -88,6 +88,8 @@ import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { AdminGuard } from './_guards/admin.guard';
 import { AlertService } from './_services/alert.service';
+import { NotificacionService } from './_services/notificacion.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
     imports: [
@@ -165,6 +167,8 @@ import { AlertService } from './_services/alert.service';
     ],
     bootstrap: [AppComponent],
     providers: [
+        NotificacionService,
+        DatePipe,
         AuthService,
         ColaboradorService,
         AlertService,
