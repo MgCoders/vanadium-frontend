@@ -13,7 +13,7 @@ import { AlertService } from '../_services/alert.service';
 })
 export class DashboardComponent implements OnInit {
 
-    private notificaciones: Notificacion[];
+    notificaciones: Notificacion[];
 
     constructor(private notificacionService: NotificacionService,
                 private authService: AuthService,
