@@ -32,6 +32,8 @@ import { AlertService } from '../_services/alert.service';
 import { LayoutService } from '../layout/layout.service';
 
 import { TimePipe } from '../_pipes/time.pipe';
+import { ListaEstimacionesComponent } from './lista-estimaciones/lista-estimaciones.component';
+import { AltaEstimacionComponent } from './alta-estimacion/alta-estimacion.component';
 
 @NgModule({
   imports: [
@@ -57,7 +59,9 @@ import { TimePipe } from '../_pipes/time.pipe';
   ],
 
   declarations: [
-    EstimacionesComponent
+    EstimacionesComponent,
+    ListaEstimacionesComponent,
+    AltaEstimacionComponent
   ],
 
   providers: [

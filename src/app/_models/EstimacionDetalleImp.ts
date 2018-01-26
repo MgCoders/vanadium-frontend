@@ -12,15 +12,18 @@
 
 import * as models from './models';
 
-export interface Estimacion {
-    id?: number;
+export class EstimacionDetalle implements models.EstimacionDetalle {
 
-    proyecto: models.Proyecto;
+    tipoTarea: models.TipoTarea;
 
-    descripcion?: string;
+    cargo: models.Cargo;
 
-    fecha: string;
+    cantidadHoras: number;
 
-    estimacionDetalleList?: models.EstimacionDetalle[];
+    constructor(x: EstimacionDetalle) {
+        this.tipoTarea = x.tipoTarea;
+        this.cargo = x.cargo;
+        this.cantidadHoras = x.cantidadHoras
+    }
 
 }

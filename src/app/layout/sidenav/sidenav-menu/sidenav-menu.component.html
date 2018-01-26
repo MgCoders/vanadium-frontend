@@ -55,4 +55,11 @@
       <span class="nav-text">Proyectos</span>
     </a>
   </li>
+
+  <li *ngIf="isAdmin()">
+    <a mat-button [routerLink]="['/app/estimaciones/listaestimaciones']">
+      <i class="nav-icon material-icons">equalizer</i>
+      <span class="nav-text">Estimaciones</span>
+    </a>
+  </li>
 </ul>
