@@ -20,10 +20,13 @@ export class EstimacionDetalle implements models.EstimacionDetalle {
 
     cantidadHoras: number;
 
+    precioTotal: number;
+
     constructor(x: EstimacionDetalle) {
         this.tipoTarea = x.tipoTarea;
         this.cargo = x.cargo;
-        this.cantidadHoras = x.cantidadHoras
+        this.cantidadHoras = x.cantidadHoras;
+        this.precioTotal = x.precioTotal;
     }
 
 }

@@ -14,30 +14,30 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./alta-estimacion.component.scss']
 })
 export class AltaEstimacionComponent implements OnInit {
-
+/* 
   public cargoActual: Cargo;
   public precioInicial: number;
 
   public nombreFC = new FormControl('', [Validators.required]);
   public codigoFC = new FormControl('', [Validators.required]);
   public decimalRegExp: RegExp = new RegExp('^[0-9]+(\.[0-9]{1,2})?$');
-  public precioFC = new FormControl('', [Validators.required, Validators.pattern(this.decimalRegExp)]);
+  public precioFC = new FormControl('', [Validators.required, Validators.pattern(this.decimalRegExp)]); */
 
-  constructor(public dialogRef: MatDialogRef<AltaEstimacionComponent>,
+  constructor(/* public dialogRef: MatDialogRef<AltaEstimacionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Cargo, Cargo[]],
               private cs: CargoService,
               private as: AlertService,
               private layoutService: LayoutService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe */) { }
 
   ngOnInit() {
-    if (this.data[0] === undefined) {
+/*     if (this.data[0] === undefined) {
       this.cargoActual = {} as Cargo;
     } else {
       this.cargoActual = new CargoImp(this.data[0]);
-    }
+    } */
   }
-
+/* 
   Cerrar() {
     this.dialogRef.close();
   }
@@ -76,5 +76,5 @@ export class AltaEstimacionComponent implements OnInit {
           this.as.error(error, 5000);
         });
     }
-  }
+  } */
 }
