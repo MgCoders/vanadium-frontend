@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Estimacion, EstimacionDetalle } from '../_models/models';
+import { Estimacion } from '../_models/models';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -15,6 +15,10 @@ export class EstimacionService {
 
   get(id: number): Observable<Estimacion> {
     return this.http.get<Estimacion>(`${environment.apiUrl}/estimaciones/` + id);
+  }
+
+  getPorProyecto(idProyecto: number): Observable<Estimacion[]> {
+    return this.http.get<Estimacion[]>(`${environment.apiUrl}/estimaciones/proyecto/` + idProyecto);
   }
 
   create(x: Estimacion): Observable<any> {

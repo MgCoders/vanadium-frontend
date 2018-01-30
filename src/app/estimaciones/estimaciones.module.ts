@@ -34,6 +34,7 @@ import { LayoutService } from '../layout/layout.service';
 import { TimePipe } from '../_pipes/time.pipe';
 import { ListaEstimacionesComponent } from './lista-estimaciones/lista-estimaciones.component';
 import { AltaEstimacionComponent } from './alta-estimacion/alta-estimacion.component';
+import { EstimacionDetalleComponent } from './estimacion-detalle/estimacion-detalle.component';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { AltaEstimacionComponent } from './alta-estimacion/alta-estimacion.compo
   declarations: [
     EstimacionesComponent,
     ListaEstimacionesComponent,
-    AltaEstimacionComponent
+    AltaEstimacionComponent,
+    EstimacionDetalleComponent
   ],
 
   providers: [
@@ -74,6 +76,7 @@ import { AltaEstimacionComponent } from './alta-estimacion/alta-estimacion.compo
   ],
 
   entryComponents: [
+    AltaEstimacionComponent
   ]
 })
 export class EstimacionesModule { }

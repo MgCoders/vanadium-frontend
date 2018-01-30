@@ -12,15 +12,16 @@
 
 import * as models from './models';
 
-export interface Estimacion {
+export class EstimacionTipoTareaImp {
     id?: number;
 
-    proyecto: models.Proyecto;
+    tipoTarea: models.TipoTarea;
 
-    descripcion?: string;
+    duracion: string;
 
-    fecha: string;
-
-    estimacionCargos?: models.EstimacionCargo[];
-
+    public constructor(x: models.EstimacionTipoTarea) {
+        this.id = x.id;
+        this.tipoTarea = x.tipoTarea;
+        this.duracion = x.duracion;
+    }
 }

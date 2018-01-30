@@ -11,14 +11,25 @@
  */
 
 import * as models from './models';
+import { EstimacionTipoTareaImp } from './EstimacionTipoTareaImp';
 
-export interface EstimacionDetalle {
-    tipoTarea: models.TipoTarea;
+export class EstimacionCargoImp {
+    id?: number;
 
     cargo: models.Cargo;
 
-    cantidadHoras: number;
-
     precioTotal: number;
 
+    estimacionTipoTareas?: models.EstimacionTipoTarea[];
+
+    public constructor(x: models.EstimacionCargo) {
+        this.id = x.id;
+        this.cargo = x.cargo;
+        this.precioTotal = x.precioTotal;
+
+        this.estimacionTipoTareas = new Array();
+        x.estimacionTipoTareas.forEach((y) => {
+            this.estimacionTipoTareas.push(new EstimacionTipoTareaImp(y));
+        });
+    }
 }

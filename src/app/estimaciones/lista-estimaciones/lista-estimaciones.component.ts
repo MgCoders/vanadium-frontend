@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { EstimacionService } from '../../_services/estimacion.service';
 import { AlertService } from '../../_services/alert.service';
-import { Estimacion } from '../../_models/models';
+import {
+  Estimacion,
+  Proyecto
+} from '../../_models/models';
 import { LayoutService } from '../../layout/layout.service';
 import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confirm.component';
 import {
   ActivatedRoute,
-  Router
+  Router,
 } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AltaEstimacionComponent } from '../alta-estimacion/alta-estimacion.component';
@@ -20,6 +23,7 @@ import { AltaEstimacionComponent } from '../alta-estimacion/alta-estimacion.comp
 export class ListaEstimacionesComponent implements OnInit {
 
   public lista: Estimacion[];
+  public proyectoActual: Proyecto;
 
   constructor(public dialog: MatDialog,
               private service: EstimacionService,
@@ -30,9 +34,30 @@ export class ListaEstimacionesComponent implements OnInit {
 
   ngOnInit() {
     this.lista = new Array();
+    this.proyectoActual = {} as Proyecto;
+    this.LoadEstimaciones();
+  }
 
+  LoadEstimaciones() {
     this.layoutService.updatePreloaderState('active');
     this.service.getAll().subscribe(
+      (data) => {
+        this.lista = data;
+        // tslint:disable-next-line:only-arrow-functions
+        this.lista.sort(function(a, b) {
+          return this.datePipe.transform(b.fecha, 'dd-MM-yyyy').getTime() - this.datePipe.transform(b.fecha, 'dd-MM-yyyy').getTime();
+        });
+        this.layoutService.updatePreloaderState('hide');
+      },
+      (error) => {
+        this.layoutService.updatePreloaderState('hide');
+        this.as.error(error, 5000);
+      });
+  }
+
+  LoadEstimacionesPorProyecto(id: number) {
+    this.layoutService.updatePreloaderState('active');
+    this.service.getPorProyecto(id).subscribe(
       (data) => {
         this.lista = data;
         // tslint:disable-next-line:only-arrow-functions
@@ -73,5 +98,13 @@ export class ListaEstimacionesComponent implements OnInit {
       data: [x, this.lista],
       width: '600px',
     });
+  }
+
+  proyectoSeleccionado(x: Proyecto) {
+    if (x === undefined) {
+      this.LoadEstimaciones();
+    } else {
+      this.LoadEstimacionesPorProyecto(x.id);
+    }
   }
 }

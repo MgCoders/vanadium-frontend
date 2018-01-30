@@ -2,7 +2,10 @@
   <article class="article">
     <div class="row">
       <h2 class="article-title padding-top-30 col-12 col-sm-6">Estimaciones</h2>
-      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
+      <div class="padding-top-30 text-right text-sm-right col-12 col-sm-3">
+        <app-select-proyecto [addEmptyOption]="true" [object]="proyectoActual" idModel="id" placeHolder="PROYECTOS" id="id" desc="nombre" (onChange)="proyectoSeleccionado($event)"></app-select-proyecto>
+      </div>
+      <div class="article-title padding-top-30 text-right text-sm-right col-12 col-sm-3">
         <button mat-raised-button color="accent" class="btn-w-md" (click)="Nuevo()">Crear Estimación</button>
       </div>
     </div>
@@ -27,8 +30,8 @@
             <td class="mdl-data-table__cell--non-numeric">{{x.descripcion}}</td>
             <!-- <td>{{x.precioHora | number:'1.2'}}</td> -->
             <td>
-              <a matTooltipPosition="above" matTooltip="Cargar Detalle de la Estimación" mat-icon-button color="secondary" [routerLink]="['/app/cargos/historicoprecio/', x.id]">
-                <mat-icon class="material-icons">monetization_on</mat-icon>
+              <a matTooltipPosition="above" matTooltip="Cargar Detalle de la Estimación" mat-icon-button color="secondary" [routerLink]="['/app/estimaciones/detalle/', x.id]">
+                <mat-icon class="material-icons">trending_up</mat-icon>
               </a>
               <button matTooltipPosition="above" matTooltip="Editar Estimación" mat-icon-button color="primary" (click)="Editar(x)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>

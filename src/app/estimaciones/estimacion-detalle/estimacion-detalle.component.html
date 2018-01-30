@@ -1,0 +1,53 @@
+<section class="container-fluid with-maxwidth chapter">
+
+  <article class="article">
+    <div class="row">
+      <h2 class="article-title col-12 col-sm-6">
+        <span *ngIf="estimacionActual !== undefined">Estimación - {{estimacionActual.proyecto.nombre}} - {{estimacionActual.fecha}}</span>
+      </h2>
+      <div class="col-12 col-sm-6">
+        <button *ngIf="!editando && estimacionActual !== undefined" matTooltipPosition="above" matTooltip="Editar Estimación." mat-icon-button
+          color="primary" (click)="Editar()">
+          <mat-icon class="material-icons">mode_edit</mat-icon>
+        </button>
+        <button *ngIf="editando" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
+        <button *ngIf="editando" mat-raised-button color="dark" class="btn-w-md" (click)="Cancelar()">Cancelar</button>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let x of tareas" class="col-xl-3">
+        <div class="box box-transparent">
+          <div class="box-body no-padding-h">
+            <div class="box box-default table-box mdl-shadow--2dp">
+              <table class="mdl-data-table with-maxwidth">
+                <thead>
+                  <tr>
+                    <th class="text-center" colspan="2">
+                      {{x.nombre}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let y of cargos">
+                    <td class="mdl-data-table__cell--non-numeric">{{y.codigo}}</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>
+                      <b>TOTALES</b>
+                    </td>
+                    <td>
+                      <b></b>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
