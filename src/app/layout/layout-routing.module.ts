@@ -18,7 +18,8 @@ const routes: Routes = [
       { path: 'colaboradores', loadChildren: '../colaboradores/colaboradores.module#ColaboradoresModule' },
       { path: 'proyectos', loadChildren: '../proyectos/proyectos.module#ProyectosModule' },
       { path: 'horas', loadChildren: '../horas/horas.module#HorasModule' },
-      { path: 'reportes', loadChildren: '../reportes/reportes.module#ReportesModule' }
+      { path: 'reportes', loadChildren: '../reportes/reportes.module#ReportesModule' },
+      { path: 'estimaciones', loadChildren: '../estimaciones/estimaciones.module#EstimacionesModule' },
     ]
   }
 ];

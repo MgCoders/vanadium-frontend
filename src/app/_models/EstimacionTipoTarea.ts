@@ -12,15 +12,11 @@
 
 import * as models from './models';
 
-export interface Estimacion {
+export interface EstimacionTipoTarea {
     id?: number;
 
-    proyecto: models.Proyecto;
+    tipoTarea: models.TipoTarea;
 
-    descripcion?: string;
-
-    fecha: string;
-
-    estimacionCargos?: models.EstimacionCargo[];
+    duracion: string;
 
 }

@@ -7,7 +7,7 @@
         <div class="col-12">
           <mat-input-container class="full-width">
             <input [(ngModel)]="colaboradorActual.nombre" matInput placeholder="Nombre" name="Nombre" [formControl]="nombreFC">
-            <mat-error *ngIf="mailFC.hasError('required')">El nombre es obligatorio.</mat-error>
+            <mat-error *ngIf="nombreFC.hasError('required')">El nombre es obligatorio.</mat-error>
           </mat-input-container>
         </div>
       </div>
@@ -36,7 +36,7 @@
 
 <div mat-dialog-actions class="full-width">
   <div class="full-width text-sm-right">
-    <button mat-button color="primary" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
+    <button mat-button color="info" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
     <button [disabled]="nombreFC.invalid || mailFC.invalid" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
   </div>
 </div>

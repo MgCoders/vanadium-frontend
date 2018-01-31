@@ -19,13 +19,15 @@
           </mat-input-container>
         </div>
       </div>
-<!--       <div class="row">
+      <div class="row" *ngIf="data[0] === undefined">
         <div class="col-12">
           <mat-input-container class="full-width">
-            <input [(ngModel)]="cargoActual.precioHora" matInput placeholder="Precio/Hora" name="PrecioHora">
+            <input [(ngModel)]="precioInicial" matInput placeholder="Precio/Hora" name="PrecioHora" [formControl]="precioFC">
+            <mat-error *ngIf="precioFC.hasError('required')">El precio por hora del cargo es obligatorio.</mat-error>
+            <mat-error *ngIf="precioFC.hasError('pattern')">El formato no es correcto, debe ser un número.</mat-error>
           </mat-input-container>
         </div>
-      </div> -->
+      </div>
     </form>
   </div>
 </div>
@@ -33,6 +35,6 @@
 <div mat-dialog-actions class="full-width">
   <div class="full-width text-sm-right">
     <button mat-button color="info" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
-    <button [disabled]="nombreFC.invalid || codigoFC.invalid" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
+    <button [disabled]="nombreFC.invalid || codigoFC.invalid || (data[0] === undefined && precioFC.invalid)" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
   </div>
 </div>

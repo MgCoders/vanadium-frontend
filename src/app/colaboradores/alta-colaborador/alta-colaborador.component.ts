@@ -5,6 +5,7 @@ import { ColaboradorService } from '../../_services/colaborador.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CargoImp } from '../../_models/CargoImp';
 
 @Component({
   selector: 'app-alta-colaborador',
@@ -36,6 +37,9 @@ export class AltaColaboradorComponent implements OnInit {
     } else {
       this.colaboradorActual = new ColaboradorImp(this.data[0]);
       this.cargoActual = this.colaboradorActual.cargo;
+      if (this.cargoActual === undefined) {
+        this.cargoActual = {} as Cargo;
+      }
       this.esAdmin = this.colaboradorActual.role === 'ADMIN';
     }
   }

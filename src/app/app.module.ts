@@ -39,7 +39,8 @@ import {
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MAT_DATE_LOCALE
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -169,6 +170,7 @@ import { VerticalTimelineModule } from 'angular-vertical-timeline';
     ],
     bootstrap: [AppComponent],
     providers: [
+        {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
         NotificacionService,
         DatePipe,
         AuthService,

@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { Cargo } from '../../_models/models';
+import { Cargo, PrecioHora } from '../../_models/models';
 import { CargoImp } from '../../_models/CargoImp';
 import { CargoService } from '../../_services/cargo.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-alta-cargo',
@@ -15,15 +16,19 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 export class AltaCargoComponent implements OnInit {
 
   public cargoActual: Cargo;
+  public precioInicial: number;
 
   public nombreFC = new FormControl('', [Validators.required]);
   public codigoFC = new FormControl('', [Validators.required]);
+  public decimalRegExp: RegExp = new RegExp('^[0-9]+(\.[0-9]{1,2})?$');
+  public precioFC = new FormControl('', [Validators.required, Validators.pattern(this.decimalRegExp)]);
 
   constructor(public dialogRef: MatDialogRef<AltaCargoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Cargo, Cargo[]],
               private cs: CargoService,
               private as: AlertService,
-              private layoutService: LayoutService) { }
+              private layoutService: LayoutService,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
     if (this.data[0] === undefined) {
@@ -40,6 +45,12 @@ export class AltaCargoComponent implements OnInit {
   Guardar() {
     this.layoutService.updatePreloaderState('active');
     if (this.data[0] === undefined) {
+      // Agregamos el primer registro de historico de precio.
+      this.cargoActual.precioHoraHistoria = new Array();
+      const histPrecio: PrecioHora = {} as PrecioHora;
+      histPrecio.precioHora = this.precioInicial;
+      histPrecio.vigenciaDesde = this.datePipe.transform(new Date(), 'dd-MM-yyyy');
+      this.cargoActual.precioHoraHistoria.push(histPrecio);
       this.cs.create(this.cargoActual).subscribe(
         (data) => {
           this.as.success('Cargo agregado correctamente.', 3000);

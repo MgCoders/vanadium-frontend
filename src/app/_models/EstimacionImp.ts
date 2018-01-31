@@ -11,8 +11,9 @@
  */
 
 import * as models from './models';
+import { EstimacionCargoImp } from './EstimacionCargoImp';
 
-export interface Estimacion {
+export class EstimacionImp {
     id?: number;
 
     proyecto: models.Proyecto;
@@ -23,4 +24,15 @@ export interface Estimacion {
 
     estimacionCargos?: models.EstimacionCargo[];
 
+    public constructor(x: models.Estimacion) {
+        this.id = x.id;
+        this.proyecto = x.proyecto;
+        this.descripcion = x.descripcion;
+        this.fecha = x.fecha;
+
+        this.estimacionCargos = new Array();
+        x.estimacionCargos.forEach((y) => {
+            this.estimacionCargos.push(new EstimacionCargoImp(y));
+        });
+    }
 }

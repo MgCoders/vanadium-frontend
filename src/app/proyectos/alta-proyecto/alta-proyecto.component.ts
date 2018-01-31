@@ -4,6 +4,7 @@ import { Proyecto, ProyectoImp } from '../../_models/models';
 import { ProyectoService } from '../../_services/proyecto.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-alta-proyecto',
@@ -14,6 +15,9 @@ import { LayoutService } from '../../layout/layout.service';
 export class AltaProyectoComponent implements OnInit {
 
   public proyectoActual: Proyecto;
+
+  public nombreFC = new FormControl('', [Validators.required]);
+  public codigoFC = new FormControl('', [Validators.required]);
 
   constructor(public dialogRef: MatDialogRef<AltaProyectoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Proyecto, Proyecto[]],

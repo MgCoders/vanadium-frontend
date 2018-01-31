@@ -4,6 +4,7 @@ import { TipoTarea, TipoTareaImp } from '../../_models/models';
 import { TareaService } from '../../_services/tarea.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-alta-tarea',
@@ -13,6 +14,9 @@ import { LayoutService } from '../../layout/layout.service';
 export class AltaTareaComponent implements OnInit {
 
   public tareaActual: TipoTarea;
+
+  public nombreFC = new FormControl('', [Validators.required]);
+  public codigoFC = new FormControl('', [Validators.required]);
 
   constructor(public dialogRef: MatDialogRef<AltaTareaComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [TipoTarea, TipoTarea[]],

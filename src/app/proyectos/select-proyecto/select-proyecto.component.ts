@@ -16,6 +16,7 @@ export class SelectProyectoComponent implements OnInit {
   @Input() placeHolder: string;
   @Input() id: string;
   @Input() desc: string;
+  @Input() addEmptyOption: boolean;
 
   @Output() onChange: EventEmitter<Proyecto> = new EventEmitter<Proyecto>();
 

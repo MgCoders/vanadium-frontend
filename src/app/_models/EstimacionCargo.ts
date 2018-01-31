@@ -12,13 +12,13 @@
 
 import * as models from './models';
 
-export interface EstimacionDetalle {
-    tipoTarea: models.TipoTarea;
+export interface EstimacionCargo {
+    id?: number;
 
     cargo: models.Cargo;
 
-    cantidadHoras: number;
-
     precioTotal: number;
+
+    estimacionTipoTareas?: models.EstimacionTipoTarea[];
 
 }
