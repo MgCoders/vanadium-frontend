@@ -36,6 +36,8 @@ import { ListaEstimacionesComponent } from './lista-estimaciones/lista-estimacio
 import { AltaEstimacionComponent } from './alta-estimacion/alta-estimacion.component';
 import { EstimacionDetalleComponent } from './estimacion-detalle/estimacion-detalle.component';
 
+import { CustomDatePipe } from '../_pipes/customDate.pipe';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -72,7 +74,8 @@ import { EstimacionDetalleComponent } from './estimacion-detalle/estimacion-deta
     LayoutService,
     DatePipe,
     DecimalPipe,
-    TimePipe
+    TimePipe,
+    CustomDatePipe
   ],
 
   entryComponents: [

@@ -93,6 +93,8 @@ import { NotificacionService } from './_services/notificacion.service';
 import { DatePipe } from '@angular/common';
 import { VerticalTimelineModule } from 'angular-vertical-timeline';
 
+import { CustomDatePipe } from './_pipes/customDate.pipe';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -167,6 +169,8 @@ import { VerticalTimelineModule } from 'angular-vertical-timeline';
         DashboardComponent,
         // Pages
         PageLayoutFullscreenComponent,
+        // Pipes
+        CustomDatePipe
     ],
     bootstrap: [AppComponent],
     providers: [
@@ -187,7 +191,8 @@ import { VerticalTimelineModule } from 'angular-vertical-timeline';
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true
-        }
+        },
+        CustomDatePipe
     ]
 })
 

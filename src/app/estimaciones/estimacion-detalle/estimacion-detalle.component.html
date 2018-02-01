@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="row">
-      <div *ngFor="let x of tareas" class="col-xl-3">
+      <div *ngFor="let x of tareasCargos" class="col-xl-3">
         <div class="box box-transparent">
           <div class="box-body no-padding-h">
             <div class="box box-default table-box mdl-shadow--2dp">
@@ -23,23 +23,32 @@
                 <thead>
                   <tr>
                     <th class="text-center" colspan="2">
-                      {{x.nombre}}
+                      {{x.nombreTarea}}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let y of cargos">
-                    <td class="mdl-data-table__cell--non-numeric">{{y.codigo}}</td>
-                    <td></td>
+                  <tr *ngFor="let y of x.cargos">
+                    <td class="mdl-data-table__cell--non-numeric">{{y.nombreCargo}}</td>
+                    <td>
+
+                      <span *ngIf="!editando">{{y.value}}</span>
+
+                      <mat-form-field *ngIf="editando" class="anchoMinimo">
+                        <input matInput type="number" [(ngModel)]="y.value" [formControl]="y.FC">
+                        <mat-error *ngIf="y.FC.invalid">Debe ser > 0</mat-error>
+                      </mat-form-field>
+
+                    </td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td>
+                    <td class="mdl-data-table__cell--non-numeric">
                       <b>TOTALES</b>
                     </td>
                     <td>
-                      <b></b>
+                      <b>{{GetTotalTarea(x.idTarea)}}</b>
                     </td>
                   </tr>
                 </tfoot>

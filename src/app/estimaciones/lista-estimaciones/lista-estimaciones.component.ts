@@ -14,6 +14,7 @@ import {
 } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AltaEstimacionComponent } from '../alta-estimacion/alta-estimacion.component';
+import { CustomDatePipe } from '../../_pipes/customDate.pipe';
 
 @Component({
   selector: 'app-lista-estimaciones',
@@ -29,6 +30,7 @@ export class ListaEstimacionesComponent implements OnInit {
               private service: EstimacionService,
               private as: AlertService,
               private datePipe: DatePipe,
+              private customDatePipe: CustomDatePipe,
               private layoutService: LayoutService,
               private router: Router) { }
 
@@ -43,9 +45,8 @@ export class ListaEstimacionesComponent implements OnInit {
     this.service.getAll().subscribe(
       (data) => {
         this.lista = data;
-        // tslint:disable-next-line:only-arrow-functions
-        this.lista.sort(function(a, b) {
-          return this.datePipe.transform(b.fecha, 'dd-MM-yyyy').getTime() - this.datePipe.transform(b.fecha, 'dd-MM-yyyy').getTime();
+        this.lista.sort((a: Estimacion, b: Estimacion) => {
+          return this.customDatePipe.transform(b.fecha, ['']).getTime() - this.customDatePipe.transform(a.fecha, ['']).getTime();
         });
         this.layoutService.updatePreloaderState('hide');
       },
@@ -60,9 +61,8 @@ export class ListaEstimacionesComponent implements OnInit {
     this.service.getPorProyecto(id).subscribe(
       (data) => {
         this.lista = data;
-        // tslint:disable-next-line:only-arrow-functions
-        this.lista.sort(function(a, b) {
-          return this.datePipe.transform(b.fecha, 'dd-MM-yyyy').getTime() - this.datePipe.transform(b.fecha, 'dd-MM-yyyy').getTime();
+        this.lista.sort((a: Estimacion, b: Estimacion) => {
+          return this.customDatePipe.transform(b.fecha, ['']).getTime() - this.customDatePipe.transform(a.fecha, ['']).getTime();
         });
         this.layoutService.updatePreloaderState('hide');
       },
