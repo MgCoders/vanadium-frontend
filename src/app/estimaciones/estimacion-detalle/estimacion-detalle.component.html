@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="row">
-      <div *ngFor="let x of tareasCargos" class="col-xl-3">
+      <div *ngFor="let x of tareasCargos" class="col-xl-3 col-md-4 col-sm-6 col-12">
         <div class="box box-transparent">
           <div class="box-body no-padding-h">
             <div class="box box-default table-box mdl-shadow--2dp">
@@ -30,15 +30,14 @@
                 <tbody>
                   <tr *ngFor="let y of x.cargos">
                     <td class="mdl-data-table__cell--non-numeric">{{y.nombreCargo}}</td>
-                    <td>
-
-                      <span *ngIf="!editando">{{y.value}}</span>
-
-                      <mat-form-field *ngIf="editando" class="anchoMinimo">
+                    <td *ngIf="!editando">
+                      <span>{{y.value}}</span>
+                    </td>
+                    <td *ngIf="editando" class="noPading">
+                      <mat-form-field class="anchoMinimo noBorder">
                         <input matInput type="number" [(ngModel)]="y.value" [formControl]="y.FC">
                         <mat-error *ngIf="y.FC.invalid">Debe ser > 0</mat-error>
                       </mat-form-field>
-
                     </td>
                   </tr>
                 </tbody>
@@ -58,5 +57,59 @@
         </div>
       </div>
     </div>
+
+    <div class="row" *ngIf="estimacionActual !== undefined">
+      <div class= "col-md-6 col-12">
+        <div class="box box-transparent">
+          <div class="box-body no-padding-h">
+            <div class="box box-default table-box mdl-shadow--2dp">
+              <table class="mdl-data-table with-maxwidth">
+                <thead>
+                  <tr>
+                    <th class="text-center">
+                      Cargo
+                    </th>
+                    <th class="text-center">
+                      Valor Hora Estimado $
+                    </th>
+                    <th class="text-center">
+                      Valor Hora al {{estimacionActual.fecha}} $
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let y of horaCargo">
+                    <td class="mdl-data-table__cell--non-numeric">{{y.codigo}}</td>
+
+                    <td *ngIf="!editando">
+                      <span>{{y.value | number:'1.2'}}</span>
+                    </td>
+                    <td *ngIf="editando" class="noPading">
+                      <mat-form-field class="anchoMinimo noBorder">
+                        <input matInput type="number" [(ngModel)]="y.value" [formControl]="y.FC">
+                        <mat-error *ngIf="y.FC.invalid">Debe ser > 0</mat-error>
+                      </mat-form-field>
+                    </td>
+
+                    <td>{{GetValorHoraCargoFecha(y.idCargo) | number:'1.2'}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">
+                      <b>TOTALES</b>
+                    </td>
+                    <td>
+                      <!-- <b>{{GetTotalTarea(x.idTarea)}}</b> -->
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </article>
 </section>
