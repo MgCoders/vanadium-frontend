@@ -214,6 +214,39 @@ export class EstimacionDetalleComponent implements OnInit {
     this.tareasCargos.forEach((x) => {
       result += x.cargos.find((y) => y.idCargo === idCargo).value;
     });
+    return result;
+  }
+
+  GetTotalImporteEstimacionPorCargo(idCargo: number) {
+    let result: number = 0;
+    this.tareasCargos.forEach((x) => {
+      // Si se cargo el valor del cargo para la tarea la sumamos.
+      if (x.cargos.find((y) => y.idCargo === idCargo).value !== undefined) {
+        result += x.cargos.find((y) => y.idCargo === idCargo).value;
+      }
+    });
+    if (this.horaCargo.find((x) => x.idCargo === idCargo).value === undefined) {
+      return 0;
+    }
+    return result * this.horaCargo.find((x) => x.idCargo === idCargo).value;
+  }
+
+  GetTotalHorasEstimacion() {
+    let result: number = 0;
+    this.tareasCargos.forEach((x) => {
+      x.cargos.forEach((y) => {
+        result += y.value;
+      });
+    });
+    return result;
+  }
+
+  GetTotalImporteEstimacion() {
+    let result: number = 0;
+    this.horaCargo.forEach((x) => {
+      result += this.GetTotalImporteEstimacionPorCargo(x.idCargo);
+    });
+    return result;
   }
 
   GetValorHoraCargoFecha(idCargo: number) {
