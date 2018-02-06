@@ -33,6 +33,6 @@
 <div mat-dialog-actions class="full-width">
   <div class="full-width text-sm-right">
     <button mat-button color="info" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
-    <button [disabled]="descripcionFC.invalid || fechaFC.invalid || estimacionActual.proyecto === undefined" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
+    <button [disabled]="descripcionFC.invalid || fechaFC.invalid || estimacionActual.proyecto === undefined || (data[0] == undefined && loading > 0)" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
   </div>
 </div>

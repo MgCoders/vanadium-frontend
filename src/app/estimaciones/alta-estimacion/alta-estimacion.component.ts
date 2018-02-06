@@ -3,13 +3,20 @@ import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import {
   Estimacion,
   EstimacionImp,
-  Proyecto
+  Proyecto,
+  Cargo,
+  TipoTarea,
+  EstimacionCargo,
+  EstimacionTipoTarea
 } from '../../_models/models';
 import { EstimacionService } from '../../_services/estimacion.service';
+import { CargoService } from '../../_services/cargo.service';
+import { TareaService } from '../../_services/tarea.service';
 import { AlertService } from '../../_services/alert.service';
 import { LayoutService } from '../../layout/layout.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { CustomDatePipe } from '../../_pipes/customDate.pipe';
 
 @Component({
   selector: 'app-alta-estimacion',
@@ -25,18 +32,50 @@ export class AltaEstimacionComponent implements OnInit {
   public fechaFC = new FormControl('', [Validators.required]);
   public descripcionFC = new FormControl('', []);
 
+  public cargos: Cargo[];
+  public tareas: TipoTarea[];
+
+  public loading: number;
+
   constructor(public dialogRef: MatDialogRef<AltaEstimacionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Estimacion, Estimacion[]],
-              private cs: EstimacionService,
+              private es: EstimacionService,
+              private cs: CargoService,
+              private ts: TareaService,
               private as: AlertService,
               private layoutService: LayoutService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private customDatePipe: CustomDatePipe) { }
 
   ngOnInit() {
+     this.loading = 0;
+
      if (this.data[0] === undefined) {
       this.estimacionActual = {} as Estimacion;
       this.proyectoActual = {} as Proyecto;
       this.fechaActual = new Date();
+
+      this.loading++;
+      this.cs.getAll().subscribe(
+        (data) => {
+          this.cargos = data;
+          this.loading--;
+        },
+        (error) => {
+          this.as.error(error, 5000);
+        }
+      );
+      this.loading++;
+      this.ts.getAll().subscribe(
+        (data) => {
+          this.tareas = data;
+          this.loading--;
+        },
+        (error) => {
+          this.as.error(error, 5000);
+        }
+      );
+
     } else {
       this.estimacionActual = new EstimacionImp(this.data[0]);
       this.fechaActual = this.dateFromString(this.estimacionActual.fecha);
@@ -53,7 +92,18 @@ export class AltaEstimacionComponent implements OnInit {
     this.estimacionActual.fecha = this.datePipe.transform(this.fechaActual, 'dd-MM-yyyy');
 
     if (this.data[0] === undefined) {
-      this.cs.create(this.estimacionActual).subscribe(
+      // Agregamos la lista de detalle cargo y tarea.
+      this.estimacionActual.estimacionCargos = new Array();
+      this.cargos.forEach((x) => {
+        const detalleCargo = {cargo: x, precioTotal: 0, estimacionTipoTareas: new Array()} as EstimacionCargo;
+        this.estimacionActual.estimacionCargos.push(detalleCargo);
+        this.tareas.forEach((y) => {
+          const detalleTarea = {tipoTarea: y, duracion: 'PT0H0M'} as EstimacionTipoTarea;
+          detalleCargo.estimacionTipoTareas.push(detalleTarea);
+        });
+      });
+
+      this.es.create(this.estimacionActual).subscribe(
         (data) => {
           this.as.success('Estimación agregada correctamente.', 3000);
           this.data[1].push(data);
@@ -65,7 +115,7 @@ export class AltaEstimacionComponent implements OnInit {
           this.as.error(error, 5000);
         });
     } else {
-      this.cs.edit(this.estimacionActual).subscribe(
+      this.es.edit(this.estimacionActual).subscribe(
         (data) => {
           this.layoutService.updatePreloaderState('hide');
           this.as.success('Estimación actualizada correctamente.', 3000);
