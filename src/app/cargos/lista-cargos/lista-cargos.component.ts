@@ -3,14 +3,16 @@ import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { AltaCargoComponent } from '../alta-cargo/alta-cargo.component';
 import { HistoricoPrecioCargoComponent } from '../historico-precio-cargo/historico-precio-cargo.component';
 import { CargoService } from '../../_services/cargo.service';
+import { ColaboradorService } from '../../_services/colaborador.service';
 import { AlertService } from '../../_services/alert.service';
-import { Cargo } from '../../_models/models';
+import { Cargo, PrecioHora, Colaborador } from '../../_models/models';
 import { LayoutService } from '../../layout/layout.service';
 import { DialogConfirmComponent } from '../../shared/dialog-confirm/dialog-confirm.component';
 import {
   ActivatedRoute,
   Router
 } from '@angular/router';
+import { CustomDatePipe } from '../../_pipes/customDate.pipe';
 
 @Component({
   selector: 'app-lista-cargos',
@@ -20,25 +22,50 @@ import {
 export class ListaCargosComponent implements OnInit {
 
   public lista: Cargo[];
+  public colaboradores: Colaborador[];
+  public listaColaboradoresPorCargo: Array<{id: number, lista: Array<{iniciales: string, nombre: string}>}>;
+  public loading: number = 0;
 
   constructor(public dialog: MatDialog,
               private service: CargoService,
+              private colaboradorService: ColaboradorService,
               private as: AlertService,
               private layoutService: LayoutService,
-              private router: Router) { }
+              private router: Router,
+              private datePipe: CustomDatePipe) { }
 
   ngOnInit() {
     this.lista = new Array();
+    this.listaColaboradoresPorCargo = new Array();
 
     this.layoutService.updatePreloaderState('active');
     this.service.getAll().subscribe(
       (data) => {
+        data.forEach((c) => {
+          this.listaColaboradoresPorCargo.push({id: c.id, lista: new Array()});
+        });
+
         this.lista = data;
         // tslint:disable-next-line:only-arrow-functions
         this.lista.sort(function(a, b) {
           return a.id - b.id;
         });
-        this.layoutService.updatePreloaderState('hide');
+
+        // Cargamos los colaboradores.
+        this.colaboradorService.getAll().subscribe(
+          (dataC) => {
+            this.colaboradores = dataC;
+            this.lista.forEach((c) => {
+              this.listaColaboradoresPorCargo.find((h) => h.id === c.id).lista = this.GetIniciales(c);
+            });
+
+            this.layoutService.updatePreloaderState('hide');
+          },
+          (errorC) => {
+            this.layoutService.updatePreloaderState('hide');
+            this.as.error(errorC, 5000);
+          }
+        );
       },
       (error) => {
         this.layoutService.updatePreloaderState('hide');
@@ -72,5 +99,44 @@ export class ListaCargosComponent implements OnInit {
       data: [x, this.lista],
       width: '600px',
     });
+  }
+
+  GetUltimoPrecio(c: Cargo) {
+    if (c.precioHoraHistoria === undefined || c.precioHoraHistoria.length === 0) {
+      return 0;
+    } else {
+      return c.precioHoraHistoria.sort((a: PrecioHora, b: PrecioHora) => {
+        return this.datePipe.transform(b.vigenciaDesde, []).getTime() - this.datePipe.transform(a.vigenciaDesde, []).getTime();
+      })[0].precioHora;
+    }
+  }
+
+  GetIniciales(c: Cargo): Array<{iniciales: string, nombre: string}> {
+    const result: Array<{iniciales: string, nombre: string}> = new Array();
+    if (this.colaboradores === undefined) {
+      return result;
+    }
+
+    this.colaboradores
+      .filter((x) => x.cargo !== null && x.cargo.id === c.id)
+      .forEach((x) => {
+        const ini: string[] = x.nombre.split(' ');
+        let aux: string = '';
+        ini.forEach((y) => {
+          if (y.length > 0) {
+            aux += y[0];
+          }
+        });
+        result.push({iniciales: aux.toUpperCase(), nombre: x.nombre});
+      });
+
+    return result;
+  }
+
+  GetInicialesAux(id: number): Array<{iniciales: string, nombre: string}> {
+    if (this.listaColaboradoresPorCargo === undefined) {
+      return new Array();
+    }
+    return this.listaColaboradoresPorCargo.find((x) => x.id === id).lista;
   }
 }

@@ -10,6 +10,7 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatDatepickerModule,
+  MatChipsModule
 } from '@angular/material';
 
 import { CargosComponent } from './cargos.component';
@@ -39,6 +40,7 @@ import { DatePipe } from '@angular/common';
     MatTooltipModule,
     MatDialogModule,
     MatDatepickerModule,
+    MatChipsModule
   ],
 
   exports: [
