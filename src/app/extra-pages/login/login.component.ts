@@ -13,6 +13,8 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { LayoutService } from '../../layout/layout.service';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({
   selector: 'my-page-login',
@@ -32,7 +34,9 @@ export class PageLoginComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public snackBar: MatSnackBar,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private layoutService: LayoutService,
+              private as: AlertService) {
   }
 
   ngOnInit(): void {
@@ -57,9 +61,11 @@ export class PageLoginComponent implements OnInit {
 
   login() {
     this.formSubmitted = true;
+    this.layoutService.updatePreloaderState('active');
     this.authService.login(this.model.email, this.model.password)
       .subscribe((result) => {
         console.info(result);
+        this.layoutService.updatePreloaderState('hide');
         if (result === true) {
           this.router.navigateByUrl(this.returnUrl);
           console.log('LOGINA!' + this.returnUrl);
@@ -67,14 +73,10 @@ export class PageLoginComponent implements OnInit {
       } ,
       (err) => {
         console.log('NO LOG');
-        this.openSnackBar(err, 'Ok');
+        this.as.error(err, 5000);
         this.onResetForm();
+        this.layoutService.updatePreloaderState('hide');
     });
-  }
-
-  // SnackBar
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action);
   }
 
   onResetForm() {
