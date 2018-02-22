@@ -111,6 +111,9 @@ export class HorasEstimadasVsCargadasComponent implements OnInit {
                 this.reporteService.getReporte1(this.proyectoActual, tarea).subscribe(
                     (horas) => {
                         this.horasPTXC.push({ tarea, horas });
+                        this.horasPTXC.sort((a: { tarea, horas }, b: { tarea, horas }) => {
+                            return a.tarea.id - b.tarea.id;
+                        });
                         this.EndService();
                     },
                     (error) => {
