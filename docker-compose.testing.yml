@@ -8,7 +8,7 @@ services:
       - traefik_proxy
     deploy:
       labels:
-        - "traefik.port=8080"
+        - "traefik.port=80"
         - "traefik.backend=web_sulfur-frontend"
         - "traefik.frontend.rule=Host:marq.magnesium.coop"
         - "traefik.enable=true"
