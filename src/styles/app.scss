@@ -29,14 +29,20 @@
 }
 
 .timeline-content {
-    background-color: #20c997 !important;
+    background-color: #66bb6a !important;
     border-style: none;
-    padding: 40px 30px 10px 30px !important;
+    padding: 30px 30px 10px 30px !important;
+    color: #FFFFFF !important;
+}
+
+.parrafo-notificacion {
+    margin-bottom: 0px !important;
 }
 
 .timeline-content > .date {
     background: none !important;
     color: black !important;
+    display: none;
 }
 
 .timeline-content > .date > p {
@@ -47,5 +53,13 @@
     margin-top: 5px !important;
 }
 
+.titulo-notificacion {
+    width: auto;
+    text-align: center;
+}
+
+.inner-content {
+    margin-right: 0px !important;
+}
 
 

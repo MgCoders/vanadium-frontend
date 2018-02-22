@@ -7,10 +7,11 @@
          <!-- Add some cards to the timeline. It works with *ngFor too -->
          <!-- If no value is passed for the date, the current time is used. -->
          <vertical-timeline-card *ngFor="let notificacion of notificaciones" [dateValue]="notificacion.fechaHora">
-             <h3>{{notificacion.texto}}</h3>
-             <h4>{{notificacion.colaborador.nombre}}</h4>
-             <div *ngIf="notificacion.hora!=null">
-                 <h4><span class="badge badge-default">{{notificacion.hora.dia}}</span></h4>
+             <p class="parrafo-notificacion text-uppercase titulo-notificacion"><b>{{notificacion.texto}}</b></p>
+             <p class="parrafo-notificacion text-uppercase"><small>Fecha: <b>{{notificacion.fechaHora | date: 'dd/MM/yyyy'}}</b></small></p>
+             <p class="parrafo-notificacion text-uppercase"><small>Usuario: <b>{{notificacion.colaborador.nombre}}</b></small> <small *ngIf="notificacion.hora!=null"> / Horas del día: {{notificacion.hora.dia}}</small></p>
+             <div >
+                 <p class="text-uppercase"></p>
              </div>
          </vertical-timeline-card>
 
