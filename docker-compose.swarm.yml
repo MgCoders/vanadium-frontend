@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+
+  web_sulfur-frontend:
+    image: 270051160229.dkr.ecr.us-east-1.amazonaws.com/sulfur-frontend
+    networks:
+      - traefik_proxy
+    deploy:
+      labels:
+        - "traefik.port=8080"
+        - "traefik.backend=web_sulfur-frontend"
+        - "traefik.frontend.rule=Host:marq.magnesium.link"
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik_proxy"
+        - "traefik.backend.loadbalancer.sticky=true"
+        - "traefik.frontend.passHostHeader=true"
+      restart_policy:
+        condition: on-failure
+
+networks:
+  traefik_proxy:
+    external: true

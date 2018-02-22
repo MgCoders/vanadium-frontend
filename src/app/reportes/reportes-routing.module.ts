@@ -4,7 +4,7 @@ import {
 } from '@angular/router';
 
 import { ReportesComponent } from './reportes.component';
-import { HorasReporteComponent } from './reporte1/horas-reporte.component';
+import { HorasEstimadasVsCargadasComponent } from './horas-estimadas-vs-cargadas/horas-estimadas-vs-cargadascomponent';
 import { AdminGuard } from '../_guards/admin.guard';
 
 export const ReportesRoutes: Routes = [
@@ -14,7 +14,7 @@ export const ReportesRoutes: Routes = [
     canActivate: [AdminGuard],
     children: [
       { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
-      {path: 'reporte1', component: HorasReporteComponent},
+      {path: 'horas-estimadas-vs-cargadas', component: HorasEstimadasVsCargadasComponent},
     ]
   }
 ];

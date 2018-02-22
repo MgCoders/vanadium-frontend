@@ -14,12 +14,12 @@ import { HorasReporte1 } from '../../_models/HorasProyectoTipoTareaXCargo';
 import { CargoService } from '../../_services/cargo.service';
 
 @Component({
-    selector: 'horas-reporte',
-    styles: [],
-    templateUrl: './horas-reporte.component.html'
+    selector: 'app-horas-estimadas-vs-cargadas',
+    styleUrls: ['./horas-estimadas-vs-cargadas.component.scss'],
+    templateUrl: './horas-estimadas-vs-cargadas.component.html'
 })
 
-export class HorasReporteComponent implements OnInit {
+export class HorasEstimadasVsCargadasComponent implements OnInit {
 
     public proyectoActual: Proyecto;
     public tareaActual: TipoTarea;
@@ -27,6 +27,7 @@ export class HorasReporteComponent implements OnInit {
     public totales: HorasReporte1[];
     public tareas: TipoTarea[];
     public proyectos: Proyecto[];
+    public loading: number = 0;
 
     constructor(private reporteService: ReporteService,
                 private alertService: AlertService,
@@ -38,16 +39,30 @@ export class HorasReporteComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.layoutService.updatePreloaderState('active');
+
+        this.CallService();
         this.tareaActual = {} as TipoTarea;
         this.proyectoActual = {} as Proyecto;
         this.tareaService.getAll().subscribe(
-            (data) => this.tareas = data,
-            (error) => this.alertService.error(error, 5000));
+            (data) => {
+                this.tareas = data;
+                this.EndService();
+            },
+            (error) => {
+                this.alertService.error(error, 5000);
+                this.EndService();
+            });
+
+        this.CallService();
         this.proyectoService.getAll().subscribe(
-            (data) => this.proyectos = data,
-            (error) => this.alertService.error(error, 5000));
-        this.layoutService.updatePreloaderState('hide');
+            (dataP) => {
+                this.proyectos = dataP;
+                this.EndService();
+            },
+            (errorP) => {
+                this.alertService.error(errorP, 5000);
+                this.EndService();
+            });
     }
 
     proyectoSeleccionado(proyecto: Proyecto) {
@@ -61,35 +76,63 @@ export class HorasReporteComponent implements OnInit {
     }
 
     proyectoOTareaSeleccionados() {
-        this.layoutService.updatePreloaderState('active');
         this.horasPTXC = [];
         this.totales = null;
 
         if (this.proyectoActual.id && this.tareaActual.id) {
 
             const tarea = this.tareaActual;
+            this.CallService();
             this.reporteService.getReporte1(this.proyectoActual, this.tareaActual).subscribe(
-                (horas) => this.horasPTXC.push({ tarea, horas }),
-                (error) => this.alertService.error(error, 5000));
+                (horas) => {
+                    this.horasPTXC.push({ tarea, horas });
+                    this.EndService();
+                },
+                (error) => {
+                    this.alertService.error(error, 5000);
+                    this.EndService();
+                });
+
+            this.CallService();
             this.reporteService.getReporte1Totales(this.proyectoActual).subscribe(
-                (horas) => this.totales = horas,
-                (error) => this.alertService.error(error, 5000));
+                (horas) => {
+                    this.totales = horas;
+                    this.EndService();
+                },
+                (error) => {
+                    this.alertService.error(error, 5000);
+                    this.EndService();
+                });
 
         } else if (this.proyectoActual.id) {
 
             this.tareas.forEach((tarea) => {
+                this.CallService();
                 this.reporteService.getReporte1(this.proyectoActual, tarea).subscribe(
-                    (horas) => this.horasPTXC.push({ tarea, horas }),
-                    (error) => this.alertService.error(error, 5000));
+                    (horas) => {
+                        this.horasPTXC.push({ tarea, horas });
+                        this.horasPTXC.sort((a: { tarea, horas }, b: { tarea, horas }) => {
+                            return a.tarea.id - b.tarea.id;
+                        });
+                        this.EndService();
+                    },
+                    (error) => {
+                        this.alertService.error(error, 5000);
+                        this.EndService();
+                    });
             });
+
+            this.CallService();
             this.reporteService.getReporte1Totales(this.proyectoActual).subscribe(
-                (horas) => this.totales = horas,
-                (error) => this.alertService.error(error, 5000));
-
-
+                (horas) => {
+                    this.totales = horas;
+                    this.EndService();
+                },
+                (error) => {
+                    this.alertService.error(error, 5000);
+                    this.EndService();
+            });
         }
-        this.layoutService.updatePreloaderState('hide');
-
     }
 
     getFilas(horasReporte: HorasReporte1[]) {
@@ -100,4 +143,15 @@ export class HorasReporteComponent implements OnInit {
         return horasReporte.filter((item) => item.cargo == null);
     }
 
+    CallService() {
+        this.loading ++;
+        this.layoutService.updatePreloaderState('active');
+    }
+
+    EndService() {
+        this.loading --;
+        if (this.loading === 0) {
+            this.layoutService.updatePreloaderState('hide');
+        }
+    }
 }
