@@ -5,13 +5,14 @@ import {
     RequestOptions,
     Response
 } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { JwtHelper } from 'angular2-jwt';
 import { environment } from '../../environments/environment';
 import { Colaborador } from '../_models/Colaborador';
-import { Router } from '@angular/router';
+import { AlertService } from '../_services/alert.service';
 
 export const TOKEN_NAME: string = 'jwt_token';
 
@@ -20,7 +21,9 @@ export class AuthService {
 
     private jwt = new JwtHelper();
 
-    constructor(private http: Http, private router: Router) {
+    constructor(private http: Http,
+                private router: Router,
+                private as: AlertService) {
     }
 
     getToken(): string {
@@ -34,14 +37,13 @@ export class AuthService {
     public isAuthenticated(): boolean {
         try {
             const token = this.getToken();
-            const result = (token != null) && !this.jwt.isTokenExpired(token) && (this.getCurrentUser() != null);
-            if (!result) {
+            const expired: boolean = this.jwt.isTokenExpired(token);
+            if (token == null || expired) {
                 this.router.navigate(['extra/login']);
-                console.log('no token / vencimiento');
+            } else {
+            return (token != null) && !this.jwt.isTokenExpired(token) && (this.getCurrentUser() != null);
             }
-            return result;
         } catch (e) {
-
             return false;
         }
     }
@@ -49,7 +51,7 @@ export class AuthService {
     public isAuthenticatedAndAdmin(): boolean {
         try {
             const token = this.getToken();
-            return this.isAuthenticated() && (this.getCurrentUser().role === 'ADMIN');
+            return this.isAuthenticated() && this.getCurrentUser().role === 'ADMIN';
         } catch (e) {
             return false;
         }

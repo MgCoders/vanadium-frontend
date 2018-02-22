@@ -8,7 +8,8 @@ import {
   Proyecto,
   TipoTarea,
   HoraDetalle,
-  HoraDetalleImp
+  HoraDetalleImp,
+  Colaborador
 } from '../../_models/models';
 import { HoraImp } from '../../_models/HoraImp';
 import { HoraService } from '../../_services/hora.service';
@@ -50,6 +51,7 @@ export class ListaHorasComponent implements OnInit {
   public horaDetalleActual: HoraDetalle;
   public proyectoActual: Proyecto;
   public tareaActual: TipoTarea;
+  public colaboradorActual: Colaborador;
 
   public fDesde: Date;
 

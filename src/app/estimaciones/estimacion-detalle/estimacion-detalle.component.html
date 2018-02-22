@@ -3,7 +3,7 @@
   <article class="article">
     <div class="row">
       <h2 class="article-title col-12 col-sm-6">
-        <span *ngIf="estimacionActual !== undefined">Estimación - {{estimacionActual.proyecto.nombre}} - {{estimacionActual.fecha}}</span>
+        <span *ngIf="estimacionActual !== undefined">Estimación - {{estimacionActual.proyecto.nombre}} - {{estimacionActual.fecha}} - {{estimacionActual.descripcion}}</span>
       </h2>
       <div class="col-12 col-sm-6">
         <button *ngIf="!editando && estimacionActual !== undefined" matTooltipPosition="above" matTooltip="Editar Estimación." mat-icon-button

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Colaborador } from '../_models/Colaborador';
+import { Colaborador, Cargo } from '../_models/models';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
