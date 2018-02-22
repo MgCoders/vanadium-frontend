@@ -38,7 +38,7 @@ import { ReportesRoutingModule } from './reportes-routing.module';
 import { ReportesComponent } from './reportes.component';
 
 import { TableResponsiveComponent } from './responsive/responsive.component';
-import { HorasReporteComponent } from './reporte1/horas-reporte.component';
+import { HorasEstimadasVsCargadasComponent } from './horas-estimadas-vs-cargadas/horas-estimadas-vs-cargadascomponent';
 import { TableDataTableComponent } from './data-table/data-table.component';
 import { ProyectosModule } from '../proyectos/proyectos.module';
 import { TareasModule } from '../tareas/tareas.module';
@@ -95,7 +95,7 @@ import { CargoService } from '../_services/cargo.service';
         ReportesComponent,
         TableDataTableComponent,
         TableResponsiveComponent,
-        HorasReporteComponent,
+        HorasEstimadasVsCargadasComponent,
     ],
     providers: [
         AlertService,
