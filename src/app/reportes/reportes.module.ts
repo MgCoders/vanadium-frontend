@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -14,7 +15,6 @@ import {
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatNativeDateModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
@@ -48,12 +48,20 @@ import { TareaService } from '../_services/tarea.service';
 import { ReporteService } from '../_services/reporte.service';
 import { AlertService } from '../_services/alert.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule,
+         DatePipe,
+         DecimalPipe
+} from '@angular/common';
 import { LayoutService } from '../layout/layout.service';
 import { CargoService } from '../_services/cargo.service';
+import { HoraService } from '../_services/hora.service';
+import { MisHorasComponent } from './mis-horas/mis-horas.component';
+import { PipesModule } from '../_pipes/pipes.module';
 
 @NgModule({
     imports: [
+        FormsModule,
+        ReactiveFormsModule,
         ReportesRoutingModule,
         CdkTableModule,
         MatAutocompleteModule,
@@ -71,7 +79,6 @@ import { CargoService } from '../_services/cargo.service';
         MatInputModule,
         MatListModule,
         MatMenuModule,
-        MatNativeDateModule,
         MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
@@ -89,13 +96,15 @@ import { CargoService } from '../_services/cargo.service';
         MatTooltipModule,
         ProyectosModule,
         TareasModule,
-        CommonModule
+        CommonModule,
+        PipesModule
     ],
     declarations: [
         ReportesComponent,
         TableDataTableComponent,
         TableResponsiveComponent,
         HorasEstimadasVsCargadasComponent,
+        MisHorasComponent,
     ],
     providers: [
         AlertService,
@@ -104,7 +113,10 @@ import { CargoService } from '../_services/cargo.service';
         TareaService,
         ReporteService,
         LayoutService,
-        CargoService
+        CargoService,
+        DatePipe,
+        DecimalPipe,
+        HoraService
     ]
 })
 

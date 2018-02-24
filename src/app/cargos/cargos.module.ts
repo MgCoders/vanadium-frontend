@@ -25,6 +25,7 @@ import { LayoutService } from '../layout/layout.service';
 import { HistoricoPrecioCargoComponent } from './historico-precio-cargo/historico-precio-cargo.component';
 import { AltaPrecioCargoComponent } from './alta-precio-cargo/alta-precio-cargo.component';
 import { DatePipe } from '@angular/common';
+import { PipesModule } from '../_pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { DatePipe } from '@angular/common';
     MatTooltipModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatChipsModule
+    MatChipsModule,
+    PipesModule
   ],
 
   exports: [

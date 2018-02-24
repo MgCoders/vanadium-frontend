@@ -5,16 +5,28 @@ import {
 
 import { ReportesComponent } from './reportes.component';
 import { HorasEstimadasVsCargadasComponent } from './horas-estimadas-vs-cargadas/horas-estimadas-vs-cargadascomponent';
+import { MisHorasComponent } from './mis-horas/mis-horas.component';
 import { AdminGuard } from '../_guards/admin.guard';
 
 export const ReportesRoutes: Routes = [
   {
     path: '',
     component: ReportesComponent,
-    canActivate: [AdminGuard],
     children: [
-      { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
-      {path: 'horas-estimadas-vs-cargadas', component: HorasEstimadasVsCargadasComponent},
+      {
+        path: '',
+        redirectTo: '/app/dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'horas-estimadas-vs-cargadas',
+        component: HorasEstimadasVsCargadasComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'mis-horas',
+        component: MisHorasComponent
+      },
     ]
   }
 ];
