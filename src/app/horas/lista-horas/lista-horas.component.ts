@@ -65,6 +65,8 @@ export class ListaHorasComponent implements OnInit {
   public horasHastaInt: number;
   public minutosHastaInt: number;
 
+  public isUserAdmin: boolean;
+
   public minutosFC = new FormControl('', [Validators.required, Validators.max(59), Validators.min(0)]);
   public horasFC = new FormControl('', [Validators.required, Validators.max(23), Validators.min(0)]);
 
@@ -89,19 +91,9 @@ export class ListaHorasComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tareaActual = {} as TipoTarea;
-    this.proyectoActual = {} as Proyecto;
-    this.horaActual = {} as Hora;
-    this.horaDetalleActual = {} as HoraDetalle;
-    this.editandoHora = true;
-    this.horasInt = 0;
-    this.minutosInt = 0;
-    this.horasDesdeInt = 0;
-    this.minutosDesdeInt = 0;
-    this.horasHastaInt = 0;
-    this.minutosHastaInt = 0;
-    this.diaActual = new Date();
-    this.editandoHora = false;
+    this.LimpiarCampos();
+    this.isUserAdmin = this.authService.isAuthenticatedAndAdmin();
+    this.colaboradorActual = this.authService.getCurrentUser();
 
     this.fDesde = new Date();
     if (this.fDesde.getMonth() === 0) {
@@ -116,7 +108,7 @@ export class ListaHorasComponent implements OnInit {
 
   private LoadHoras(setHora: boolean, setProyectoTarea: boolean, setHoraInOut: boolean) {
     this.layoutService.updatePreloaderState('active');
-    this.service.getPorUsuarioYFecha(this.authService.getCurrentUser().id, this.fDesde, (new Date())).subscribe(
+    this.service.getPorUsuarioYFecha(this.colaboradorActual.id, this.fDesde, (new Date())).subscribe(
       (data) => {
         this.listaHoras = data;
 
@@ -152,6 +144,29 @@ export class ListaHorasComponent implements OnInit {
     );
   }
 
+  ColaboradorOnChange(c: Colaborador) {
+    this.colaboradorActual = c;
+    this.listaHoras = new Array();
+    this.LimpiarCampos();
+    this.LoadHoras(true, true, true);
+  }
+
+  LimpiarCampos() {
+    this.tareaActual = {} as TipoTarea;
+    this.proyectoActual = {} as Proyecto;
+    this.horaActual = {} as Hora;
+    this.horaDetalleActual = {} as HoraDetalle;
+    this.editandoHora = true;
+    this.horasInt = 0;
+    this.minutosInt = 0;
+    this.horasDesdeInt = 0;
+    this.minutosDesdeInt = 0;
+    this.horasHastaInt = 0;
+    this.minutosHastaInt = 0;
+    this.diaActual = new Date();
+    this.editandoHora = false;
+  }
+
   private OrdenarLista() {
     this.listaHoras.sort((a: Hora, b: Hora) => {
       return this.dateFromString(b.dia).getTime() - this.dateFromString(a.dia).getTime();
@@ -172,7 +187,7 @@ export class ListaHorasComponent implements OnInit {
 
   GuardarOnClick() {
 
-    this.horaActual.colaborador = this.authService.getCurrentUser();
+    this.horaActual.colaborador = this.colaboradorActual;
 
     if (this.diaActual.getTime() > (new Date()).getTime()) {
       this.as.error('No se pueden cargar horas de días futuros.', 5000);
