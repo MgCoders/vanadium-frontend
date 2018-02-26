@@ -1,12 +1,12 @@
 <section class="container-fluid with-maxwidth chapter">
   <article class="article">
     <div class="row">
-      <h2 class="article-title padding-top-30 col-12 col-sm-6">Registro de Horas</h2>
-      <div class="padding-top-30 text-left text-sm-right col-12 col-sm-3">
-        <app-select-colaborador *ngIf="isUserAdmin" [object]="colaboradorActual" (onChange)="ColaboradorOnChange($event)" idModel="id" placeHolder="Colaborador"
-        id="id" desc="nombre"></app-select-colaborador>
+      <div class="padding-top-30 full-width text-left col-12 col-sm-6">
+        <h2 class="article-title">Registro de Horas</h2>
       </div>
-      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-3">
+      <div class="padding-top-30 text-left text-sm-right col-12 col-sm-3">
+      </div>
+      <div class="padding-top-30 full-width text-sm-right text-left col-12 col-sm-3">
         <button mat-raised-button color="accent" class="btn-w-md" (click)="Nuevo()">Nuevo Día</button>
       </div>
     </div>
@@ -25,7 +25,7 @@
           </div>
 
           <div class="col-4 col-sm-1 text-right">
-              <h3 class="article-title">Inicio:</h3>
+            <h3 class="article-title">Inicio:</h3>
           </div>
 
           <div class="col-4 col-sm-1">
@@ -33,7 +33,8 @@
               <button (click)="horasDesdeIntOnClick()" matSuffix mat-icon-button color="accent">
                 <mat-icon class="material-icons">replay</mat-icon>
               </button>
-              <input matTooltipPosition="above" matTooltip="Hora de Inicio de la jornada." matInput type="number" placeholder="H. Ini." [(ngModel)]="horasDesdeInt" [formControl]="horasDesdeIntFC">
+              <input matTooltipPosition="above" matTooltip="Hora de Inicio de la jornada." matInput type="number" placeholder="H. Ini."
+                [(ngModel)]="horasDesdeInt" [formControl]="horasDesdeIntFC">
               <mat-error *ngIf="horasDesdeIntFC.invalid">Debe ser un número entre 0 y 23</mat-error>
             </mat-form-field>
           </div>
@@ -43,11 +44,12 @@
               <button (click)="minutosDesdeIntOnClick()" matSuffix mat-icon-button color="accent">
                 <mat-icon class="material-icons">replay</mat-icon>
               </button>
-              <input matTooltipPosition="above" matTooltip="Minutos de Inicio de la jornada." matInput type="number" placeholder="M. Ini." [(ngModel)]="minutosDesdeInt" [formControl]="minutosDesdeIntFC">
+              <input matTooltipPosition="above" matTooltip="Minutos de Inicio de la jornada." matInput type="number" placeholder="M. Ini."
+                [(ngModel)]="minutosDesdeInt" [formControl]="minutosDesdeIntFC">
               <mat-error *ngIf="minutosDesdeIntFC.invalid">Debe ser un número entre 0 y 59</mat-error>
             </mat-form-field>
           </div>
-          
+
           <div class="col-4 col-sm-1 text-right">
             <h3 class="article-title">Fin:</h3>
           </div>
@@ -57,7 +59,8 @@
               <button (click)="horasHastaIntOnClick()" matSuffix mat-icon-button color="accent">
                 <mat-icon class="material-icons">replay</mat-icon>
               </button>
-              <input matTooltipPosition="above" matTooltip="Hora de Fin de la jornada." matInput type="number" placeholder="H. Fin" [(ngModel)]="horasHastaInt" [formControl]="horasHastaIntFC">
+              <input matTooltipPosition="above" matTooltip="Hora de Fin de la jornada." matInput type="number" placeholder="H. Fin" [(ngModel)]="horasHastaInt"
+                [formControl]="horasHastaIntFC">
               <mat-error *ngIf="horasHastaIntFC.invalid">Debe ser un número entre 0 y 23</mat-error>
             </mat-form-field>
           </div>
@@ -67,14 +70,17 @@
               <button (click)="minutosHastaIntOnClick()" matSuffix mat-icon-button color="accent">
                 <mat-icon class="material-icons">replay</mat-icon>
               </button>
-              <input matTooltipPosition="above" matTooltip="Minutos de Fin de la jornada." matInput type="number" placeholder="M. Fin" [(ngModel)]="minutosHastaInt" [formControl]="minutosHastaIntFC">
+              <input matTooltipPosition="above" matTooltip="Minutos de Fin de la jornada." matInput type="number" placeholder="M. Fin"
+                [(ngModel)]="minutosHastaInt" [formControl]="minutosHastaIntFC">
               <mat-error *ngIf="minutosHastaIntFC.invalid">Debe ser un número entre 0 y 59</mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-12 col-sm-4 text-right">
-            <button [disabled]="diaFC.invalid || minutosDesdeIntFC.invalid || horasDesdeIntFC.invalid || minutosHastaIntFC.invalid || horasHastaIntFC.invalid" *ngIf="horaActual.id === undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
-            <button [disabled]="diaFC.invalid || minutosDesdeIntFC.invalid || horasDesdeIntFC.invalid || minutosHastaIntFC.invalid || horasHastaIntFC.invalid" *ngIf="horaActual.id !== undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Editar</button>
+            <button [disabled]="diaFC.invalid || minutosDesdeIntFC.invalid || horasDesdeIntFC.invalid || minutosHastaIntFC.invalid || horasHastaIntFC.invalid"
+              *ngIf="horaActual.id === undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
+            <button [disabled]="diaFC.invalid || minutosDesdeIntFC.invalid || horasDesdeIntFC.invalid || minutosHastaIntFC.invalid || horasHastaIntFC.invalid"
+              *ngIf="horaActual.id !== undefined" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Editar</button>
             <button *ngIf="horaActual.id !== undefined" mat-raised-button color="dark" class="btn-w-md" (click)="Cancelar()">Cancelar</button>
           </div>
         </div>
@@ -82,7 +88,7 @@
 
         <div id="rowAddHora" class="box-body row" [hidden]="editandoHora || horaActual === undefined || horaActual.id === undefined">
 
-          <div class="col-12 col-sm-3">
+          <div class="col-12 col-sm-2">
             <span *ngIf="horaActual !== undefined && horaActual.dia !== undefined && horaActual.subtotal !== undefined">
               <b>{{ horaActual.dia }}</b>
               <br/> {{horaActual.subtotal | myTimePipe:'HH hs. mm min.'}}
@@ -93,15 +99,15 @@
           </div>
 
           <div class="col-12 col-sm-3">
-            <app-select-proyecto [object]="proyectoActual" (onChange)="ProyectoOnChange($event)" idModel="id" placeHolder="PROYECTO"
+            <app-select-proyecto [object]="proyectoActual" (onChange)="ProyectoOnChange($event)" idModel="id" placeHolder="Proyecto"
               id="id" desc="nombre"></app-select-proyecto>
           </div>
 
           <div class="col-12 col-sm-3">
-            <app-select-tarea [object]="tareaActual" (onChange)="TareaOnChange($event)" idModel="id" placeHolder="TAREA" id="id" desc="nombre"></app-select-tarea>
+            <app-select-tarea [object]="tareaActual" (onChange)="TareaOnChange($event)" idModel="id" placeHolder="Tarea" id="id" desc="nombre"></app-select-tarea>
           </div>
 
-          <div class="col-12 col-sm-1 paddingLeftRigth">
+          <div class="col-12 col-sm-1">
             <mat-form-field class="full-width">
               <button (click)="horasOnClick()" matSuffix mat-icon-button color="accent">
                 <mat-icon class="material-icons">replay</mat-icon>
@@ -111,7 +117,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-sm-1 paddingLeftRigth">
+          <div class="col-12 col-sm-1">
             <mat-form-field class="full-width">
               <button (click)="minutosOnClick()" matSuffix mat-icon-button color="accent">
                 <mat-icon class="material-icons">replay</mat-icon>
@@ -121,10 +127,11 @@
             </mat-form-field>
           </div>
 
-          <div class="col-12 col-sm-1 paddingLeftRigth">
+          <div class="col-12 col-sm-2 text-right">
             <button matTooltipPosition="above" matTooltip="Agregar Registro" [disabled]="minutosFC.invalid || horasFC.invalid || horaDetalleActual.proyecto === undefined || horaDetalleActual.tipoTarea === undefined"
-              (click)="AgregarOnClick()" mat-icon-button color="accent">
-              <mat-icon class="material-icons">add</mat-icon>
+              (click)="AgregarOnClick()"mat-raised-button color="primary">
+<!--               <mat-icon class="material-icons">add</mat-icon> -->
+              Agregar
             </button>
           </div>
 
@@ -168,9 +175,23 @@
       </div>
     </article>
 
-    <div class="row">
-      <div class="col-12 text-right">
-        <mat-form-field>
+    <div class="row" *ngIf="isUserAdmin">
+      <div class="col-sm-3 col-12 offset-sm-6">
+        <app-select-colaborador [object]="colaboradorActual" (onChange)="ColaboradorOnChange($event)" idModel="id" placeHolder="Colaborador"
+          id="id" desc="nombre"></app-select-colaborador>
+      </div>
+      <div class="col-sm-3 col-12">
+        <mat-form-field class="full-width">
+          <input [(ngModel)]="fDesde" (dateChange)="fDesdeOnChange($event)" class="full-width" matInput [matDatepicker]="pickerFDesde"
+            placeholder="Fecha Desde">
+          <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFDesde></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" *ngIf="!isUserAdmin">
+      <div class="col-sm-3 col-12 offset-sm-9">
+        <mat-form-field class="full-width">
           <input [(ngModel)]="fDesde" (dateChange)="fDesdeOnChange($event)" class="full-width" matInput [matDatepicker]="pickerFDesde"
             placeholder="Fecha Desde">
           <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
