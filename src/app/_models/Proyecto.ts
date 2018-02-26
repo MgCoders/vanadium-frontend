@@ -19,4 +19,5 @@ export interface Proyecto {
 
     nombre: string;
 
+    prioridad: number;
 }

@@ -28,9 +28,8 @@ export class ListaProyectosComponent implements OnInit {
     this.service.getAll().subscribe(
       (data) => {
         this.lista = data;
-        // tslint:disable-next-line:only-arrow-functions
-        this.lista.sort(function(a, b) {
-          return a.id - b.id;
+        this.lista.sort((a: Proyecto, b: Proyecto) => {
+          return b.prioridad - a.prioridad;
         });
         this.layoutService.updatePreloaderState('hide');
       },
@@ -45,6 +44,14 @@ export class ListaProyectosComponent implements OnInit {
       data: [undefined, this.lista],
       width: '600px',
     });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          // TODO
+          this.as.success('Proyecto eliminado correctamente.', 3000);
+        }
+      });
   }
 
   Eliminar(x: Proyecto) {
@@ -54,10 +61,9 @@ export class ListaProyectosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       (result) => {
-        if (result) {
-          // TODO
-          this.as.success('Proyecto eliminado correctamente.', 3000);
-        }
+        this.lista.sort((a: Proyecto, b: Proyecto) => {
+          return b.prioridad - a.prioridad;
+        });
       });
   }
 
@@ -66,5 +72,12 @@ export class ListaProyectosComponent implements OnInit {
       data: [x, this.lista],
       width: '600px',
     });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        this.lista.sort((a: Proyecto, b: Proyecto) => {
+          return b.prioridad - a.prioridad;
+        });
+      });
   }
 }

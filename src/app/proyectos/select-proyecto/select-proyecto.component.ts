@@ -30,6 +30,9 @@ export class SelectProyectoComponent implements OnInit {
     this.service.getAll().subscribe(
       (data) => {
         this.lista = data;
+        this.lista.sort((a: Proyecto, b: Proyecto) => {
+          return b.prioridad - a.prioridad;
+        });
       },
       (error) => {
         this.as.error(error, 5000);

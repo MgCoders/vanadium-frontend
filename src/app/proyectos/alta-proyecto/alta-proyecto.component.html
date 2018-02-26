@@ -19,6 +19,14 @@
           </mat-input-container>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-input-container class="full-width">
+            <input [(ngModel)]="proyectoActual.prioridad" matInput placeholder="Prioridad" name="Prioridad" [formControl]="prioridadFC">
+            <mat-error *ngIf="prioridadFC.invalid">La prioridad del proyecto obligatoria y debe ser numérica.</mat-error>
+          </mat-input-container>
+        </div>
+      </div>
     </form>
   </div>
 </div>
@@ -26,6 +34,6 @@
 <div mat-dialog-actions class="full-width">
   <div class="full-width text-sm-right">
     <button mat-button color="info" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
-    <button [disabled]="nombreFC.invalid || codigoFC.invalid" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
+    <button [disabled]="nombreFC.invalid || codigoFC.invalid || prioridadFC.invalid" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
   </div>
 </div>

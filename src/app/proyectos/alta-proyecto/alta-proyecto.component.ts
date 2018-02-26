@@ -18,6 +18,7 @@ export class AltaProyectoComponent implements OnInit {
 
   public nombreFC = new FormControl('', [Validators.required]);
   public codigoFC = new FormControl('', [Validators.required]);
+  public prioridadFC = new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]);
 
   constructor(public dialogRef: MatDialogRef<AltaProyectoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Proyecto, Proyecto[]],
