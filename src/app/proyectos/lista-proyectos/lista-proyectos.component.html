@@ -15,6 +15,7 @@
             <th>#</th>
             <th class="mdl-data-table__cell--non-numeric">Descripción</th>
             <th class="mdl-data-table__cell--non-numeric">Código</th>
+            <th>Prioridad</th>
             <th></th>
           </tr>
         </thead>
@@ -23,6 +24,7 @@
             <td>{{x.id}}</td>
             <td class="mdl-data-table__cell--non-numeric">{{x.nombre}}</td>
             <td class="mdl-data-table__cell--non-numeric">{{x.codigo}}</td>
+            <td>{{x.prioridad}}</td>
             <td>
               <button mat-icon-button color="primary" (click)="Editar(x)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>

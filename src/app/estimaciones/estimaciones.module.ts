@@ -31,12 +31,11 @@ import { EstimacionService } from '../_services/estimacion.service';
 import { AlertService } from '../_services/alert.service';
 import { LayoutService } from '../layout/layout.service';
 
-import { TimePipe } from '../_pipes/time.pipe';
 import { ListaEstimacionesComponent } from './lista-estimaciones/lista-estimaciones.component';
 import { AltaEstimacionComponent } from './alta-estimacion/alta-estimacion.component';
 import { EstimacionDetalleComponent } from './estimacion-detalle/estimacion-detalle.component';
 
-import { CustomDatePipe } from '../_pipes/customDate.pipe';
+import { PipesModule } from '../_pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -59,6 +58,7 @@ import { CustomDatePipe } from '../_pipes/customDate.pipe';
     MatDialogModule,
     MatSliderModule,
     MatCardModule,
+    PipesModule,
   ],
 
   declarations: [
@@ -74,8 +74,6 @@ import { CustomDatePipe } from '../_pipes/customDate.pipe';
     LayoutService,
     DatePipe,
     DecimalPipe,
-    TimePipe,
-    CustomDatePipe
   ],
 
   entryComponents: [

@@ -111,6 +111,16 @@ export class ListaCargosComponent implements OnInit {
     }
   }
 
+  GetFechaUltimoPrecio(c: Cargo) {
+    if (c.precioHoraHistoria === undefined || c.precioHoraHistoria.length === 0) {
+      return 0;
+    } else {
+      return c.precioHoraHistoria.sort((a: PrecioHora, b: PrecioHora) => {
+        return this.datePipe.transform(b.vigenciaDesde, []).getTime() - this.datePipe.transform(a.vigenciaDesde, []).getTime();
+      })[0].vigenciaDesde;
+    }
+  }
+
   GetIniciales(c: Cargo): Array<{iniciales: string, nombre: string}> {
     const result: Array<{iniciales: string, nombre: string}> = new Array();
     if (this.colaboradores === undefined) {

@@ -2,7 +2,11 @@
   <article class="article">
     <div class="row">
       <h2 class="article-title padding-top-30 col-12 col-sm-6">Registro de Horas</h2>
-      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-6">
+      <div class="padding-top-30 text-left text-sm-right col-12 col-sm-3">
+        <app-select-colaborador *ngIf="isUserAdmin" [object]="colaboradorActual" (onChange)="ColaboradorOnChange($event)" idModel="id" placeHolder="Colaborador"
+        id="id" desc="nombre"></app-select-colaborador>
+      </div>
+      <div class="article-title padding-top-30 text-left text-sm-right col-12 col-sm-3">
         <button mat-raised-button color="accent" class="btn-w-md" (click)="Nuevo()">Nuevo Día</button>
       </div>
     </div>

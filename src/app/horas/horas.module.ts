@@ -35,7 +35,7 @@ import { AlertService } from '../_services/alert.service';
 import { LayoutService } from '../layout/layout.service';
 import { EditHoraComponent } from './edit-hora/edit-hora.component';
 
-import { TimePipe } from '../_pipes/time.pipe';
+import { PipesModule } from '../_pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -58,6 +58,7 @@ import { TimePipe } from '../_pipes/time.pipe';
     MatDialogModule,
     MatSliderModule,
     MatCardModule,
+    PipesModule
   ],
 
   declarations: [
@@ -66,7 +67,6 @@ import { TimePipe } from '../_pipes/time.pipe';
     SelectHoraDesdeComponent,
     SelectHoraHastaComponent,
     EditHoraComponent,
-    TimePipe
   ],
 
   providers: [
@@ -75,7 +75,6 @@ import { TimePipe } from '../_pipes/time.pipe';
     LayoutService,
     DatePipe,
     DecimalPipe,
-    TimePipe
   ],
 
   entryComponents: [

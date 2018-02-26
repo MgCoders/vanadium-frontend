@@ -1,6 +1,7 @@
 <mat-form-field class="full-width">
-    <mat-select placeholder="Colaborador" name="Colaborador" class="full-width">
-        <mat-option value="1">Apellido1, Nombre1</mat-option>
-        <mat-option value="2">Apellido2, Nombre2</mat-option>
+    <mat-select [(ngModel)]="object[idModel]" [placeholder]="placeHolder" class="full-width" (change)="onChangeValue($event)">
+        <mat-option *ngFor="let x of lista" [value]="x[id]">
+            {{x[desc]}}
+        </mat-option>
     </mat-select>
 </mat-form-field>

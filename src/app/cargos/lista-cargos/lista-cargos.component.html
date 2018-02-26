@@ -15,6 +15,7 @@
             <th class="mdl-data-table__cell--non-numeric">Nombre</th>
             <th class="mdl-data-table__cell--non-numeric">Código</th>
             <th class="mdl-data-table__cell--non-numeric">Colaboradores</th>
+            <th>Fecha Último Valor</th>
             <th>Último Valor</th>
             <th></th>
           </tr>
@@ -31,6 +32,7 @@
 <!--               <span matTooltipPosition="above" matTooltip="Tooltip!" *ngFor="let y of GetIniciales(x)">I have a tooltip</span>
                 <span matTooltipPosition="above" matTooltip="Tooltip!" *ngFor="let y of GetIniciales(x)">dfdf</span> -->
             </td>
+            <td>{{GetFechaUltimoPrecio(x)}}</td>
             <td>{{GetUltimoPrecio(x) | number:'1.2'}}</td>
             <td>
               <a matTooltipPosition="above" matTooltip="Histórico de Precios" mat-icon-button color="secondary" [routerLink]="['/app/cargos/historicoprecio/', x.id]">
