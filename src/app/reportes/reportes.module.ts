@@ -57,6 +57,9 @@ import { CargoService } from '../_services/cargo.service';
 import { HoraService } from '../_services/hora.service';
 import { MisHorasComponent } from './mis-horas/mis-horas.component';
 import { PipesModule } from '../_pipes/pipes.module';
+import { HistoricoHorasComponent } from './historico-horas/historico-horas.component';
+import { ColaboradoresModule } from '../colaboradores/colaboradores.module';
+import { ReporteHorasDelMesComponent } from './reporte-horas-del-mes/reporte-horas-del-mes.component';
 
 @NgModule({
     imports: [
@@ -97,7 +100,8 @@ import { PipesModule } from '../_pipes/pipes.module';
         ProyectosModule,
         TareasModule,
         CommonModule,
-        PipesModule
+        PipesModule,
+        ColaboradoresModule
     ],
     declarations: [
         ReportesComponent,
@@ -105,6 +109,8 @@ import { PipesModule } from '../_pipes/pipes.module';
         TableResponsiveComponent,
         HorasEstimadasVsCargadasComponent,
         MisHorasComponent,
+        HistoricoHorasComponent,
+        ReporteHorasDelMesComponent,
     ],
     providers: [
         AlertService,

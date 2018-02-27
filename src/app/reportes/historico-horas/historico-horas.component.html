@@ -1,9 +1,13 @@
 <section class="container-fluid with-maxwidth chapter">
   <article class="article">
     <div class="row">
-      <h2 class="article-title col-12 col-sm-6">
-        <span>Mis Horas</span>
+      <h2 class="article-title col-12 col-sm-3">
+        <span>Histórico de Horas</span>
       </h2>
+      <div class="col-12 col-sm-3">
+        <app-select-colaborador [object]="colaboradorActual" idModel="id" placeHolder="Colaborador" (onChange)="ColaboradorOnChange($event)"
+          id="id" desc="nombre"></app-select-colaborador>
+      </div>
       <div class="col-12 col-sm-3">
         <mat-form-field class="full-width">
           <input [(ngModel)]="fDesde" (dateChange)="Reload()" class="full-width" matInput [matDatepicker]="pickerFDesde" placeholder="Fecha Desde">

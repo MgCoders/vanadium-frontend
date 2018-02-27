@@ -27,14 +27,30 @@
 
   <li class="nav-divider" *ngIf="isAdmin()"></li>
   <li *ngIf="isAdmin()">
-      <a mat-button href="#/app/reportes"><i class="nav-icon material-icons">equalizer</i><span class="nav-text">Reportes</span></a>
-      <ul>
-        <li><a mat-button class="md-button prepend-icon"
-               [routerLink]="['/app/reportes/horas-estimadas-vs-cargadas']">
-              <span>Reporte Horas Estimadas<br/>vs. Cargadas</span>
-            </a>
-          </li>
-      </ul>
+    <a mat-button href="#/app/reportes">
+      <i class="nav-icon material-icons">equalizer</i>
+      <span class="nav-text">Reportes</span>
+    </a>
+    <ul>
+      <li>
+        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/horas-estimadas-vs-cargadas']">
+          <span>Reporte Horas Estimadas
+            <br/>vs. Cargadas</span>
+        </a>
+      </li>
+      <li>
+        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/historico-horas']">
+          <span>Historico Horas Cargadas
+            <br/>por fecha y colaborador</span>
+        </a>
+      </li>
+      <li>
+        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/reporte-horas-del-mes']">
+          <span>Reporte Horas y costos
+            <br/>por cargos</span>
+        </a>
+      </li>
+    </ul>
   </li>
 
   <li *ngIf="isAdmin()">
