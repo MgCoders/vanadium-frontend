@@ -1,0 +1,77 @@
+<section class="container-fluid with-maxwidth chapter">
+    <article class="article">
+      <div class="row">
+        <h2 class="article-title col-12 col-sm-6">
+          <span>Resumen de Horas y Costos por Cargo</span>
+        </h2>
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="full-width">
+            <input [(ngModel)]="fDesde" (dateChange)="Reload()" class="full-width" matInput [matDatepicker]="pickerFDesde" placeholder="Fecha Desde">
+            <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFDesde></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-3">
+          <mat-form-field class="full-width">
+            <input [(ngModel)]="fHasta" (dateChange)="Reload()" class="full-width" matInput [matDatepicker]="pickerFHasta" placeholder="Fecha Hasta">
+            <mat-datepicker-toggle matSuffix [for]="pickerFHasta"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFHasta></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div class="box box-default table-box table-responsive mdl-shadow--2dp">
+        <table class="mdl-data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="text-left">Nombre</th>
+              <th class="text-left">Código</th>
+              <th class="text-left">Colaboradores</th>
+              <th>Cantidad Horas</th>
+              <th>Importe Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td class="text-left">Proyect Manager</td>
+              <td class="text-left">PM</td>
+              <td class="text-left">
+                <mat-chip-list>
+                  <mat-chip matTooltipPosition="above" matTooltip="Carla Antón">
+                    <b>CA</b>
+                  </mat-chip>
+                  <mat-chip matTooltipPosition="above" matTooltip="Andres Silva">
+                    <b>AS</b>
+                  </mat-chip>
+                  <mat-chip matTooltipPosition="above" matTooltip="Juan Acuña">
+                    <b>JA</b>
+                  </mat-chip>
+                </mat-chip-list>
+              </td>
+              <td>150</td>
+              <td>1860</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td class="text-left">Dibujante</td>
+              <td class="text-left">D</td>
+              <td class="text-left">
+                <mat-chip-list>
+                  <mat-chip matTooltipPosition="above" matTooltip="Silvia Lopez">
+                    <b>SL</b>
+                  </mat-chip>
+                  <mat-chip matTooltipPosition="above" matTooltip="Oscar Perez">
+                    <b>OP</b>
+                  </mat-chip>
+                </mat-chip-list>
+              </td>
+              <td>300</td>
+              <td>2500</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </section>
