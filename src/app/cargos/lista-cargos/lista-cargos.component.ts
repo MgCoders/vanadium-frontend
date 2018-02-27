@@ -128,7 +128,7 @@ export class ListaCargosComponent implements OnInit {
     }
 
     this.colaboradores
-      .filter((x) => x.cargo !== null && x.cargo.id === c.id)
+      .filter((x) => x.cargo != null && x.cargo.id === c.id)
       .forEach((x) => {
         const ini: string[] = x.nombre.split(' ');
         let aux: string = '';
