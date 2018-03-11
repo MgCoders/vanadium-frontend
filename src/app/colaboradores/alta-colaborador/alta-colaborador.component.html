@@ -1,4 +1,13 @@
-<h1 mat-dialog-title>Colaborador</h1>
+<h1 mat-dialog-title>
+  <div class="row">
+    <div class="col-11 text-left">
+        Colaborador
+    </div>
+    <div class="col-1 text-rigth">
+        <mat-spinner *ngIf="loading" [diameter]="20" [strokeWidth]="5"></mat-spinner>
+    </div>
+  </div>
+</h1>
 
 <div mat-dialog-content class="box box-default">
   <div class="box-body">
@@ -36,7 +45,7 @@
 
 <div mat-dialog-actions class="full-width">
   <div class="full-width text-sm-right">
-    <button mat-button color="info" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
-    <button [disabled]="nombreFC.invalid || mailFC.invalid" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
+    <button [disabled]="loading" mat-button color="info" class="btn-w-xs" [mat-dialog-close]="false">Cancelar</button>
+    <button [disabled]="nombreFC.invalid || mailFC.invalid || loading" mat-button color="primary" class="btn-w-md" (click)="Guardar()">Guardar</button>
   </div>
 </div>

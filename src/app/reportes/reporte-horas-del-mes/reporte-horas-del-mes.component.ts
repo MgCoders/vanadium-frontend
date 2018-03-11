@@ -9,7 +9,8 @@ import {
   TipoTarea,
   HoraDetalle,
   HoraDetalleImp,
-  Colaborador
+  Colaborador,
+  Cargo
 } from '../../_models/models';
 import { HoraImp } from '../../_models/HoraImp';
 import { HoraService } from '../../_services/hora.service';
@@ -33,6 +34,12 @@ import {
 } from '@angular/forms';
 
 import { TimePipe } from '../../_pipes/time.pipe';
+import { CargoService } from '../../_services/cargo.service';
+import { ColaboradorService } from '../../_services/colaborador.service';
+import { ReporteService } from '../../_services/reporte.service';
+import { HorasProyectoXCargo } from '../../_models/HorasProyectoXCargo';
+import { ProyectoService } from '../../_services/proyecto.service';
+
 @Component({
   selector: 'app-reporte-horas-del-mes',
   templateUrl: './reporte-horas-del-mes.component.html',
@@ -40,99 +47,219 @@ import { TimePipe } from '../../_pipes/time.pipe';
 })
 export class ReporteHorasDelMesComponent implements OnInit {
 
-    public fDesde: Date;
-    public fHasta: Date;
-    public lista: Hora[];
-    public listaTotales: Array<{proyectoId: number, proyectoNombre: string, minutos: number}>;
-    public total: number;
-    public colaboradorActual: Colaborador;
-    public loading: boolean;
+  public proyectoActual: Proyecto;
+  public proyectos: Proyecto[];
+  public reporteHoras: HorasProyectoXCargo[];
+  public listaTotales: Array<{ cargo: Cargo, cantidadHoras: number, importe: number }>;
+  public colaboradores: Colaborador[];
+  public listaCargos: Cargo[];
+  public listaColaboradoresPorCargo: Array<{ id: number, lista: Array<{ iniciales: string, nombre: string }> }>;
+  public totalHoras: number;
+  public totalImporte: number;
+  public loading: number;
 
-    constructor(private service: HoraService,
-                private as: AlertService,
-                private datePipe: DatePipe,
-                private customDatePipe: CustomDatePipe,
-                private decimalPipe: DecimalPipe,
-                private timePipe: TimePipe,
-                private authService: AuthService,
-                private layoutService: LayoutService,
-                public dialog: MatDialog) {
+  constructor(private service: ReporteService,
+              private cargoDervice: CargoService,
+              private colaboradorService: ColaboradorService,
+              private proyectoService: ProyectoService,
+              private as: AlertService,
+              private datePipe: DatePipe,
+              private customDatePipe: CustomDatePipe,
+              private decimalPipe: DecimalPipe,
+              private timePipe: TimePipe,
+              private authService: AuthService,
+              private layoutService: LayoutService,
+              public dialog: MatDialog) {
   }
 
-    ngOnInit() {
-      this.colaboradorActual = this.authService.getCurrentUser();
-      this.fHasta = new Date();
-      this.fDesde = this.fHasta;
-      this.listaTotales = new Array();
-      this.total = 0;
-      this.loading = false;
+  ngOnInit() {
+    this.Clear();
+    this.proyectoActual = {} as Proyecto;
+    this.listaColaboradoresPorCargo = new Array();
+    this.colaboradores = new Array();
 
-      this.fDesde = new Date();
-      if (this.fDesde.getMonth() === 0) {
-        this.fDesde.setMonth(11);
-        this.fDesde.setFullYear(this.fDesde.getFullYear() - 1);
-      } else {
-        this.fDesde.setMonth(this.fDesde.getMonth() - 1);
-      }
+    this.loading = 1;
+    this.layoutService.updatePreloaderState('active');
+    this.cargoDervice.getAll().subscribe(
+      (data) => {
 
-      this.Reload();
+        data.forEach((c) => {
+          this.listaColaboradoresPorCargo.push({ id: c.id, lista: new Array() });
+        });
+
+        this.listaCargos = data;
+        this.listaCargos.sort((a: Cargo, b: Cargo) => {
+          return a.id - b.id;
+        });
+
+        // Cargamos los colaboradores.
+        this.colaboradorService.getAll().subscribe(
+          (dataC) => {
+            this.colaboradores = dataC;
+            this.listaCargos.forEach((c) => {
+              this.listaColaboradoresPorCargo.find((h) => h.id === c.id).lista = this.GetIniciales(c);
+            });
+
+            this.proyectoService.getAll().subscribe(
+              (dataP) => {
+                this.proyectos = dataP;
+                this.loading--;
+                this.layoutService.updatePreloaderState('hide');
+
+                // Cargamos el resumen.
+                this.Reload();
+              },
+              (errorP) => {
+                this.loading--;
+                this.layoutService.updatePreloaderState('hide');
+                this.as.error(errorP, 5000);
+              }
+            );
+          },
+          (errorC) => {
+            this.loading--;
+            this.layoutService.updatePreloaderState('hide');
+            this.as.error(errorC, 5000);
+          }
+        );
+      },
+      (error) => {
+        this.loading--;
+        this.layoutService.updatePreloaderState('hide');
+        this.as.error(error, 5000);
+      });
+  }
+
+  Clear() {
+    this.reporteHoras = new Array();
+    this.listaTotales = new Array();
+    this.listaCargos = new Array();
+    this.totalHoras = 0;
+    this.totalImporte = 0;
+  }
+
+  public Reload() {
+    this.Clear();
+
+    if (this.proyectoActual.id === undefined) {
+      this.LoadTotalesProyecto(0);
+      return;
+    } else {
+      this.LoadTotalesProyecto(undefined);
     }
+  }
 
-    public Reload() {
-      // Hacemos los chequeos.
-      if (this.fDesde === undefined) {
-        this.as.error('Debe ingresar la fecha "Desde".', 5000);
-        return;
-      }
-      if (this.fHasta === undefined) {
-        this.as.error('Debe ingresar la fecha "Hasta".', 5000);
-        return;
-      }
-      if (this.fDesde.getTime() > this.fHasta.getTime()) {
-        this.as.error('La fecha "Desde" debe ser menor o igual que la fecha "Hasta".', 5000);
-        return;
-      }
-
-      // Cargamos las horas.
-/*       this.layoutService.updatePreloaderState('active');
-      this.total = 0;
-      this.loading = true;
-      this.service.getPorUsuarioYFecha(this.colaboradorActual.id, this.fDesde, this.fHasta).subscribe(
+  LoadTotalesProyecto(indiceP: number) {
+    // Si solo quiero un proyecto
+    if (indiceP === undefined) {
+      this.loading++;
+      this.layoutService.updatePreloaderState('active');
+      this.service.getReporte1Totales(this.proyectoActual).subscribe(
         (data) => {
-          this.lista = data;
-          this.CalcularSubtotales();
-          this.lista.sort((a: Hora, b: Hora) => {
-            return this.customDatePipe.transform(b.dia, []).getTime() - this.customDatePipe.transform(a.dia, []).getTime();
+          data.forEach((x) => {
+            if (x.cargo !== undefined) {
+              const indice: number = this.listaTotales.findIndex((y) => y.cargo.id === x.cargo.id);
+              if (indice === -1) {
+                this.listaTotales.push({ cargo: x.cargo, cantidadHoras: x.cantidadHoras, importe: x.precioTotal });
+              } else {
+                this.listaTotales[indice].cantidadHoras += x.cantidadHoras;
+                this.listaTotales[indice].importe += x.precioTotal;
+              }
+              this.totalHoras += x.cantidadHoras;
+              this.totalImporte += x.precioTotal;
+            }
           });
+
+          this.listaTotales.sort((a: { cargo: Cargo, cantidadHoras: number, importe: number }, b: { cargo: Cargo, cantidadHoras: number, importe: number }) => {
+            return b.cargo.precioHoraHistoria[0].precioHora - a.cargo.precioHoraHistoria[0].precioHora;
+          });
+
+          this.loading--;
           this.layoutService.updatePreloaderState('hide');
-          this.loading = false;
         },
         (error) => {
+          this.loading--;
           this.as.error(error, 5000);
-          this.layoutService.updatePreloaderState('hide');
-          this.loading = false;
+          this.layoutService.updatePreloaderState('active');
         }
-      ); */
-    }
+      );
+    } else {
+      if (indiceP < this.proyectos.length) {
+        this.loading++;
+        this.layoutService.updatePreloaderState('active');
+        this.service.getReporte1Totales(this.proyectos[indiceP]).subscribe(
+          (data) => {
+            data.forEach((x) => {
+              if (x.cargo !== undefined) {
+                const indice: number = this.listaTotales.findIndex((y) => y.cargo.id === x.cargo.id);
+                if (indice === -1) {
+                  this.listaTotales.push({ cargo: x.cargo, cantidadHoras: x.cantidadHoras, importe: x.precioTotal });
+                } else {
+                  this.listaTotales[indice].cantidadHoras += x.cantidadHoras;
+                  this.listaTotales[indice].importe += x.precioTotal;
+                }
+                this.totalHoras += x.cantidadHoras;
+                this.totalImporte += x.precioTotal;
+              }
+            });
 
-    public CalcularSubtotales() {
-      this.listaTotales = new Array();
-      this.lista.forEach((x) => {
-        x.horaDetalleList.forEach((y) => {
-          const pId: number = this.listaTotales.findIndex((z) => z.proyectoId === y.proyecto.id);
-          if (pId < 0) {
-            this.listaTotales.push({proyectoId: y.proyecto.id, proyectoNombre: y.proyecto.nombre, minutos: this.timePipe.transform(y.duracion, ['minutos'])});
-          } else {
-            this.listaTotales.find((z) => z.proyectoId === y.proyecto.id).minutos += this.timePipe.transform(y.duracion, ['minutos']);
+            this.LoadTotalesProyecto(indiceP + 1);
+            this.loading--;
+            this.layoutService.updatePreloaderState('hide');
+          },
+          (error) => {
+            this.as.error(error, 5000);
+            this.loading--;
+            this.layoutService.updatePreloaderState('active');
           }
-          this.total += this.timePipe.transform(y.duracion, ['minutos']);
+        );
+      } else {
+        this.listaTotales.sort((a: { cargo: Cargo, cantidadHoras: number, importe: number }, b: { cargo: Cargo, cantidadHoras: number, importe: number }) => {
+          return b.cargo.precioHoraHistoria[0].precioHora - a.cargo.precioHoraHistoria[0].precioHora;
         });
-      });
-    }
-
-    GetMinutosToString(m: number) {
-      const horas = Math.trunc((m) / 60);
-      const minutos = (m) - Math.trunc((m) / 60) * 60;
-      return horas + ' hs. ' + minutos + ' min.';
+      }
     }
   }
+
+  proyectoSeleccionado(proyecto: Proyecto) {
+    this.proyectoActual = proyecto;
+    this.Reload();
+  }
+
+  // TODO Modularizar.
+  GetMinutosToString(m: number) {
+    const horas = Math.trunc((m) / 60);
+    const minutos = (m) - Math.trunc((m) / 60) * 60;
+    return horas + ' hs. ' + minutos + ' min.';
+  }
+
+  // TODO Modularizar, se repite en el reporte de cargos.
+  GetIniciales(c: Cargo): Array<{ iniciales: string, nombre: string }> {
+    const result: Array<{ iniciales: string, nombre: string }> = new Array();
+    if (this.colaboradores === undefined) {
+      return result;
+    }
+
+    this.colaboradores
+      .filter((x) => x.cargo != null && x.cargo.id === c.id)
+      .forEach((x) => {
+        const ini: string[] = x.nombre.split(' ');
+        let aux: string = '';
+        ini.forEach((y) => {
+          if (y.length > 0) {
+            aux += y[0];
+          }
+        });
+        result.push({ iniciales: aux.toUpperCase(), nombre: x.nombre });
+      });
+
+    return result;
+  }
+
+  GetInicialesAux(id: number): Array<{ iniciales: string, nombre: string }> {
+    if (this.listaColaboradoresPorCargo === undefined || this.listaColaboradoresPorCargo.length === 0) {
+      return new Array();
+    }
+    return this.listaColaboradoresPorCargo.find((x) => x.id === id).lista;
+  }
+}

@@ -2,26 +2,17 @@
     <article class="article">
       <div class="row">
         <h2 class="article-title col-12 col-sm-6">
-          <span>Hs. y Costos</span>
+          <span>Hs. Reales (Resumen y Costos)</span>
         </h2>
         <div class="col-12 col-sm-3">
-          <mat-form-field class="full-width">
-            <input [(ngModel)]="fDesde" (dateChange)="Reload()" class="full-width" matInput [matDatepicker]="pickerFDesde" placeholder="Fecha Desde">
-            <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
-            <mat-datepicker #pickerFDesde></mat-datepicker>
-          </mat-form-field>
         </div>
         <div class="col-12 col-sm-3">
-          <mat-form-field class="full-width">
-            <input [(ngModel)]="fHasta" (dateChange)="Reload()" class="full-width" matInput [matDatepicker]="pickerFHasta" placeholder="Fecha Hasta">
-            <mat-datepicker-toggle matSuffix [for]="pickerFHasta"></mat-datepicker-toggle>
-            <mat-datepicker #pickerFHasta></mat-datepicker>
-          </mat-form-field>
+          <app-select-proyecto [object]="proyectoActual" idModel="id" placeHolder="PROYECTOS" id="id" desc="nombre" (onChange)="proyectoSeleccionado($event)"></app-select-proyecto>
         </div>
       </div>
   
       <div class="box box-default table-box table-responsive mdl-shadow--2dp">
-        <table class="mdl-data-table">
+        <table class="mdl-data-table" *ngIf="loading === 0">
           <thead>
             <tr>
               <th>#</th>
@@ -33,44 +24,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td class="text-left">Proyect Manager</td>
-              <td class="text-left">PM</td>
+            <tr *ngFor="let x of listaTotales">
+              <td>{{x.cargo.id}}</td>
+              <td class="text-left">{{x.cargo.nombre}}</td>
+              <td class="text-left">{{x.cargo.codigo}}</td>
               <td class="text-left">
                 <mat-chip-list>
-                  <mat-chip matTooltipPosition="above" matTooltip="Carla Antón">
-                    <b>CA</b>
-                  </mat-chip>
-                  <mat-chip matTooltipPosition="above" matTooltip="Andres Silva">
-                    <b>AS</b>
-                  </mat-chip>
-                  <mat-chip matTooltipPosition="above" matTooltip="Juan Acuña">
-                    <b>JA</b>
-                  </mat-chip>
+                  <mat-chip matTooltipPosition="above" [matTooltip]="y.nombre" *ngFor="let y of GetInicialesAux(x.cargo.id)"><b>{{y.iniciales}}</b></mat-chip>
                 </mat-chip-list>
               </td>
-              <td>150</td>
-              <td>1860</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td class="text-left">Dibujante</td>
-              <td class="text-left">D</td>
-              <td class="text-left">
-                <mat-chip-list>
-                  <mat-chip matTooltipPosition="above" matTooltip="Silvia Lopez">
-                    <b>SL</b>
-                  </mat-chip>
-                  <mat-chip matTooltipPosition="above" matTooltip="Oscar Perez">
-                    <b>OP</b>
-                  </mat-chip>
-                </mat-chip-list>
-              </td>
-              <td>300</td>
-              <td>2500</td>
+              <td>{{x.cantidadHoras}}</td>
+              <td>{{x.importe | number:'1.2'}}</td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" class="text-rigth"><b>TOTALES</b></td>
+              <td class="text-rigth"><b>{{totalHoras}}</b></td>
+              <td class="text-rigth"><b>{{totalImporte | number:'1.2'}}</b></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </article>
