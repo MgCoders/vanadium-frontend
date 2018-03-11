@@ -33,15 +33,15 @@
                   <mat-chip matTooltipPosition="above" [matTooltip]="y.nombre" *ngFor="let y of GetInicialesAux(x.cargo.id)"><b>{{y.iniciales}}</b></mat-chip>
                 </mat-chip-list>
               </td>
-              <td>{{x.cantidadHoras}}</td>
-              <td>{{x.importe | number:'1.2'}}</td>
+              <td>{{x.cantidadHoras | number:'1.0'}}</td>
+              <td>{{x.importe | number:'1.0'}}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colspan="4" class="text-rigth"><b>TOTALES</b></td>
-              <td class="text-rigth"><b>{{totalHoras}}</b></td>
-              <td class="text-rigth"><b>{{totalImporte | number:'1.2'}}</b></td>
+              <td class="text-rigth"><b>{{totalHoras | number:'1.0'}}</b></td>
+              <td class="text-rigth"><b>{{totalImporte | number:'1.0'}}</b></td>
             </tr>
           </tfoot>
         </table>
