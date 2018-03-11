@@ -18,6 +18,7 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatCardModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { EstimacionesComponent } from './estimaciones.component';
@@ -59,6 +60,7 @@ import { PipesModule } from '../_pipes/pipes.module';
     MatSliderModule,
     MatCardModule,
     PipesModule,
+    MatProgressSpinnerModule
   ],
 
   declarations: [

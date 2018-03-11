@@ -12,6 +12,7 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatCheckboxModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { ListaColaboradoresComponent } from './lista-colaboradores/lista-colaboradores.component';
@@ -41,6 +42,7 @@ import { CargosModule } from '../cargos/cargos.module';
     MatDialogModule,
     CargosModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
 
   declarations: [

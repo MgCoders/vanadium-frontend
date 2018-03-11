@@ -46,8 +46,7 @@ export class ListaCargosComponent implements OnInit {
         });
 
         this.lista = data;
-        // tslint:disable-next-line:only-arrow-functions
-        this.lista.sort(function(a, b) {
+        this.lista.sort((a: Cargo, b: Cargo) => {
           return a.id - b.id;
         });
 

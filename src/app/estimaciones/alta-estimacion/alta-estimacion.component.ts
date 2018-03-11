@@ -89,6 +89,7 @@ export class AltaEstimacionComponent implements OnInit {
 
   Guardar() {
     this.layoutService.updatePreloaderState('active');
+    this.loading++;
     this.estimacionActual.fecha = this.datePipe.transform(this.fechaActual, 'dd-MM-yyyy');
 
     if (this.data[0] === undefined) {
@@ -107,16 +108,19 @@ export class AltaEstimacionComponent implements OnInit {
         (data) => {
           this.as.success('Estimación agregada correctamente.', 3000);
           this.data[1].push(data);
+          this.loading--;
           this.layoutService.updatePreloaderState('hide');
           this.dialogRef.close();
         },
         (error) => {
+          this.loading--;
           this.layoutService.updatePreloaderState('hide');
           this.as.error(error, 5000);
         });
     } else {
       this.es.edit(this.estimacionActual).subscribe(
         (data) => {
+          this.loading--;
           this.layoutService.updatePreloaderState('hide');
           this.as.success('Estimación actualizada correctamente.', 3000);
           const index: number = this.data[1].indexOf(this.data[0]);
@@ -124,6 +128,7 @@ export class AltaEstimacionComponent implements OnInit {
           this.dialogRef.close();
         },
         (error) => {
+          this.loading--;
           this.layoutService.updatePreloaderState('hide');
           this.as.error(error, 5000);
         });

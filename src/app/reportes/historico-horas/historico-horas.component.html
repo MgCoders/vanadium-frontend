@@ -2,7 +2,7 @@
   <article class="article">
     <div class="row">
       <h2 class="article-title col-12 col-sm-3">
-        <span>Histórico de Horas</span>
+        <span>Hs. Reales (Detalle)</span>
       </h2>
       <div class="col-12 col-sm-3">
         <app-select-colaborador [object]="colaboradorActual" idModel="id" placeHolder="Colaborador" (onChange)="ColaboradorOnChange($event)"
@@ -33,7 +33,7 @@
                 <thead>
                   <tr>
                     <th class="text-center" colspan="2">
-                      Horas Por Proyecto
+                      Resumen de Horas Por Proyecto
                     </th>
                   </tr>
                 </thead>
@@ -70,6 +70,8 @@
             <th>Hora de Entrada</th>
             <th>Hora de Salida</th>
             <th>Tiempo Total</th>
+            <th>Hs. Cargadas</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -78,6 +80,12 @@
             <td>{{x.horaIn}}</td>
             <td>{{x.horaOut}}</td>
             <td>{{x.subtotal | myTimePipe:'HH hs. mm min.'}}</td>
+            <td>{{x.subtotalDetalles | myTimePipe:'HH hs. mm min.'}}</td>
+            <td>
+              <mat-icon matTooltipPosition="above" matTooltip="Día completado correctamente." *ngIf="x.completa" color="accent" class="material-icons">done</mat-icon>
+              <mat-icon matTooltipPosition="above" matTooltip="Día incompleto. Faltan registros de horas." *ngIf="!x.completa" color="warn"
+                class="material-icons">error</mat-icon>
+            </td>
           </tr>
         </tbody>
       </table>

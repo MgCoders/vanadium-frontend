@@ -12,7 +12,6 @@ export class LayoutService {
     this.preloaderStateSource.next(state);
   }
 
-
   private searchOverlaySource = new Subject<string>();
 
   searchOverlayState$ = this.searchOverlaySource.asObservable();
@@ -21,7 +20,6 @@ export class LayoutService {
     // console.log('overlay state: ' + state)
     this.searchOverlaySource.next(state);
   }
-
 
   private echartsSource = new Subject<boolean>();
   echartsState$ = this.echartsSource.asObservable();
