@@ -9,6 +9,7 @@ import {
   MatSelectModule,
   MatTooltipModule,
   MatDialogModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { TareasComponent } from './tareas.component';
@@ -34,6 +35,7 @@ import { LayoutService } from '../layout/layout.service';
     MatSelectModule,
     MatTooltipModule,
     MatDialogModule,
+    MatProgressSpinnerModule
   ],
 
   declarations: [
