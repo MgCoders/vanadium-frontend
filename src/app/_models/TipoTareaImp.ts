@@ -8,9 +8,12 @@ export class TipoTareaImp implements models.TipoTarea {
 
     codigo: string;
 
+    prioridad: number;
+
     public constructor(x: models.TipoTarea) {
         this.id = x.id;
         this.nombre = x.nombre;
         this.codigo = x.codigo;
+        this.prioridad = x.prioridad;
     }
 }

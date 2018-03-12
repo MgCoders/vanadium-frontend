@@ -28,9 +28,8 @@ export class ListaTareasComponent implements OnInit {
     this.service.getAll().subscribe(
       (data) => {
         this.lista = data;
-        // tslint:disable-next-line:only-arrow-functions
-        this.lista.sort(function(a, b) {
-          return a.id - b.id;
+        this.lista.sort((a: TipoTarea, b: TipoTarea) => {
+          return b.prioridad - a.prioridad;
         });
         this.layoutService.updatePreloaderState('hide');
       },
