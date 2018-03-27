@@ -10,7 +10,8 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatDatepickerModule,
-  MatChipsModule
+  MatChipsModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import { CargosComponent } from './cargos.component';
@@ -42,7 +43,8 @@ import { PipesModule } from '../_pipes/pipes.module';
     MatDialogModule,
     MatDatepickerModule,
     MatChipsModule,
-    PipesModule
+    PipesModule,
+    MatCheckboxModule
   ],
 
   exports: [

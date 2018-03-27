@@ -21,4 +21,6 @@ export interface Cargo {
 
     precioHoraHistoria?: models.PrecioHora[];
 
+    enabled: boolean;
+
 }
