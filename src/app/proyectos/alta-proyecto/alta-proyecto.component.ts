@@ -29,6 +29,7 @@ export class AltaProyectoComponent implements OnInit {
   ngOnInit() {
     if (this.data[0] === undefined) {
       this.proyectoActual = {} as Proyecto;
+      this.proyectoActual.enabled = true;
     } else {
       this.proyectoActual = new ProyectoImp(this.data[0]);
     }

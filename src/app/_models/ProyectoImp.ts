@@ -9,10 +9,13 @@ export class ProyectoImp implements models.Proyecto {
 
     prioridad: number;
 
-    public constructor(x: models.TipoTarea) {
+    enabled: boolean;
+
+    public constructor(x: models.Proyecto) {
         this.id = x.id;
         this.nombre = x.nombre;
         this.codigo = x.codigo;
-        this.prioridad = this.prioridad;
+        this.prioridad = x.prioridad;
+        this.enabled = x.enabled;
     }
 }

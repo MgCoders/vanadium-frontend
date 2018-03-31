@@ -27,7 +27,7 @@ export class SelectColaboradorComponent implements OnInit {
       this.lista = new Array();
       this.service.getAll().subscribe(
         (data) => {
-          this.lista = data;
+          this.lista = data.filter((x) => x.enabled);
         },
         (error) => {
           this.as.error(error, 5000);

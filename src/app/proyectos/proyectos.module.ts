@@ -9,6 +9,7 @@ import {
   MatSelectModule,
   MatTooltipModule,
   MatDialogModule,
+  MatCheckboxModule,
 } from '@angular/material';
 
 import { AltaProyectoComponent } from './alta-proyecto/alta-proyecto.component';
@@ -34,6 +35,7 @@ import { LayoutService } from '../layout/layout.service';
     MatSelectModule,
     MatTooltipModule,
     MatDialogModule,
+    MatCheckboxModule,
   ],
 
   declarations: [

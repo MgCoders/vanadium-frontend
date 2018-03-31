@@ -12,7 +12,7 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatCheckboxModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
 } from '@angular/material';
 
 import { ListaColaboradoresComponent } from './lista-colaboradores/lista-colaboradores.component';
