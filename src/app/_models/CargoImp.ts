@@ -10,10 +10,13 @@ export class CargoImp implements models.Cargo {
 
     precioHoraHistoria?: models.PrecioHora[];
 
+    enabled: boolean;
+
     public constructor(x: models.Cargo) {
         this.id = x.id;
         this.nombre = x.nombre;
         this.codigo = x.codigo;
+        this.enabled = x.enabled;
 
         this.precioHoraHistoria = new Array();
         x.precioHoraHistoria.forEach((y) => {

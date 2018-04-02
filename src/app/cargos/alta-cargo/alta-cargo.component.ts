@@ -33,6 +33,7 @@ export class AltaCargoComponent implements OnInit {
   ngOnInit() {
     if (this.data[0] === undefined) {
       this.cargoActual = {} as Cargo;
+      this.cargoActual.enabled = true;
     } else {
       this.cargoActual = new CargoImp(this.data[0]);
     }

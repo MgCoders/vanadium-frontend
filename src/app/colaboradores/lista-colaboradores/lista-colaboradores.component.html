@@ -17,6 +17,7 @@
             <th class="mdl-data-table__cell--non-numeric">E-mail</th>
             <th class="mdl-data-table__cell--non-numeric">Cargo</th>
             <th class="mdl-data-table__cell--non-numeric">Role</th>
+            <th>¿Habilitado?</th>
             <th></th>
           </tr>
         </thead>
@@ -27,12 +28,10 @@
             <td class="mdl-data-table__cell--non-numeric">{{x.email}}</td>
             <td class="mdl-data-table__cell--non-numeric"><span *ngIf="x.cargo != undefined">{{x.cargo.nombre}}</span></td>
             <td class="mdl-data-table__cell--non-numeric">{{x.role}}</td>
+            <td><mat-checkbox [disabled]="true" [(ngModel)]="x.enabled"></mat-checkbox></td>
             <td>
               <button matTooltipPosition="above" matTooltip="Editar Colaborador." mat-icon-button color="primary" (click)="Editar(x)">
                 <mat-icon class="material-icons">mode_edit</mat-icon>
-              </button>
-              <button matTooltipPosition="above" matTooltip="Eliminar Colaborador." mat-icon-button color="warn">
-                <mat-icon class="material-icons" (click)="Eliminar(x)">delete</mat-icon>
               </button>
             </td>
           </tr>

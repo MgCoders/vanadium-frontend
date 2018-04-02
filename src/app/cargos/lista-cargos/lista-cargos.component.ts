@@ -146,6 +146,11 @@ export class ListaCargosComponent implements OnInit {
     if (this.listaColaboradoresPorCargo === undefined) {
       return new Array();
     }
-    return this.listaColaboradoresPorCargo.find((x) => x.id === id).lista;
+
+    if (this.listaColaboradoresPorCargo.find((x) => x.id === id) === undefined) {
+      return new Array();
+    } else {
+      return this.listaColaboradoresPorCargo.find((x) => x.id === id).lista;
+    }
   }
 }
