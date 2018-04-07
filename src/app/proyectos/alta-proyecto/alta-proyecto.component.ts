@@ -20,6 +20,8 @@ export class AltaProyectoComponent implements OnInit {
   public codigoFC = new FormControl('', [Validators.required]);
   public prioridadFC = new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]);
 
+  public loading: boolean;
+
   constructor(public dialogRef: MatDialogRef<AltaProyectoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Proyecto, Proyecto[]],
               private cs: ProyectoService,
@@ -27,6 +29,7 @@ export class AltaProyectoComponent implements OnInit {
               private layoutService: LayoutService) { }
 
   ngOnInit() {
+    this.loading = false;
     if (this.data[0] === undefined) {
       this.proyectoActual = {} as Proyecto;
       this.proyectoActual.enabled = true;
@@ -40,23 +43,27 @@ export class AltaProyectoComponent implements OnInit {
   }
 
   Guardar() {
+    this.loading = true;
     this.layoutService.updatePreloaderState('active');
     if (this.data[0] === undefined) {
       this.cs.create(this.proyectoActual).subscribe(
         (data) => {
           this.layoutService.updatePreloaderState('hide');
+          this.loading = false;
           this.as.success('Proyecto agregado correctamente.', 3000);
           this.data[1].push(data);
           this.dialogRef.close();
         },
         (error) => {
           this.layoutService.updatePreloaderState('hide');
+          this.loading = false;
           this.as.error(error, 5000);
         });
     } else {
       this.cs.edit(this.proyectoActual).subscribe(
         (data) => {
           this.layoutService.updatePreloaderState('hide');
+          this.loading = false;
           this.as.success('Proyecto actualizado correctamente.', 3000);
           const index: number = this.data[1].indexOf(this.data[0]);
           this.data[1][index] = data;
@@ -64,6 +71,7 @@ export class AltaProyectoComponent implements OnInit {
         },
         (error) => {
           this.layoutService.updatePreloaderState('hide');
+          this.loading = false;
           this.as.error(error, 5000);
         });
     }
