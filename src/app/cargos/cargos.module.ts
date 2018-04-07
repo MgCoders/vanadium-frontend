@@ -11,7 +11,8 @@ import {
   MatDialogModule,
   MatDatepickerModule,
   MatChipsModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { CargosComponent } from './cargos.component';
@@ -44,7 +45,8 @@ import { PipesModule } from '../_pipes/pipes.module';
     MatDatepickerModule,
     MatChipsModule,
     PipesModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
 
   exports: [

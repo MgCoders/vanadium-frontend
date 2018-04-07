@@ -8,11 +8,13 @@ import { HorasReporte1 } from '../_models/HorasProyectoTipoTareaXCargo';
 import { EstimacionProyectoTipoTareaXCargo } from '../_models/EstimacionProyectoTipoTareaXCargo';
 import { HorasProyectoXCargo } from '../_models/HorasProyectoXCargo';
 import { TipoTarea } from '../_models/TipoTarea';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class ReporteService {
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient,
+              private datePipe: DatePipe) { }
 
   getHorasProyectoTipoTareaCargoXColaborador(): Observable<HorasProyectoTipoTareaCargoXColaborador[]> {
     return this.http.get<HorasProyectoTipoTareaCargoXColaborador[]>(`${environment.apiUrl}/horas/proyecto/tarea/cargo/`);
@@ -32,5 +34,10 @@ export class ReporteService {
 
   getHorasProyectoXCargo(proyecto: Proyecto): Observable<HorasProyectoXCargo[]> {
     return this.http.get<HorasProyectoXCargo[]>(`${environment.apiUrl}/reportes/horas/proyecto/` + proyecto.id);
+  }
+
+  getResumenHoras(desde: Date, hasta: Date): Observable<HorasReporte1[]> {
+    return this.http.get<HorasReporte1[]>(`${environment.apiUrl}/reportes/horas/fechas/` +
+      this.datePipe.transform(desde, 'dd-MM-yyyy') + `/` + this.datePipe.transform(hasta, 'dd-MM-yyyy'));
   }
 }
