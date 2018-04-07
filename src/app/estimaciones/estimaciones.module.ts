@@ -38,6 +38,8 @@ import { EstimacionDetalleComponent } from './estimacion-detalle/estimacion-deta
 
 import { PipesModule } from '../_pipes/pipes.module';
 
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -60,7 +62,8 @@ import { PipesModule } from '../_pipes/pipes.module';
     MatSliderModule,
     MatCardModule,
     PipesModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    SharedModule
   ],
 
   declarations: [

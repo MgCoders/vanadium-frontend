@@ -40,6 +40,7 @@ export class EstimacionDetalleComponent implements OnInit {
   public tareasCargosRespaldo: Array<{ idTarea: number, nombreTarea: string, cargos: Array<{ idCargo: number, nombreCargo: string, value: number, FC: FormControl }> }>;
   public horaCargo: Array<{idCargo: number, codigo: string, value: number, FC: FormControl}>;
   public horaCargoRespaldo: Array<{idCargo: number, codigo: string, value: number, FC: FormControl}>;
+  public loading: boolean;
 
   constructor(private service: EstimacionService,
               private serviceC: CargoService,
@@ -57,10 +58,12 @@ export class EstimacionDetalleComponent implements OnInit {
     this.tareasCargosRespaldo = new Array();
     this.horaCargo = new Array();
     this.horaCargoRespaldo = new Array();
+    this.loading = false;
 
     this.route.params.subscribe((params) => {
       this.idEstimacionActual = +params['id'];
       this.layoutService.updatePreloaderState('active');
+      this.loading = true;
       this.serviceC.getAll().subscribe(
         (datac) => {
           this.cargos = datac;
@@ -72,17 +75,20 @@ export class EstimacionDetalleComponent implements OnInit {
             (error) => {
               this.as.error(error, 5000);
               this.layoutService.updatePreloaderState('hide');
+              this.loading = false;
             });
         },
         (error) => {
           this.as.error(error, 5000);
           this.layoutService.updatePreloaderState('hide');
+          this.loading = false;
         });
     });
   }
 
   LoadEstimacion() {
     this.layoutService.updatePreloaderState('active');
+    this.loading = true;
     this.service.get(this.idEstimacionActual).subscribe(
       (data) => {
         this.estimacionActual = data;
@@ -98,9 +104,11 @@ export class EstimacionDetalleComponent implements OnInit {
         });
 
         this.layoutService.updatePreloaderState('hide');
+        this.loading = false;
       },
       (error) => {
         this.layoutService.updatePreloaderState('hide');
+        this.loading = false;
         this.as.error(error, 5000);
       });
   }
@@ -149,16 +157,19 @@ export class EstimacionDetalleComponent implements OnInit {
     });
 
     this.layoutService.updatePreloaderState('active');
+    this.loading = true;
     this.service.edit(this.estimacionActual).subscribe(
       (data) => {
         this.estimacionActual = data;
         this.layoutService.updatePreloaderState('hide');
+        this.loading = false;
         this.editando = false;
         this.as.success('Estimación guardada correctamente', 3000);
       },
       (error) => {
         this.as.error(error, 5000);
         this.layoutService.updatePreloaderState('hide');
+        this.loading = false;
       }
     );
   }

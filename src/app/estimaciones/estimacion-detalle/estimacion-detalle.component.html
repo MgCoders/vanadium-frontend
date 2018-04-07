@@ -10,8 +10,8 @@
           color="primary" (click)="Editar()">
           <mat-icon class="material-icons">mode_edit</mat-icon>
         </button>
-        <button *ngIf="editando" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
-        <button *ngIf="editando" mat-raised-button color="dark" class="btn-w-md" (click)="Cancelar()">Cancelar</button>
+        <button *ngIf="editando" [disabled]="loading" mat-raised-button color="primary" class="btn-w-md" (click)="GuardarOnClick()">Guardar</button>
+        <button *ngIf="editando" [disabled]="loading" mat-raised-button color="dark" class="btn-w-md" (click)="Cancelar()">Cancelar</button>
       </div>
     </div>
     <div class="row">
@@ -35,7 +35,7 @@
                     </td>
                     <td *ngIf="editando" class="text-rigth noPading">
                       <mat-form-field class="anchoMinimo noBorder">
-                        <input matInput type="number" [(ngModel)]="y.value" [formControl]="y.FC">
+                        <input matInput type="number" [(ngModel)]="y.value" [formControl]="y.FC" [appDisableControl]="loading">
                         <mat-error *ngIf="y.FC.invalid">Debe ser > 0</mat-error>
                       </mat-form-field>
                     </td>
@@ -86,7 +86,7 @@
                     </td>
                     <td *ngIf="editando" class="text-rigth noPading">
                       <mat-form-field class="anchoMinimo noBorder">
-                        <input matInput type="number" [(ngModel)]="y.value" [formControl]="y.FC">
+                        <input matInput type="number" [(ngModel)]="y.value" [formControl]="y.FC" [appDisableControl]="loading">
                         <mat-error *ngIf="y.FC.invalid">Debe ser > 0</mat-error>
                       </mat-form-field>
                     </td>
