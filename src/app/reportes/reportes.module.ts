@@ -60,6 +60,7 @@ import { PipesModule } from '../_pipes/pipes.module';
 import { HistoricoHorasComponent } from './historico-horas/historico-horas.component';
 import { ColaboradoresModule } from '../colaboradores/colaboradores.module';
 import { ReporteHorasDelMesComponent } from './reporte-horas-del-mes/reporte-horas-del-mes.component';
+import { PapaParseModule } from 'ngx-papaparse';
 
 @NgModule({
     imports: [
@@ -101,7 +102,8 @@ import { ReporteHorasDelMesComponent } from './reporte-horas-del-mes/reporte-hor
         TareasModule,
         CommonModule,
         PipesModule,
-        ColaboradoresModule
+        ColaboradoresModule,
+        PapaParseModule
     ],
     declarations: [
         ReportesComponent,
