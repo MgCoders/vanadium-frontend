@@ -39,6 +39,8 @@ import { ColaboradorService } from '../../_services/colaborador.service';
 import { ReporteService } from '../../_services/reporte.service';
 import { HorasProyectoXCargo } from '../../_models/HorasProyectoXCargo';
 import { ProyectoService } from '../../_services/proyecto.service';
+import { PapaParseService } from 'ngx-papaparse';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-reporte-horas-del-mes',
@@ -69,7 +71,8 @@ export class ReporteHorasDelMesComponent implements OnInit {
               private timePipe: TimePipe,
               private authService: AuthService,
               private layoutService: LayoutService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private papa: PapaParseService) {
   }
 
   ngOnInit() {
@@ -261,5 +264,20 @@ export class ReporteHorasDelMesComponent implements OnInit {
       return new Array();
     }
     return this.listaColaboradoresPorCargo.find((x) => x.id === id).lista;
+  }
+
+  public Download_CSV() {
+    // Generamos el archivo con el detalle de la comparacion de horas cargadas vs. estimadas.
+    const nombre: string = 'Horas_Reales_Resumen_y_Costos_' + (this.proyectoActual.nombre === undefined ? 'TODOS' : this.proyectoActual.nombre.replace(' ', '_')) + '.csv';
+    const detalle: Array<{Cargo: string, Codigo: string, Colaboradores: string, Horas_Cargadas: number, Importe_Total: number}> = new Array();
+    this.listaTotales.forEach((x) => {
+      let colaboradores: string = '';
+      this.GetInicialesAux(x.cargo.id).forEach((y) => {
+        colaboradores += y.iniciales + ' | ';
+      });
+      detalle.push({Cargo: x.cargo.nombre, Codigo: x.cargo.codigo, Colaboradores: colaboradores, Horas_Cargadas: x.cantidadHoras, Importe_Total: x.importe});
+    });
+    const blob = new Blob([this.papa.unparse(detalle)]);
+    FileSaver.saveAs(blob, nombre);
   }
 }
