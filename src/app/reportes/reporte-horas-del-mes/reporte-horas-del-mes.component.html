@@ -1,13 +1,25 @@
 <section class="container-fluid with-maxwidth chapter">
     <article class="article">
       <div class="row">
-        <h2 class="article-title col-12 col-sm-6">
+        <h2 class="article-title col-12 col-sm-5">
           <span>Hs. Reales (Resumen y Costos)</span>
         </h2>
         <div class="col-12 col-sm-2">
-        </div>
-        <div class="col-12 col-sm-3">
           <app-select-proyecto [object]="proyectoActual" idModel="id" placeHolder="PROYECTOS" id="id" desc="nombre" (onChange)="proyectoSeleccionado($event)"></app-select-proyecto>
+        </div>
+        <div class="col-12 col-sm-2">
+          <mat-form-field class="full-width">
+            <input [(ngModel)]="fDesde" (dateChange)="Load()" class="full-width" matInput [matDatepicker]="pickerFDesde" placeholder="Fecha Desde">
+            <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFDesde></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-2">
+          <mat-form-field class="full-width">
+            <input [(ngModel)]="fHasta" (dateChange)="Load()" class="full-width" matInput [matDatepicker]="pickerFHasta" placeholder="Fecha Hasta">
+            <mat-datepicker-toggle matSuffix [for]="pickerFHasta"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFHasta></mat-datepicker>
+          </mat-form-field>
         </div>
         <div class="col-12 col-sm-1">
           <button matTooltipPosition="above" matTooltip="Bajar archivo csv con los datos." [disabled]="loading > 0" (click)="Download_CSV()" mat-icon-button color="primary">
@@ -29,7 +41,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let x of listaTotales">
+            <tr *ngFor="let x of getFilas(lista)">
               <td>{{x.cargo.id}}</td>
               <td class="text-left">{{x.cargo.nombre}}</td>
               <td class="text-left">{{x.cargo.codigo}}</td>
@@ -39,14 +51,14 @@
                 </mat-chip-list>
               </td>
               <td>{{x.cantidadHoras | number:'1.0-0'}}</td>
-              <td>{{x.importe | number:'1.0-0'}}</td>
+              <td>{{x.precioTotal | number:'1.0-0'}}</td>
             </tr>
           </tbody>
           <tfoot>
-            <tr>
+            <tr *ngFor="let x of getTotal(lista)">
               <td colspan="4" class="text-rigth"><b>TOTALES</b></td>
-              <td class="text-rigth"><b>{{totalHoras | number:'1.0-0'}}</b></td>
-              <td class="text-rigth"><b>{{totalImporte | number:'1.0-0'}}</b></td>
+              <td class="text-rigth"><b>{{x.cantidadHoras | number:'1.0-0'}}</b></td>
+              <td class="text-rigth"><b>{{x.precioTotal | number:'1.0-0'}}</b></td>
             </tr>
           </tfoot>
         </table>

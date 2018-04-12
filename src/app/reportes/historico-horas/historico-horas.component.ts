@@ -32,7 +32,6 @@ import {
   Validators
 } from '@angular/forms';
 
-
 import { TimePipe } from '../../_pipes/time.pipe';
 import { PapaParseService } from 'ngx-papaparse';
 import * as FileSaver from 'file-saver';
@@ -53,16 +52,15 @@ export class HistoricoHorasComponent implements OnInit {
   public loading: boolean;
 
   constructor(private service: HoraService,
-    private as: AlertService,
-    private datePipe: DatePipe,
-    private customDatePipe: CustomDatePipe,
-    private decimalPipe: DecimalPipe,
-    private timePipe: TimePipe,
-    private authService: AuthService,
-    private layoutService: LayoutService,
-    public dialog: MatDialog,
-    private papa: PapaParseService) {
-  }
+              private as: AlertService,
+              private datePipe: DatePipe,
+              private customDatePipe: CustomDatePipe,
+              private decimalPipe: DecimalPipe,
+              private timePipe: TimePipe,
+              private authService: AuthService,
+              private layoutService: LayoutService,
+              public dialog: MatDialog,
+              private papa: PapaParseService) { }
 
   ngOnInit() {
     this.colaboradorActual = this.authService.getCurrentUser();
@@ -157,7 +155,7 @@ export class HistoricoHorasComponent implements OnInit {
       this.datePipe.transform(this.fDesde, 'yyyyMMdd') + '_' +
       this.datePipe.transform(this.fHasta, 'yyyyMMdd') + '.csv';
     const detalle: Array<{Dia: string, Hora_Entrada: string, Hora_Salida: string, Tiempo_Total: string, Horas_Cargadas: string, Status: string}> = new Array();
-      this.lista.forEach((x) => {
+    this.lista.forEach((x) => {
         detalle.push({Dia: x.dia, Hora_Entrada: x.horaIn, Hora_Salida: x.horaOut, Tiempo_Total: this.timePipe.transform(x.subtotal, ['HH:mm']), Horas_Cargadas: this.timePipe.transform(x.subtotalDetalles, ['HH:mm']), Status: (x.completa ? 'Ok' : 'Error')});
       });
     const blob = new Blob([this.papa.unparse(detalle)]);

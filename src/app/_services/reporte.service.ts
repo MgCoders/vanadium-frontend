@@ -40,4 +40,10 @@ export class ReporteService {
     return this.http.get<HorasReporte1[]>(`${environment.apiUrl}/reportes/horas/fechas/` +
       this.datePipe.transform(desde, 'dd-MM-yyyy') + `/` + this.datePipe.transform(hasta, 'dd-MM-yyyy'));
   }
+
+  getResumenHoras_x_proyecto(desde: Date, hasta: Date, idProyecto: number): Observable<HorasReporte1[]> {
+    return this.http.get<HorasReporte1[]>(`${environment.apiUrl}/reportes/horas/fechas/` +
+      this.datePipe.transform(desde, 'dd-MM-yyyy') + `/` + this.datePipe.transform(hasta, 'dd-MM-yyyy') +
+      `/proyecto/` + idProyecto.toString());
+  }
 }
