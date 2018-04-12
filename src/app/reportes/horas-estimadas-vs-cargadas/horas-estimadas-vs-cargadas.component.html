@@ -41,7 +41,7 @@
                 </tbody>
                 <tfoot>
                   <tr *ngFor="let hora of getTotal(horaPTXC.horas);">
-                    <td class="mdl-data-table__cell--non-numeric">Total</td>
+                    <td class="text-rigth"><b>TOTALES</b></td>
                     <td>{{hora.cantidadHorasEstimadas | number:'1.0'}}</td>
                     <td>{{hora.cantidadHoras | number:'1.0'}}</td>
                   </tr>
@@ -76,19 +76,19 @@
                 <tbody>
                   <tr *ngFor="let hora of getFilas(totales);">
                     <td class="mdl-data-table__cell--non-numeric">{{hora.cargo.nombre}}</td>
-                    <td>{{hora.cantidadHorasEstimadas}}</td>
-                    <td>{{hora.precioEstimado | number:'1.2'}}</td>
-                    <td>{{hora.cantidadHoras}}</td>
-                    <td>{{hora.precioTotal | number:'1.2'}}</td>
+                    <td>{{hora.cantidadHorasEstimadas | number:'1.0-0'}}</td>
+                    <td>$ {{hora.precioEstimado | number:'1.0-0'}}</td>
+                    <td>{{hora.cantidadHoras | number:'1.0-0'}}</td>
+                    <td>$ {{hora.precioTotal | number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr *ngFor="let hora of getTotal(totales);">
-                    <td class="mdl-data-table__cell--non-numeric">Total</td>
-                    <td>{{hora.cantidadHorasEstimadas}}</td>
-                    <td>{{hora.precioEstimado | number:'1.2'}}</td>
-                    <td>{{hora.cantidadHoras}}</td>
-                    <td>{{hora.precioTotal | number:'1.2'}}</td>
+                    <td class="text-rigth"><b>TOTALES</b></td>
+                    <td>{{hora.cantidadHorasEstimadas | number:'1.0-0'}}</td>
+                    <td>$ {{hora.precioEstimado | number:'1.0-0'}}</td>
+                    <td>{{hora.cantidadHoras | number:'1.0-0'}}</td>
+                    <td>$ {{hora.precioTotal | number:'1.0-0'}}</td>
                   </tr>
                 </tfoot>
               </table>
