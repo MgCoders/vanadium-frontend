@@ -82,7 +82,7 @@
                     <td class="text-left">{{y.codigo}}</td>
 
                     <td class="text-rigth"*ngIf="!editando">
-                      <span>{{y.value | number:'1.2'}}</span>
+                      <span>$ {{y.value | number:'1.0-0'}}</span>
                     </td>
                     <td *ngIf="editando" class="text-rigth noPading">
                       <mat-form-field class="anchoMinimo noBorder">
@@ -91,7 +91,7 @@
                       </mat-form-field>
                     </td>
 
-                    <td class="text-rigth">{{GetValorHoraCargoFecha(y.idCargo) | number:'1.2'}}</td>
+                    <td class="text-rigth">$ {{GetValorHoraCargoFecha(y.idCargo) | number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -121,15 +121,15 @@
                   <tbody>
                     <tr *ngFor="let y of horaCargo">
                       <td class="text-left">{{y.codigo}}</td>
-                      <td class="text-rigth">{{GetTotalHorasEstimacionPorCargo(y.idCargo)}}</td>  
-                      <td class="text-rigth">{{GetTotalImporteEstimacionPorCargo(y.idCargo) | number:'1.2'}}</td>
+                      <td class="text-rigth">{{GetTotalHorasEstimacionPorCargo(y.idCargo) | number:'1.0-0'}}</td>  
+                      <td class="text-rigth">$ {{GetTotalImporteEstimacionPorCargo(y.idCargo) | number:'1.0-0'}}</td>
                     </tr>
                   </tbody>
                   <tfoot>
                     <tr>
                       <td class="text-left"><b>TOTALES</b></td>
-                      <td class="text-rigth"><b>{{GetTotalHorasEstimacion() | number:'1.2'}}</b></td>
-                      <td class="text-rigth"><b>{{GetTotalImporteEstimacion() | number:'1.2'}}</b></td>
+                      <td class="text-rigth"><b>{{GetTotalHorasEstimacion() | number:'1.0-0'}}</b></td>
+                      <td class="text-rigth"><b>$ {{GetTotalImporteEstimacion() | number:'1.0-0'}}</b></td>
                     </tr>
                   </tfoot>
                 </table>
