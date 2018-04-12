@@ -39,6 +39,9 @@ import { ColaboradorService } from '../../_services/colaborador.service';
 import { ReporteService } from '../../_services/reporte.service';
 import { HorasProyectoXCargo } from '../../_models/HorasProyectoXCargo';
 import { ProyectoService } from '../../_services/proyecto.service';
+import { PapaParseService } from 'ngx-papaparse';
+import * as FileSaver from 'file-saver';
+import { HorasReporte1 } from '../../_models/HorasProyectoTipoTareaXCargo';
 
 @Component({
   selector: 'app-reporte-horas-del-mes',
@@ -57,6 +60,9 @@ export class ReporteHorasDelMesComponent implements OnInit {
   public totalHoras: number;
   public totalImporte: number;
   public loading: number;
+  public lista: HorasReporte1[];
+  public fDesde: Date;
+  public fHasta: Date;
 
   constructor(private service: ReporteService,
               private cargoDervice: CargoService,
@@ -69,20 +75,28 @@ export class ReporteHorasDelMesComponent implements OnInit {
               private timePipe: TimePipe,
               private authService: AuthService,
               private layoutService: LayoutService,
-              public dialog: MatDialog) {
-  }
+              public dialog: MatDialog,
+              private papa: PapaParseService) { }
 
   ngOnInit() {
-    this.Clear();
+    this.loading = 0;
     this.proyectoActual = {} as Proyecto;
     this.listaColaboradoresPorCargo = new Array();
     this.colaboradores = new Array();
+    this.fHasta = new Date();
+    this.fDesde = new Date();
+    if (this.fDesde.getMonth() === 0) {
+      this.fDesde.setMonth(11);
+      this.fDesde.setFullYear(this.fDesde.getFullYear() - 1);
+    } else {
+      this.fDesde.setMonth(this.fDesde.getMonth() - 1);
+    }
 
-    this.loading = 1;
+    this.loading++;
     this.layoutService.updatePreloaderState('active');
     this.cargoDervice.getAll().subscribe(
       (data) => {
-
+        this.loading--;
         data.forEach((c) => {
           this.listaColaboradoresPorCargo.push({ id: c.id, lista: new Array() });
         });
@@ -93,28 +107,17 @@ export class ReporteHorasDelMesComponent implements OnInit {
         });
 
         // Cargamos los colaboradores.
+        this.loading++;
         this.colaboradorService.getAll().subscribe(
           (dataC) => {
+            this.loading--;
             this.colaboradores = dataC;
             this.listaCargos.forEach((c) => {
               this.listaColaboradoresPorCargo.find((h) => h.id === c.id).lista = this.GetIniciales(c);
             });
 
-            this.proyectoService.getAll().subscribe(
-              (dataP) => {
-                this.proyectos = dataP;
-                this.loading--;
-                this.layoutService.updatePreloaderState('hide');
-
-                // Cargamos el resumen.
-                this.Reload();
-              },
-              (errorP) => {
-                this.loading--;
-                this.layoutService.updatePreloaderState('hide');
-                this.as.error(errorP, 5000);
-              }
-            );
+            // En el inicio cargamos el resumen de todos los proyectos.
+            this.Load();
           },
           (errorC) => {
             this.loading--;
@@ -130,100 +133,51 @@ export class ReporteHorasDelMesComponent implements OnInit {
       });
   }
 
-  Clear() {
-    this.reporteHoras = new Array();
-    this.listaTotales = new Array();
-    this.listaCargos = new Array();
-    this.totalHoras = 0;
-    this.totalImporte = 0;
-  }
-
-  public Reload() {
-    this.Clear();
-
-    if (this.proyectoActual.id === undefined) {
-      this.LoadTotalesProyecto(0);
-      return;
-    } else {
-      this.LoadTotalesProyecto(undefined);
-    }
-  }
-
-  LoadTotalesProyecto(indiceP: number) {
-    // Si solo quiero un proyecto
-    if (indiceP === undefined) {
+  Load() {
+    if (this.proyectoActual === undefined || this.proyectoActual.id === undefined) {
       this.loading++;
       this.layoutService.updatePreloaderState('active');
-      this.service.getReporte1Totales(this.proyectoActual).subscribe(
+      this.service.getResumenHoras(this.fDesde, this.fHasta).subscribe(
         (data) => {
-          data.forEach((x) => {
-            if (x.cargo !== undefined) {
-              const indice: number = this.listaTotales.findIndex((y) => y.cargo.id === x.cargo.id);
-              if (indice === -1) {
-                this.listaTotales.push({ cargo: x.cargo, cantidadHoras: x.cantidadHoras, importe: x.precioTotal });
-              } else {
-                this.listaTotales[indice].cantidadHoras += x.cantidadHoras;
-                this.listaTotales[indice].importe += x.precioTotal;
-              }
-              this.totalHoras += x.cantidadHoras;
-              this.totalImporte += x.precioTotal;
-            }
-          });
-
-          this.listaTotales.sort((a: { cargo: Cargo, cantidadHoras: number, importe: number }, b: { cargo: Cargo, cantidadHoras: number, importe: number }) => {
-            return b.cargo.precioHoraHistoria[0].precioHora - a.cargo.precioHoraHistoria[0].precioHora;
-          });
-
+          this.lista = data;
           this.loading--;
           this.layoutService.updatePreloaderState('hide');
         },
         (error) => {
           this.loading--;
+          this.layoutService.updatePreloaderState('hide');
           this.as.error(error, 5000);
-          this.layoutService.updatePreloaderState('active');
         }
       );
     } else {
-      if (indiceP < this.proyectos.length) {
-        this.loading++;
-        this.layoutService.updatePreloaderState('active');
-        this.service.getReporte1Totales(this.proyectos[indiceP]).subscribe(
-          (data) => {
-            data.forEach((x) => {
-              if (x.cargo !== undefined) {
-                const indice: number = this.listaTotales.findIndex((y) => y.cargo.id === x.cargo.id);
-                if (indice === -1) {
-                  this.listaTotales.push({ cargo: x.cargo, cantidadHoras: x.cantidadHoras, importe: x.precioTotal });
-                } else {
-                  this.listaTotales[indice].cantidadHoras += x.cantidadHoras;
-                  this.listaTotales[indice].importe += x.precioTotal;
-                }
-                this.totalHoras += x.cantidadHoras;
-                this.totalImporte += x.precioTotal;
-              }
-            });
-
-            this.LoadTotalesProyecto(indiceP + 1);
-            this.loading--;
-            this.layoutService.updatePreloaderState('hide');
-          },
-          (error) => {
-            this.as.error(error, 5000);
-            this.loading--;
-            this.layoutService.updatePreloaderState('active');
-          }
-        );
-      } else {
-        this.listaTotales.sort((a: { cargo: Cargo, cantidadHoras: number, importe: number }, b: { cargo: Cargo, cantidadHoras: number, importe: number }) => {
-          return b.cargo.precioHoraHistoria[0].precioHora - a.cargo.precioHoraHistoria[0].precioHora;
-        });
-      }
+      this.loading++;
+      this.layoutService.updatePreloaderState('active');
+      this.service.getResumenHoras_x_proyecto(this.fDesde, this.fHasta, this.proyectoActual.id).subscribe(
+        (data) => {
+          this.lista = data;
+          this.loading--;
+          this.layoutService.updatePreloaderState('hide');
+        },
+        (error) => {
+          this.loading--;
+          this.layoutService.updatePreloaderState('hide');
+          this.as.error(error, 5000);
+        }
+      );
     }
+  }
+
+  getFilas(horasReporte: HorasReporte1[]) {
+    return horasReporte.filter((item) => item.cargo != null);
+  }
+
+  getTotal(horasReporte: HorasReporte1[]) {
+    return horasReporte.filter((item) => item.cargo == null);
   }
 
   proyectoSeleccionado(proyecto: Proyecto) {
     this.proyectoActual = proyecto;
-    this.Reload();
+    this.Load();
   }
 
   // TODO Modularizar.
@@ -261,5 +215,22 @@ export class ReporteHorasDelMesComponent implements OnInit {
       return new Array();
     }
     return this.listaColaboradoresPorCargo.find((x) => x.id === id).lista;
+  }
+
+  public Download_CSV() {
+    // Generamos el archivo con el detalle de la comparacion de horas cargadas vs. estimadas.
+    const nombre: string = 'Horas_Reales_Resumen_y_Costos_' + (this.proyectoActual.nombre === undefined ? 'TODOS' : this.proyectoActual.nombre.replace(' ', '_')) + '.csv';
+    const detalle: Array<{ Cargo: string, Codigo: string, Colaboradores: string, Horas_Cargadas: number, Importe_Total: number }> = new Array();
+    this.lista.forEach((x) => {
+      if (x.cargo !== undefined) {
+        let colaboradores: string = '';
+        this.GetInicialesAux(x.cargo.id).forEach((y) => {
+          colaboradores += y.iniciales + ' | ';
+        });
+        detalle.push({ Cargo: x.cargo.nombre, Codigo: x.cargo.codigo, Colaboradores: colaboradores, Horas_Cargadas: x.cantidadHoras, Importe_Total: x.precioTotal });
+      }
+    });
+    const blob = new Blob([this.papa.unparse(detalle)]);
+    FileSaver.saveAs(blob, nombre);
   }
 }

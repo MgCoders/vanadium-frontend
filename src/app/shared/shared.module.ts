@@ -9,6 +9,8 @@ import {
   MatButtonModule
 } from '@angular/material';
 
+import { DisableControlDirective } from '../_directives/disable-control.directive';
+
 @NgModule({
   imports: [
     MatDialogModule,
@@ -18,11 +20,13 @@ import {
     EChartsDirective,
     SlimScrollDirective,
     DialogConfirmComponent,
+    DisableControlDirective
   ],
   exports: [
     EChartsDirective,
     SlimScrollDirective,
     DialogConfirmComponent,
+    DisableControlDirective
   ],
 
   entryComponents: [

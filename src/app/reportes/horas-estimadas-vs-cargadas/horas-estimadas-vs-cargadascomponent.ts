@@ -12,6 +12,8 @@ import { TipoTarea } from '../../_models/TipoTarea';
 import { LayoutService } from '../../layout/layout.service';
 import { HorasReporte1 } from '../../_models/HorasProyectoTipoTareaXCargo';
 import { CargoService } from '../../_services/cargo.service';
+import { PapaParseService } from 'ngx-papaparse';
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'app-horas-estimadas-vs-cargadas',
@@ -35,7 +37,8 @@ export class HorasEstimadasVsCargadasComponent implements OnInit {
                 private tareaService: TareaService,
                 private authService: AuthService,
                 private layoutService: LayoutService,
-                private cargoService: CargoService) {
+                private cargoService: CargoService,
+                private papa: PapaParseService) {
     }
 
     ngOnInit(): void {
@@ -153,5 +156,27 @@ export class HorasEstimadasVsCargadasComponent implements OnInit {
         if (this.loading === 0) {
             this.layoutService.updatePreloaderState('hide');
         }
+    }
+
+    public Download_CSV() {
+        // Generamos el archivo con el detalle de la comparacion de horas cargadas vs. estimadas.
+        const nombre: string = 'Estimadas_Vs_Reales_Detalle_' + this.proyectoActual.nombre.replace(' ', '_') + '.csv';
+        const detalle: Array<{Tarea: string, Cargo: string, Horas_Estimadas: number, Horas_Cargadas: number}> = new Array();
+        this.horasPTXC.forEach((x) => {
+            this.getFilas(x.horas).forEach((y) => {
+                detalle.push({Tarea: x.tarea.nombre, Cargo: y.cargo.nombre, Horas_Estimadas: y.cantidadHorasEstimadas, Horas_Cargadas: y.cantidadHoras});
+            });
+        });
+        const blob = new Blob([this.papa.unparse(detalle)]);
+        FileSaver.saveAs(blob, nombre);
+
+        // Generamos el archivo con el resumen de la comparacion de horas cargadas vs. estimadas.
+        const nombre2: string = 'Estimadas_Vs_Reale_Resumen_' + this.proyectoActual.nombre.replace(' ', '_') + '.csv';
+        const resumen: Array<{Cargo: string, Horas_Estimadas: number, Costo_Estimado: number, Horas_Cargadas: number, Costo_Real: number}> = new Array();
+        this.getFilas(this.totales).forEach((x) => {
+            resumen.push({Cargo: x.cargo.nombre, Horas_Estimadas: x.cantidadHorasEstimadas, Costo_Estimado: x.precioEstimado, Horas_Cargadas: x.cantidadHoras, Costo_Real: x.precioTotal});
+        });
+        const blob2 = new Blob([this.papa.unparse(resumen)]);
+        FileSaver.saveAs(blob2, nombre2);
     }
 }

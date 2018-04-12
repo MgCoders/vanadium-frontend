@@ -23,6 +23,8 @@ export class AltaCargoComponent implements OnInit {
   public decimalRegExp: RegExp = new RegExp('^[0-9]+(\.[0-9]{1,2})?$');
   public precioFC = new FormControl('', [Validators.required, Validators.pattern(this.decimalRegExp)]);
 
+  public loading: boolean;
+
   constructor(public dialogRef: MatDialogRef<AltaCargoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: [Cargo, Cargo[]],
               private cs: CargoService,
@@ -31,6 +33,7 @@ export class AltaCargoComponent implements OnInit {
               private datePipe: DatePipe) { }
 
   ngOnInit() {
+    this.loading = false;
     if (this.data[0] === undefined) {
       this.cargoActual = {} as Cargo;
       this.cargoActual.enabled = true;
@@ -44,6 +47,7 @@ export class AltaCargoComponent implements OnInit {
   }
 
   Guardar() {
+    this.loading = true;
     this.layoutService.updatePreloaderState('active');
     if (this.data[0] === undefined) {
       // Agregamos el primer registro de historico de precio.
@@ -58,10 +62,12 @@ export class AltaCargoComponent implements OnInit {
           this.data[1].push(data);
           this.layoutService.updatePreloaderState('hide');
           this.dialogRef.close();
+          this.loading = false;
         },
         (error) => {
           this.layoutService.updatePreloaderState('hide');
           this.as.error(error, 5000);
+          this.loading = false;
         });
     } else {
       this.cs.edit(this.cargoActual).subscribe(
@@ -71,10 +77,12 @@ export class AltaCargoComponent implements OnInit {
           const index: number = this.data[1].indexOf(this.data[0]);
           this.data[1][index] = data;
           this.dialogRef.close();
+          this.loading = false;
         },
         (error) => {
           this.layoutService.updatePreloaderState('hide');
           this.as.error(error, 5000);
+          this.loading = false;
         });
     }
   }

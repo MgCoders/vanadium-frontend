@@ -1,6 +1,7 @@
 import {
     ApplicationRef,
-    NgModule
+    NgModule,
+    LOCALE_ID
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -170,7 +171,8 @@ import { VerticalTimelineModule } from 'angular-vertical-timeline';
     ],
     bootstrap: [AppComponent],
     providers: [
-        {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
+        { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+        //{ provide: LOCALE_ID, useValue: 'es' },
         NotificacionService,
         DatePipe,
         AuthService,

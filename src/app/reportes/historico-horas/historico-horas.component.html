@@ -1,26 +1,31 @@
 <section class="container-fluid with-maxwidth chapter">
   <article class="article">
     <div class="row">
-      <h2 class="article-title col-12 col-sm-3">
+      <h2 class="article-title col-12 col-sm-5">
         <span>Hs. Reales (Detalle)</span>
       </h2>
-      <div class="col-12 col-sm-3">
+      <div class="col-12 col-sm-2">
         <app-select-colaborador [object]="colaboradorActual" idModel="id" placeHolder="Colaborador" (onChange)="ColaboradorOnChange($event)"
           id="id" desc="nombre"></app-select-colaborador>
       </div>
-      <div class="col-12 col-sm-3">
+      <div class="col-12 col-sm-2">
         <mat-form-field class="full-width">
           <input [(ngModel)]="fDesde" (dateChange)="Reload()" class="full-width" matInput [matDatepicker]="pickerFDesde" placeholder="Fecha Desde">
           <mat-datepicker-toggle matSuffix [for]="pickerFDesde"></mat-datepicker-toggle>
           <mat-datepicker #pickerFDesde></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-12 col-sm-3">
+      <div class="col-12 col-sm-2">
         <mat-form-field class="full-width">
           <input [(ngModel)]="fHasta" (dateChange)="Reload()" class="full-width" matInput [matDatepicker]="pickerFHasta" placeholder="Fecha Hasta">
           <mat-datepicker-toggle matSuffix [for]="pickerFHasta"></mat-datepicker-toggle>
           <mat-datepicker #pickerFHasta></mat-datepicker>
         </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-1">
+          <button matTooltipPosition="above" matTooltip="Bajar archivo csv con los datos." [disabled]="loading" (click)="Download_CSV()" mat-icon-button color="primary">
+            <mat-icon class="material-icons">file_download</mat-icon>
+          </button>
       </div>
     </div>
 
@@ -47,8 +52,8 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td>
-                      <b>TOTAL</b>
+                    <td class="text-rigth">
+                      <b>TOTALES</b>
                     </td>
                     <td>
                       <b>{{GetMinutosToString(total)}}</b>

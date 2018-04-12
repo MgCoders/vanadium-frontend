@@ -10,6 +10,7 @@ import {
   MatTooltipModule,
   MatDialogModule,
   MatCheckboxModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { AltaProyectoComponent } from './alta-proyecto/alta-proyecto.component';
@@ -36,6 +37,7 @@ import { LayoutService } from '../layout/layout.service';
     MatTooltipModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
 
   declarations: [
