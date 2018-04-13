@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://sulfur.magnesium.coop/api',
+  apiUrl: 'https://vanadium.magnesium.coop/api',
   hmr: false
 };

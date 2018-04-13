@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 #/bin/bash
 set -x
-docker stack rm sulfur-frontend
+docker stack rm vanadium-frontend

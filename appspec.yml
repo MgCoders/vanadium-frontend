@@ -3,7 +3,7 @@ os: linux
 
 files:
  - source: /
-   destination: /home/ubuntu/sulfur-frontend-deploy
+   destination: /home/ubuntu/vanadium-frontend-deploy
 
 permissions:
  - object: /

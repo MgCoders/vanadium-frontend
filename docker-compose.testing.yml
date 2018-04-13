@@ -2,14 +2,14 @@ version: '3.3'
 
 services:
 
-  web_sulfur-frontend:
-    image: 270051160229.dkr.ecr.us-east-1.amazonaws.com/sulfur-frontend
+  web_vanadium-frontend:
+    image: 270051160229.dkr.ecr.us-east-1.amazonaws.com/vanadium-frontend
     networks:
       - traefik_proxy
     deploy:
       labels:
         - "traefik.port=80"
-        - "traefik.backend=web_sulfur-frontend"
+        - "traefik.backend=web_vanadium-frontend"
         - "traefik.frontend.rule=Host:marq.magnesium.coop"
         - "traefik.enable=true"
         - "traefik.docker.network=traefik_proxy"
