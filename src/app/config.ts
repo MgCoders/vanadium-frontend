@@ -4,8 +4,8 @@ function makeAppConfig() {
   const year = date.getFullYear();
 
   const AppConfig = {
-    brand: 'MARQ',
-    brandLogoUrl: 'assets/images/logoMarq.png',
+    brand: 'Vanadium',
+    brandLogoUrl: 'assets/images/logo.png!!!',
     user: 'Lisa',
     year,
     layoutBoxed: false,               // true, false

@@ -1,8 +1,0 @@
-<mat-form-field class="full-width">
-    <mat-select [(ngModel)]="object[idModel]" [placeholder]="placeHolder" class="full-width" (change)="onChangeValue($event)">
-      <mat-option [value]="undefined">-- Seleccionar --</mat-option>
-        <mat-option *ngFor="let x of lista" [value]="x.hora">
-          {{x.desc}}
-      </mat-option>
-  </mat-select>
-</mat-form-field>

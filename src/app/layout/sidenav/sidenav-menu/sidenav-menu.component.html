@@ -6,49 +6,7 @@
       <span class="nav-text">Dashboard</span>
     </a>
   </li>
-  <li>
-    <a mat-button [routerLink]="['/app/horas/listahoras']">
-      <i class="nav-icon material-icons">av_timer</i>
-      <span class="nav-text">Cargar Horas</span>
-    </a>
-  </li>
-  <li>
-    <a mat-button [routerLink]="['/app/reportes/mis-horas']">
-      <i class="nav-icon material-icons">reorder</i>
-      <span class="nav-text">Mis Horas</span>
-    </a>
-  </li>
-  <!--<li>
-    <a mat-button href="javascript:;" myToggleQuickview="customizer">
-      <i class="nav-icon material-icons">settings</i>
-      <span class="nav-text">Opciones</span>
-    </a>
-  </li>-->
-
   <li class="nav-divider" *ngIf="isAdmin()"></li>
-  <li *ngIf="isAdmin()">
-    <a mat-button href="#/app/reportes">
-      <i class="nav-icon material-icons">equalizer</i>
-      <span class="nav-text">Reportes</span>
-    </a>
-    <ul>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/horas-estimadas-vs-cargadas']">
-          <span>Hs. Estimadas vs. Reales</span>
-        </a>
-      </li>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/historico-horas']">
-          <span>Hs. Reales (Detalle)</span>
-        </a>
-      </li>
-      <li>
-        <a mat-button class="md-button prepend-icon" [routerLink]="['/app/reportes/reporte-horas-del-mes']">
-          <span>Hs. Reales (Resumen y Costos)</span>
-        </a>
-      </li>
-    </ul>
-  </li>
 
   <li *ngIf="isAdmin()">
     <a mat-button [routerLink]="['/app/cargos/lista']">
@@ -57,12 +15,6 @@
     </a>
   </li>
 
-  <li *ngIf="isAdmin()">
-    <a mat-button [routerLink]="['/app/tareas/lista']">
-      <i class="nav-icon material-icons">settings</i>
-      <span class="nav-text">Tareas</span>
-    </a>
-  </li>
 
   <li *ngIf="isAdmin()">
     <a mat-button [routerLink]="['/app/colaboradores/listacolaboradores']">
@@ -71,17 +23,5 @@
     </a>
   </li>
 
-  <li *ngIf="isAdmin()">
-    <a mat-button [routerLink]="['/app/proyectos/lista']">
-      <i class="nav-icon material-icons">equalizer</i>
-      <span class="nav-text">Proyectos</span>
-    </a>
-  </li>
 
-  <li *ngIf="isAdmin()">
-    <a mat-button [routerLink]="['/app/estimaciones/listaestimaciones']">
-      <i class="nav-icon material-icons">trending_up</i>
-      <span class="nav-text">Estimaciones</span>
-    </a>
-  </li>
 </ul>
